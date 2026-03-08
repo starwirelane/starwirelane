@@ -133,10 +133,24 @@ body::after{
   gap:0; flex-shrink:0; position:relative;
 }
 .prompt-lbl{color:var(--prompt);white-space:nowrap;user-select:none;}
+
+/* ghost text wrapper */
+.input-wrap{
+  flex:1; position:relative; display:flex; align-items:center;
+  padding-left:6px;
+}
 #userinput{
-  flex:1; background:transparent; border:none; outline:none;
+  position:relative; z-index:2;
+  width:100%; background:transparent; border:none; outline:none;
   color:var(--text); font-family:var(--font); font-size:var(--fs);
-  caret-color:transparent; padding-left:6px;
+  caret-color:transparent;
+}
+/* ghost suggestion text shown behind real input */
+#ghost-text{
+  position:absolute; left:0; top:50%; transform:translateY(-50%);
+  font-family:var(--font); font-size:var(--fs);
+  color:var(--dim); pointer-events:none; z-index:1;
+  white-space:pre; opacity:0.55;
 }
 /* custom animated cursor */
 .fake-cursor{
@@ -303,8 +317,11 @@ pre.ascii-dim{color:var(--dim);font-size:10px;line-height:1.2;}
     <!-- input -->
     <div class="irow">
       <span class="prompt-lbl" id="promptlbl">farhad@portfolio:~$&nbsp;</span>
-      <input id="userinput" type="text" autocomplete="off" autocorrect="off"
-             autocapitalize="off" spellcheck="false" inputmode="text"/>
+      <div class="input-wrap">
+        <span id="ghost-text"></span>
+        <input id="userinput" type="text" autocomplete="off" autocorrect="off"
+               autocapitalize="off" spellcheck="false" inputmode="text"/>
+      </div>
       <span class="fake-cursor" id="fakecursor"></span>
     </div>
   </div>
@@ -820,6 +837,25 @@ const promptEl = document.getElementById('promptlbl');
 const sugEl    = document.getElementById('suggestions');
 const counterEl= document.getElementById('cmd-counter');
 const cursor   = document.getElementById('fakecursor');
+const ghostEl  = document.getElementById('ghost-text');
+
+// Ghost text — shows best match greyed out behind typing
+function updateGhost(){
+  const val = inputEl.value;
+  if(!val){ ghostEl.textContent=''; return; }
+  const match = Object.keys(CMDS).find(k => k.startsWith(val) && k !== val);
+  if(match){
+    // show full word: typed part (invisible) + ghost remainder
+    ghostEl.textContent = val + match.slice(val.length);
+    // make typed portion invisible so only ghost part shows
+    ghostEl.style.color = 'transparent';
+    // use a layered span trick — just show the suffix in dim color
+    ghostEl.innerHTML =
+      `<span style="color:transparent">${val}</span><span style="color:var(--dim);opacity:0.5">${match.slice(val.length)}</span>`;
+  } else {
+    ghostEl.textContent = '';
+  }
+}
 
 let hist=[], histIdx=-1, cmdCount=0, startTime=Date.now();
 let matrixInterval=null, matrixCtx=null;
@@ -848,7 +884,7 @@ function updateCursor(){
   document.body.removeChild(tmp);
   cursor.style.left = (rect.left - rowRect.left + tw + 4) + 'px';
 }
-inputEl.addEventListener('input', ()=>{ updateCursor(); showSuggestions(); });
+inputEl.addEventListener('input', ()=>{ updateCursor(); showSuggestions(); updateGhost(); });
 
 function pLine(cls, html){
   const d=document.createElement('div');
@@ -936,17 +972,22 @@ async function runCmd(raw){
 /* input events */
 inputEl.addEventListener('keydown', async e=>{
   if(e.key==='Enter'){
-    const v=inputEl.value; inputEl.value=''; sugEl.style.display='none';
+    const v=inputEl.value; inputEl.value=''; ghostEl.textContent='';
+    sugEl.style.display='none';
     updateCursor(); await runCmd(v);
   }
-  if(e.key==='ArrowUp'){ e.preventDefault(); if(histIdx<hist.length-1) histIdx++; inputEl.value=hist[histIdx]||''; updateCursor(); }
-  if(e.key==='ArrowDown'){ e.preventDefault(); if(histIdx>0) histIdx--; else{histIdx=-1;inputEl.value='';} inputEl.value=hist[histIdx]||''; updateCursor(); }
+  if(e.key==='ArrowUp'){ e.preventDefault(); if(histIdx<hist.length-1) histIdx++; inputEl.value=hist[histIdx]||''; ghostEl.textContent=''; updateCursor(); }
+  if(e.key==='ArrowDown'){ e.preventDefault(); if(histIdx>0) histIdx--; else{histIdx=-1;inputEl.value='';} inputEl.value=hist[histIdx]||''; ghostEl.textContent=''; updateCursor(); }
   if(e.key==='Tab'){
     e.preventDefault();
-    const v=inputEl.value.toLowerCase();
-    const m=Object.keys(CMDS).filter(k=>k.startsWith(v));
-    if(m.length===1){ inputEl.value=m[0]; sugEl.style.display='none'; }
-    else if(m.length>1){ pLine('line-cmd',promptEl.textContent+v); pHTML(`<span class="dim">${m.join('  ')}</span>`,false); }
+    const val=inputEl.value.toLowerCase();
+    const match=Object.keys(CMDS).find(k=>k.startsWith(val)&&k!==val);
+    if(match){
+      inputEl.value=match; ghostEl.textContent=''; sugEl.style.display='none';
+    } else {
+      const m=Object.keys(CMDS).filter(k=>k.startsWith(val));
+      if(m.length>1){ pLine('line-cmd',promptEl.textContent+val); pHTML(`<span class="dim">${m.join('  ')}</span>`,false); }
+    }
     updateCursor();
   }
   if(e.key==='Escape') sugEl.style.display='none';
