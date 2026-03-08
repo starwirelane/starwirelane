@@ -1,0 +1,24 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images"
+
+collections:
+  - name: "portfolio"
+    label: "Portfolio Content"
+    files:
+      - name: "main"
+        label: "Main Content"
+        file: "content.json"
+        fields:
+          - { label: "Your Name", name: "name", widget: "string" }
+          - { label: "Job Title", name: "title", widget: "string" }
+          - { label: "Location", name: "location", widget: "string" }
+          - { label: "Company", name: "company", widget: "string" }
+          - { label: "College", name: "college", widget: "string" }
+          - { label: "GPA", name: "gpa", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "GitHub URL", name: "github", widget: "string" }
+          - { label: "LinkedIn URL", name: "linkedin", widget: "string" }
+          - { label: "Bio", name: "bio", widget: "text" }
