@@ -440,9 +440,32 @@ const CMDS = {
 
   whoami:{
     desc:'Current user info',
-    output:()=>`<span class="grn">guest</span> <span class="dim">— you are visiting Farhad's terminal portfolio</span>
-<span class="dim">host:</span> <span class="acc">farhad-portfolio.github.io</span>
-<span class="dim">shell:</span> zsh 5.9  <span class="dim">terminal:</span> xterm-256color`
+    output:()=>{
+      const ua = navigator.userAgent;
+      const platform = /iPhone/.test(ua) ? 'iPhone' :
+                       /iPad/.test(ua) ? 'iPad' :
+                       /Android/.test(ua) ? 'Android' :
+                       /Mac/.test(ua) ? 'macOS' :
+                       /Windows/.test(ua) ? 'Windows' :
+                       /Linux/.test(ua) ? 'Linux' : 'Unknown';
+      const browser = /Chrome/.test(ua) && !/Edg/.test(ua) ? 'Chrome' :
+                      /Safari/.test(ua) && !/Chrome/.test(ua) ? 'Safari' :
+                      /Firefox/.test(ua) ? 'Firefox' :
+                      /Edg/.test(ua) ? 'Edge' :
+                      /OPR/.test(ua) ? 'Opera' : 'Unknown';
+      const mobile = /Mobi|Android|iPhone|iPad/.test(ua);
+      const screen = `${window.innerWidth}x${window.innerHeight}`;
+      return `<div class="cmd-out">
+<span class="grn">guest</span> <span class="dim">— you are visiting Farhad's terminal portfolio</span>
+<div><span class="lbl">host</span><span class="acc">farhadali.netlify.app</span></div>
+<div><span class="lbl">platform</span>${platform}</div>
+<div><span class="lbl">browser</span>${browser}</div>
+<div><span class="lbl">device</span>${mobile ? '📱 Mobile' : '🖥️ Desktop'}</div>
+<div><span class="lbl">resolution</span>${screen}</div>
+<div><span class="lbl">language</span>${navigator.language}</div>
+<div><span class="lbl">timezone</span>${Intl.DateTimeFormat().resolvedOptions().timeZone}</div>
+</div>`;
+    }
   },
 
   system:{
