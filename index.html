@@ -851,7 +851,7 @@ function updateGhost(){
     ghostEl.style.color = 'transparent';
     // use a layered span trick — just show the suffix in dim color
     ghostEl.innerHTML =
-      `<span style="color:transparent">${val}</span><span style="color:var(--dim);opacity:0.5">${match.slice(val.length)}</span>`;
+      `<span style="color:transparent">${val}</span><span style="color:var(--text);opacity:0.35">${match.slice(val.length)}</span>`;
   } else {
     ghostEl.textContent = '';
   }
