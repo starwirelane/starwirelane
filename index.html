@@ -318,8 +318,30 @@ const CFG = {
   prompt:      'farhad@portfolio:~$\u00a0',
   typeSpeed:   18,
   bootSpeed:   22,
-  soundOn:     false,  // toggle with 'sound on/off'
+  soundOn:     false,
 };
+
+// Dynamic content loaded from content.json
+let CONTENT = {
+  name: "Farhad Ali",
+  title: "Manufacturing Associate & Aspiring Data Analyst",
+  location: "Lodi, California",
+  company: "Cepheid",
+  college: "Delta College",
+  gpa: "3.8",
+  email: "farhad622860@gmail.com",
+  github: "https://github.com/starwirelane",
+  linkedin: "https://linkedin.com/in/farhadali-627770352",
+  bio: "I'm passionate about using data and analytical thinking to solve real-world problems and improve organizational efficiency. Through manufacturing and operations experience, I've built a strong foundation for transitioning into business analytics and data analysis."
+};
+
+// Fetch latest content from content.json (updated by admin panel)
+async function loadContent(){
+  try{
+    const res = await fetch('/content.json?t='+Date.now());
+    if(res.ok){ CONTENT = await res.json(); }
+  }catch(e){ console.log('Using default content'); }
+}
 
 /* ═══════════════════════════════════════════════
    FAKE FILE SYSTEM
@@ -386,19 +408,16 @@ const CMDS = {
   about:{
     desc:'About Farhad Ali',
     output:()=>`<div class="cmd-out">
-<span class="acc" style="font-size:16px;font-weight:700">Farhad Ali</span>
-<span class="dim">Manufacturing Associate · Aspiring Data Analyst</span>
+<span class="acc" style="font-size:16px;font-weight:700">${CONTENT.name}</span>
+<span class="dim">${CONTENT.title}</span>
 <hr class="divider">
-<div><span class="lbl">Location</span>Lodi, California, United States 📍</div>
-<div><span class="lbl">Current Role</span>Manufacturing Associate I @ <span class="acc">Cepheid</span></div>
-<div><span class="lbl">Education</span>San Joaquin Delta College — AA</div>
-<div><span class="lbl">GPA</span><span class="grn">3.8 — High Honors Graduate ⭐</span></div>
+<div><span class="lbl">Location</span>${CONTENT.location} 📍</div>
+<div><span class="lbl">Current Role</span>Manufacturing Associate I @ <span class="acc">${CONTENT.company}</span></div>
+<div><span class="lbl">Education</span>${CONTENT.college} — AA</div>
+<div><span class="lbl">GPA</span><span class="grn">${CONTENT.gpa} — High Honors Graduate ⭐</span></div>
 <div><span class="lbl">Languages</span>English · Urdu (Native) · Punjabi</div>
 <hr class="divider">
-<span class="dim">I'm passionate about using data and analytical thinking to solve real-world
-problems and improve organizational efficiency. Through manufacturing and
-operations experience, I've built a strong foundation for transitioning into
-</span><span class="acc">business analytics</span><span class="dim"> and </span><span class="acc">data analysis</span><span class="dim">.</span>
+<span class="dim">${CONTENT.bio}</span>
 </div>`
   },
 
@@ -640,12 +659,12 @@ ${[['GMP/ISO',95],['Data Recording',90],['Team Leadership',85],['Analytics',70],
   contact:{
     desc:'Contact information',
     output:()=>`<div class="cmd-out">
-<span class="acc">Contact Farhad</span>
+<span class="acc">Contact ${CONTENT.name}</span>
 <hr class="divider">
-<div><span class="lbl">Email</span><a href="mailto:farhad622860@gmail.com">farhad622860@gmail.com</a></div>
-<div><span class="lbl">LinkedIn</span><a href="https://linkedin.com/in/farhadali-627770352" target="_blank">linkedin.com/in/farhadali-627770352</a></div>
-<div><span class="lbl">GitHub</span><a href="https://github.com/starwirelane" target="_blank">github.com/starwirelane</a></div>
-<div><span class="lbl">Location</span>Lodi, California 📍</div>
+<div><span class="lbl">Email</span><a href="mailto:${CONTENT.email}">${CONTENT.email}</a></div>
+<div><span class="lbl">LinkedIn</span><a href="${CONTENT.linkedin}" target="_blank">${CONTENT.linkedin.replace('https://','')}</a></div>
+<div><span class="lbl">GitHub</span><a href="${CONTENT.github}" target="_blank">${CONTENT.github.replace('https://','')}</a></div>
+<div><span class="lbl">Location</span>${CONTENT.location} 📍</div>
 <hr class="divider">
 <span class="grn">Currently open to new opportunities.</span> <span class="dim">Response within 24h.</span>
 </div>`
@@ -998,6 +1017,9 @@ setInterval(()=>{
    BOOT SEQUENCE
 ══════════════════════════════════════════ */
 (async()=>{
+  // Load dynamic content first
+  await loadContent();
+
   const bootEl=document.getElementById('boot-text');
   const barEl=document.getElementById('boot-bar');
   const bootLines=[
@@ -1036,20 +1058,16 @@ setInterval(()=>{
   <span style="font-family:'Orbitron',sans-serif;font-weight:900;font-size:13px;
     background:linear-gradient(90deg,#f9c74f,#ff9a3c,#f9c74f);
     -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-    background-clip:text;
-    text-shadow:none;
-    letter-spacing:2px;">FARHAD ALI</span>
+    background-clip:text;text-shadow:none;letter-spacing:2px;">${CONTENT.name.toUpperCase()}</span>
   <span style="color:var(--dim)"> — </span>
-  <span style="color:var(--highlight)">Manufacturing Associate</span>
-  <span style="color:var(--dim)"> &amp; </span>
-  <span style="color:var(--highlight)">Aspiring Data Analyst</span><br>
-  <span style="color:#f778ba">📍 Lodi, CA</span>
+  <span style="color:var(--highlight)">${CONTENT.title}</span><br>
+  <span style="color:#f778ba">📍 ${CONTENT.location}</span>
   <span style="color:var(--dim)"> &nbsp;·&nbsp; </span>
-  <span style="color:#3fb950">🔬 Cepheid</span>
+  <span style="color:#3fb950">🔬 ${CONTENT.company}</span>
   <span style="color:var(--dim)"> &nbsp;·&nbsp; </span>
-  <span style="color:#d29922">🎓 Delta College</span>
+  <span style="color:#d29922">🎓 ${CONTENT.college}</span>
   <span style="color:var(--dim)"> &nbsp;·&nbsp; </span>
-  <span style="color:#00eaff">⭐ 3.8 GPA</span><br>
+  <span style="color:#00eaff">⭐ ${CONTENT.gpa} GPA</span><br>
   <span style="color:var(--dim)">Type </span><span class="badge">help</span><span style="color:var(--dim)"> for commands &nbsp;·&nbsp; </span><span class="badge">Tab</span><span style="color:var(--dim)"> autocomplete &nbsp;·&nbsp; </span><span class="badge">↑↓</span><span style="color:var(--dim)"> history</span>
 </div>`;
   const d=document.createElement('div');
