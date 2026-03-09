@@ -405,7 +405,7 @@ const CMDS = {
     desc:'Show all available commands',
     output:()=>{
       const groups = {
-        '📋 Info':['help','about','whoami','neofetch'],
+        '📋 Info':['help','about','whoami'],
         '💼 Portfolio':['experience','skills','education','awards','projects','resume'],
         '🌐 Links':['github','linkedin','contact'],
         '📁 Files':['ls','cd','cat','pwd'],
@@ -470,35 +470,7 @@ const CMDS = {
 
 
 
-  neofetch:{
-    desc:'System info with ASCII art',
-    output:()=>`<div class="cmd-out" style="display:flex;gap:24px;flex-wrap:wrap">
-<pre class="ascii" style="font-size:9px">
-  ██████╗
- ██╔════╝
- ██████╗
- ██╔══╝
- ██║
- ╚═╝    </pre>
-<div>
-<span class="acc" style="font-weight:700">farhad</span><span class="dim">@</span><span class="acc">portfolio</span>
-<span class="dim">─────────────────</span>
-<div><span class="lbl">OS</span>PortfolioOS v2.0</div>
-<div><span class="lbl">Shell</span>zsh 5.9</div>
-<div><span class="lbl">Theme</span><span id="neofetch-theme">neo-terminal</span></div>
-<div><span class="lbl">Font</span>JetBrains Mono 14px</div>
-<div><span class="lbl">Uptime</span><span id="neofetch-uptime"></span></div>
-<div><span class="lbl">Commands</span><span class="acc">${()=>cmdCount}</span></div>
-<div style="margin-top:8px">
-<span style="background:#ff5f57;padding:0 8px">&nbsp;</span>
-<span style="background:#febc2e;padding:0 8px">&nbsp;</span>
-<span style="background:#28c840;padding:0 8px">&nbsp;</span>
-<span style="background:var(--prompt);padding:0 8px">&nbsp;</span>
-<span style="background:var(--highlight);padding:0 8px">&nbsp;</span>
-<span style="background:var(--pink);padding:0 8px">&nbsp;</span>
-</div>
-</div></div>`
-  },
+
 
   experience:{
     desc:'Work experience',
