@@ -154,11 +154,12 @@ body::after{
 }
 /* custom animated cursor */
 .fake-cursor{
-  display:inline-block; width:9px; height:1.1em;
+  display:inline-block; width:8px; height:1.1em;
   background:var(--cursor); vertical-align:text-bottom;
   animation:blink 1s step-end infinite;
   box-shadow:0 0 6px var(--cursor);
-  pointer-events:none; position:absolute; opacity:1;
+  pointer-events:none; position:relative; opacity:1;
+  margin-left:2px; flex-shrink:0;
 }
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
@@ -850,18 +851,13 @@ function updatePrompt(){
 }
 
 // position fake cursor after input text
-function updateCursor(){
-  const irow = document.querySelector('.irow');
-  const rect  = inputEl.getBoundingClientRect();
-  const rowRect = irow.getBoundingClientRect();
-  // measure text width
-  const tmp = document.createElement('span');
-  tmp.style.cssText = `font:${CFG.typeSpeed}px var(--font);visibility:hidden;position:fixed;white-space:pre`;
-  tmp.textContent = inputEl.value;
-  document.body.appendChild(tmp);
-  const tw = tmp.getBoundingClientRect().width;
-  document.body.removeChild(tmp);
-  cursor.style.left = (rect.left - rowRect.left + tw + 4) + 'px';
+function updateCursor(){ /* cursor handled by CSS */ }
+```
+
+```
+function updatePrompt(){
+  const path = CWD==='/home' ? '' : ' ' + CWD;
+  promptEl.textContent = `> farhad${path}\u00a0`;
 }
 inputEl.addEventListener('input', ()=>{ updateCursor(); showSuggestions(); updateGhost(); });
 
