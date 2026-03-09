@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-<title>Farhad Ali | Portfolio</title>
+<title>Farhad Ali — Terminal Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet"/>
-<script defer src="https://cloud.umami.is/script.js" data-website-id="5da5f162-3e85-4994-8728-63fd5cddbcb3"></script>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <style>
 /* ═══════════════════════════════════════════
    THEME VARIABLES — edit colors here
@@ -15,7 +15,7 @@
   --surface:    #161b22;
   --border:     #21262d;
   --text:       #c9d1d9;
-  --dim:        #768390;
+  --dim:        #484f58;
   --prompt:     #00eaff;
   --highlight:  #58a6ff;
   --green:      #3fb950;
@@ -154,12 +154,11 @@ body::after{
 }
 /* custom animated cursor */
 .fake-cursor{
-  display:inline-block; width:8px; height:1.1em;
+  display:inline-block; width:9px; height:1.1em;
   background:var(--cursor); vertical-align:text-bottom;
   animation:blink 1s step-end infinite;
   box-shadow:0 0 6px var(--cursor);
-  pointer-events:none; position:relative; opacity:1;
-  margin-left:2px; flex-shrink:0;
+  pointer-events:none; position:absolute; opacity:1;
 }
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
@@ -189,7 +188,7 @@ body::after{
 .cmd-out a:hover{text-decoration:underline;}
 .lbl{color:var(--yellow);display:inline-block;min-width:130px;}
 .acc{color:var(--prompt);}
-.dim{color:#6e7681;}
+.dim{color:var(--dim);}
 .grn{color:var(--green);}
 .red{color:var(--red);}
 .pnk{color:var(--pink);}
@@ -302,7 +301,7 @@ pre.ascii-dim{color:var(--dim);font-size:10px;line-height:1.2;}
       <div class="dot dot-r" title="Close"></div>
       <div class="dot dot-y" title="Minimize"></div>
       <div class="dot dot-g" id="btn-fullscreen" title="Fullscreen"></div>
-      <span class="tbar-title">farhad.sh</span>
+      <span class="tbar-title">farhad@portfolio — zsh</span>
       <span class="tbar-stats" id="cmd-counter">cmds: 0</span>
     </div>
 
@@ -317,13 +316,13 @@ pre.ascii-dim{color:var(--dim);font-size:10px;line-height:1.2;}
 
     <!-- input -->
     <div class="irow">
-      <span class="prompt-lbl" id="promptlbl">> farhad&nbsp;</span>
+      <span class="prompt-lbl" id="promptlbl">farhad@portfolio:~$&nbsp;</span>
       <div class="input-wrap">
         <span id="ghost-text"></span>
         <input id="userinput" type="text" autocomplete="off" autocorrect="off"
                autocapitalize="off" spellcheck="false" inputmode="text"/>
-        <span class="fake-cursor" id="fakecursor"></span>
       </div>
+      <span class="fake-cursor" id="fakecursor"></span>
     </div>
   </div>
 </div>
@@ -333,7 +332,7 @@ pre.ascii-dim{color:var(--dim);font-size:10px;line-height:1.2;}
    CONFIG
 ═══════════════════════════════════════════════ */
 const CFG = {
-  prompt:      '> farhad\u00a0',
+  prompt:      'farhad@portfolio:~$\u00a0',
   typeSpeed:   18,
   bootSpeed:   22,
   soundOn:     false,
@@ -406,7 +405,7 @@ const CMDS = {
     desc:'Show all available commands',
     output:()=>{
       const groups = {
-        '📋 Info':['help','about','whoami'],
+        '📋 Info':['help','about','whoami','system','neofetch'],
         '💼 Portfolio':['experience','skills','education','awards','projects','resume'],
         '🌐 Links':['github','linkedin','contact'],
         '📁 Files':['ls','cd','cat','pwd'],
@@ -441,37 +440,58 @@ const CMDS = {
 
   whoami:{
     desc:'Current user info',
+    output:()=>`<span class="grn">guest</span> <span class="dim">— you are visiting Farhad's terminal portfolio</span>
+<span class="dim">host:</span> <span class="acc">farhad-portfolio.github.io</span>
+<span class="dim">shell:</span> zsh 5.9  <span class="dim">terminal:</span> xterm-256color`
+  },
+
+  system:{
+    desc:'System / environment info',
     output:()=>{
       const ua = navigator.userAgent;
-      const platform = /iPhone/.test(ua) ? 'iPhone' :
-                       /iPad/.test(ua) ? 'iPad' :
-                       /Android/.test(ua) ? 'Android' :
-                       /Mac/.test(ua) ? 'macOS' :
-                       /Windows/.test(ua) ? 'Windows' :
-                       /Linux/.test(ua) ? 'Linux' : 'Unknown';
-      const browser = /Chrome/.test(ua) && !/Edg/.test(ua) ? 'Chrome' :
-                      /Safari/.test(ua) && !/Chrome/.test(ua) ? 'Safari' :
-                      /Firefox/.test(ua) ? 'Firefox' :
-                      /Edg/.test(ua) ? 'Edge' :
-                      /OPR/.test(ua) ? 'Opera' : 'Unknown';
-      const mobile = /Mobi|Android|iPhone|iPad/.test(ua);
-      const screen = `${window.innerWidth}x${window.innerHeight}`;
+      const mobile = /Mobi/.test(ua);
       return `<div class="cmd-out">
-<span class="grn">guest</span> <span class="dim">— you are visiting Farhad's terminal portfolio</span>
-<div><span class="lbl">host</span><span class="acc">farhadali.netlify.app</span></div>
-<div><span class="lbl">platform</span>${platform}</div>
-<div><span class="lbl">browser</span>${browser}</div>
-<div><span class="lbl">device</span>${mobile ? '📱 Mobile' : '🖥️ Desktop'}</div>
-<div><span class="lbl">resolution</span>${screen}</div>
-<div><span class="lbl">language</span>${navigator.language}</div>
-<div><span class="lbl">timezone</span>${Intl.DateTimeFormat().resolvedOptions().timeZone}</div>
+<span class="acc">System Info</span>
+<hr class="divider">
+<div><span class="lbl">OS</span>${mobile?'Mobile':'Desktop'} — ${navigator.platform||'Web'}</div>
+<div><span class="lbl">Browser</span>${ua.split(')')[0].split('(')[1]||'Unknown'}</div>
+<div><span class="lbl">Resolution</span>${window.innerWidth} × ${window.innerHeight}</div>
+<div><span class="lbl">Language</span>${navigator.language}</div>
+<div><span class="lbl">Time Zone</span>${Intl.DateTimeFormat().resolvedOptions().timeZone}</div>
+<div><span class="lbl">Commands Run</span><span class="acc">${cmdCount}</span></div>
 </div>`;
     }
   },
 
-
-
-
+  neofetch:{
+    desc:'System info with ASCII art',
+    output:()=>`<div class="cmd-out" style="display:flex;gap:24px;flex-wrap:wrap">
+<pre class="ascii" style="font-size:9px">
+  ██████╗
+ ██╔════╝
+ ██████╗
+ ██╔══╝
+ ██║
+ ╚═╝    </pre>
+<div>
+<span class="acc" style="font-weight:700">farhad</span><span class="dim">@</span><span class="acc">portfolio</span>
+<span class="dim">─────────────────</span>
+<div><span class="lbl">OS</span>PortfolioOS v2.0</div>
+<div><span class="lbl">Shell</span>zsh 5.9</div>
+<div><span class="lbl">Theme</span><span id="neofetch-theme">neo-terminal</span></div>
+<div><span class="lbl">Font</span>JetBrains Mono 14px</div>
+<div><span class="lbl">Uptime</span><span id="neofetch-uptime"></span></div>
+<div><span class="lbl">Commands</span><span class="acc">${()=>cmdCount}</span></div>
+<div style="margin-top:8px">
+<span style="background:#ff5f57;padding:0 8px">&nbsp;</span>
+<span style="background:#febc2e;padding:0 8px">&nbsp;</span>
+<span style="background:#28c840;padding:0 8px">&nbsp;</span>
+<span style="background:var(--prompt);padding:0 8px">&nbsp;</span>
+<span style="background:var(--highlight);padding:0 8px">&nbsp;</span>
+<span style="background:var(--pink);padding:0 8px">&nbsp;</span>
+</div>
+</div></div>`
+  },
 
   experience:{
     desc:'Work experience',
@@ -845,20 +865,13 @@ promptEl.textContent = CFG.prompt;
 function clearOut(){ outEl.innerHTML=''; }
 function scrollBot(){ outEl.scrollTop=outEl.scrollHeight; }
 
-function updatePrompt(){
-  const path = CWD==='/home' ? '~' : CWD;
-  promptEl.textContent = `farhad@portfolio:${path}$\u00a0`;
-}
-
-// position fake cursor after input text
 function updateCursor(){ /* cursor handled by CSS */ }
-```
 
-```
 function updatePrompt(){
   const path = CWD==='/home' ? '' : ' ' + CWD;
   promptEl.textContent = `> farhad${path}\u00a0`;
 }
+
 inputEl.addEventListener('input', ()=>{ updateCursor(); showSuggestions(); updateGhost(); });
 
 function pLine(cls, html){
@@ -1094,8 +1107,7 @@ setInterval(()=>{
 
   inputEl.focus();
 })();
-</script>
-<script>
+
 if(window.netlifyIdentity){
   window.netlifyIdentity.on("init",user=>{
     if(!user){ window.netlifyIdentity.on("login",()=>{ document.location.href="/admin/"; }); }
