@@ -412,22 +412,67 @@ const CMDS = {
       return out;
     }
   },
-
- whoami:{
+about:{
     desc:'About Farhad Ali',
     output:()=>`<div class="cmd-out">
-<span class="acc" style="font-size:16px;font-weight:700">${CONTENT.name}</span>
-<span class="dim">${CONTENT.title}</span>
+<span class="acc" style="font-size:16px;font-weight:700">Farhad Ali</span>
 <hr class="divider">
-<div><span class="lbl">Location</span>${CONTENT.location} 📍</div>
-<div><span class="lbl">Current Role</span>Manufacturing Associate I @ <span class="acc">${CONTENT.company}</span></div>
-<div><span class="lbl">Education</span>${CONTENT.college} — AA</div>
-<div><span class="lbl">GPA</span><span class="grn">${CONTENT.gpa} — High Honors Graduate ⭐</span></div>
-<div><span class="lbl">Languages</span>English · Urdu (Native) · Punjabi</div>
-<hr class="divider">
-<span class="dim">${CONTENT.bio}</span>
+<span class="dim">Manufacturing Associate at Cepheid and student at San Joaquin Delta College. I am passionate about using data and analytical thinking to solve real world problems and improve how organizations operate. My experience in manufacturing and operations has given me hands on exposure to processes, performance metrics, and operational efficiency.</span>
 </div>`
   },
+
+  currently:{
+    desc:'What I am currently doing',
+    output:()=>`<div class="cmd-out">
+<span class="acc">Currently</span>
+<hr class="divider">
+<span class="dim">Currently working as a Manufacturing Associate at <span class="acc">Cepheid</span> in a regulated cleanroom manufacturing environment supporting molecular diagnostic production. At the same time, I am a student at <span class="acc">San Joaquin Delta College</span> where I am developing skills in business analytics and data analysis while preparing to transfer to a four year university.</span>
+</div>`
+  },
+
+  mission:{
+    desc:'My goal and mission',
+    output:()=>`<div class="cmd-out">
+<span class="acc">Mission</span>
+<hr class="divider">
+<span class="dim">My goal is to apply analytical thinking and data analysis to improve operational efficiency and help organizations make smarter decisions. I am particularly interested in roles where data can be used to solve real business and manufacturing problems.</span>
+</div>`
+  },
+
+  status:{
+    desc:'Current status',
+    output:()=>`<div class="cmd-out">
+<span class="acc">Status</span>
+<hr class="divider">
+<span class="grn">● Active</span> <span class="dim">— Currently building analytics skills and preparing for opportunities in business analytics and data analysis.</span>
+</div>`
+  },
+
+  location:{
+    desc:'Where I am based',
+    output:()=>`<div class="cmd-out">
+<span class="acc">Location</span>
+<hr class="divider">
+<span style="color:#f778ba">📍 Lodi, California, United States</span>
+</div>`
+  },
+ whoami:{
+    desc:'Who is Farhad Ali',
+    output:()=>`<div class="cmd-out">
+<span class="acc" style="font-size:16px;font-weight:700">Farhad Ali</span>
+<hr class="divider">
+<span class="dim">Manufacturing Associate at Cepheid and student at San Joaquin Delta College. Interested in business analytics, data analysis, and operational improvement. Focused on using data to understand systems, identify inefficiencies, and support better decision making.</span>
+</div>`
+  },
+```
+
+Then update the help group. Find:
+```
+'📋 Info':['help','whoami','system'],
+```
+Replace with:
+```
+'📋 Info':['help','about','whoami','currently','mission','status','location','system'],
 
   experience:{
     desc:'Work experience',
