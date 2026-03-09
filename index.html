@@ -80,8 +80,7 @@ body::after{
 }
 #boot.hide{opacity:0; pointer-events:none;}
 #boot-text{color:var(--green); font-size:13px; max-width:600px; width:100%;}
-#boot-bar-wrap{width:300px; border:1px solid var(--prompt); padding:2px; margin-top:16px;}
-#boot-bar{height:8px; background:var(--prompt); width:0%; transition:width 0.05s linear; box-shadow:0 0 8px var(--prompt);}
+
 
 /* ═══ LAYOUT ═══ */
 #app{
@@ -289,7 +288,6 @@ pre.ascii-dim{color:var(--dim);font-size:10px;line-height:1.2;}
 <!-- BOOT SCREEN -->
 <div id="boot">
   <div id="boot-text"></div>
-  <div id="boot-bar-wrap"><div id="boot-bar"></div></div>
 </div>
 
 <!-- MATRIX CANVAS -->
@@ -1049,8 +1047,7 @@ setInterval(()=>{
   // Load dynamic content first
   await loadContent();
 
-  const bootEl=document.getElementById('boot-text');
-  const barEl=document.getElementById('boot-bar');
+  const bootEl=document.getElementById('boot-text');;
   const bootLines=[
     '[  0.001] Initializing terminal environment...',
     '[  0.042] Loading JetBrains Mono font... OK',
@@ -1061,11 +1058,8 @@ setInterval(()=>{
     '[  0.512] Applying theme: neo-terminal',
     '[  0.601] All systems ready. Welcome, visitor.',
   ];
-  let pct=0;
   for(let i=0;i<bootLines.length;i++){
     bootEl.innerHTML+=`<div>${bootLines[i]}</div>`;
-    pct=Math.round((i+1)/bootLines.length*100);
-    barEl.style.width=pct+'%';
     await sleep(CFG.bootSpeed+(i===bootLines.length-1?300:0));
   }
   await sleep(500);
