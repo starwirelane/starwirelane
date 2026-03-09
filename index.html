@@ -405,7 +405,7 @@ const CMDS = {
     desc:'Show all available commands',
     output:()=>{
       const groups = {
-        '📋 Info':['help','about','whoami','system','neofetch'],
+        '📋 Info':['help','about','whoami','neofetch'],
         '💼 Portfolio':['experience','skills','education','awards','projects','resume'],
         '🌐 Links':['github','linkedin','contact'],
         '📁 Files':['ls','cd','cat','pwd'],
@@ -468,23 +468,7 @@ const CMDS = {
     }
   },
 
-  system:{
-    desc:'System / environment info',
-    output:()=>{
-      const ua = navigator.userAgent;
-      const mobile = /Mobi/.test(ua);
-      return `<div class="cmd-out">
-<span class="acc">System Info</span>
-<hr class="divider">
-<div><span class="lbl">OS</span>${mobile?'Mobile':'Desktop'} — ${navigator.platform||'Web'}</div>
-<div><span class="lbl">Browser</span>${ua.split(')')[0].split('(')[1]||'Unknown'}</div>
-<div><span class="lbl">Resolution</span>${window.innerWidth} × ${window.innerHeight}</div>
-<div><span class="lbl">Language</span>${navigator.language}</div>
-<div><span class="lbl">Time Zone</span>${Intl.DateTimeFormat().resolvedOptions().timeZone}</div>
-<div><span class="lbl">Commands Run</span><span class="acc">${cmdCount}</span></div>
-</div>`;
-    }
-  },
+
 
   neofetch:{
     desc:'System info with ASCII art',
