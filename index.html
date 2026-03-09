@@ -153,11 +153,12 @@ body::after{
 }
 /* custom animated cursor */
 .fake-cursor{
-  display:inline-block; width:9px; height:1.1em;
+  display:inline-block; width:8px; height:1.1em;
   background:var(--cursor); vertical-align:text-bottom;
   animation:blink 1s step-end infinite;
   box-shadow:0 0 6px var(--cursor);
-  pointer-events:none; position:absolute; opacity:1;
+  pointer-events:none; position:relative; opacity:1;
+  margin-left:2px; flex-shrink:0;
 }
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
@@ -288,6 +289,7 @@ pre.ascii-dim{color:var(--dim);font-size:10px;line-height:1.2;}
 <!-- BOOT SCREEN -->
 <div id="boot">
   <div id="boot-text"></div>
+
 </div>
 
 <!-- MATRIX CANVAS -->
@@ -319,7 +321,7 @@ pre.ascii-dim{color:var(--dim);font-size:10px;line-height:1.2;}
         <span id="ghost-text"></span>
         <input id="userinput" type="text" autocomplete="off" autocorrect="off"
                autocapitalize="off" spellcheck="false" inputmode="text"/>
-      <span class="fake-cursor" id="fakecursor"></span>
+        <span class="fake-cursor" id="fakecursor"></span>
       </div>
     </div>
   </div>
@@ -1047,7 +1049,7 @@ setInterval(()=>{
   // Load dynamic content first
   await loadContent();
 
-  const bootEl=document.getElementById('boot-text');;
+  const bootEl=document.getElementById('boot-text');
   const bootLines=[
     '[  0.001] Initializing terminal environment...',
     '[  0.042] Loading JetBrains Mono font... OK',
