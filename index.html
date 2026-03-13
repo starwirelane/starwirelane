@@ -20,6 +20,26 @@ body.theme-amber{--bg:#1a0e00;--surface:#1f1200;--border:#4a2800;--text:#ffb347;
 body.theme-nord{--bg:#2e3440;--surface:#3b4252;--border:#434c5e;--text:#eceff4;--prompt:#88c0d0;--highlight:#81a1c1;--green:#a3be8c;--cursor:#88c0d0;--glow:rgba(136,192,208,0.12);}
 body.theme-cyber{--bg:#0a0010;--surface:#0f0018;--border:#2d0050;--text:#e0aaff;--prompt:#c77dff;--highlight:#e0aaff;--green:#80ffdb;--cursor:#c77dff;--glow:rgba(199,125,255,0.2);}
 body.theme-light{--bg:#f6f8fa;--surface:#ffffff;--border:#d0d7de;--text:#24292f;--dim:#57606a;--prompt:#0969da;--highlight:#0550ae;--green:#1a7f37;--yellow:#9a6700;--red:#cf222e;--pink:#bf3989;--cursor:#0969da;--glow:rgba(9,105,218,0.1);}
+/* Retro — typewriter font, sepia tones */
+body.theme-retro{--bg:#1a1410;--surface:#221c16;--border:#4a3728;--text:#e8d5b0;--dim:#8a7060;--prompt:#c8a96e;--highlight:#e8b86d;--green:#7ab648;--yellow:#c8a96e;--red:#c0392b;--pink:#d4906a;--cursor:#c8a96e;--glow:rgba(200,169,110,0.15);--font:'Courier New',Courier,monospace;}
+body.theme-retro .terminal-window{border-radius:4px;border-width:2px;}
+body.theme-retro .tbar{background:rgba(0,0,0,0.6);}
+/* Bubblegum — pastel pink fun */
+body.theme-bubblegum{--bg:#1a0a14;--surface:#240d1a;--border:#6b2d4a;--text:#ffd6e8;--dim:#c084a8;--prompt:#ff6eb4;--highlight:#ffb3d9;--green:#a8ff78;--yellow:#ffe066;--red:#ff6b6b;--pink:#ff6eb4;--cursor:#ff6eb4;--glow:rgba(255,110,180,0.2);--font:'JetBrains Mono',monospace;}
+body.theme-bubblegum .terminal-window{border-radius:20px;}
+body.theme-bubblegum .tbar{background:rgba(255,110,180,0.1);}
+/* Ocean — deep sea blues */
+body.theme-ocean{--bg:#020b18;--surface:#041525;--border:#0a3050;--text:#cce7ff;--dim:#4a7fa0;--prompt:#00b4d8;--highlight:#90e0ef;--green:#52b788;--yellow:#f4a261;--red:#e63946;--pink:#c77dff;--cursor:#00b4d8;--glow:rgba(0,180,216,0.2);--font:'JetBrains Mono',monospace;}
+body.theme-ocean .terminal-window{border-radius:16px;}
+/* Latte — cozy coffee shop */
+body.theme-latte{--bg:#f4ede3;--surface:#fdf8f2;--border:#d4b896;--text:#3d2b1f;--dim:#8b6b4f;--prompt:#8b4513;--highlight:#a0522d;--green:#4a7c59;--yellow:#b8860b;--red:#8b2020;--pink:#c2507a;--cursor:#8b4513;--glow:rgba(139,69,19,0.1);--font:'Georgia',serif;}
+body.theme-latte .terminal-window{border-radius:8px;border-width:2px;}
+body.theme-latte .tbar{background:rgba(139,69,19,0.08);}
+/* Glitch — chaotic neon distortion */
+body.theme-glitch{--bg:#050005;--surface:#0a000a;--border:#ff003c;--text:#00ffff;--dim:#008080;--prompt:#ff003c;--highlight:#00ffff;--green:#00ff9f;--yellow:#ffff00;--red:#ff003c;--pink:#ff00ff;--cursor:#ff003c;--glow:rgba(255,0,60,0.3);--font:'JetBrains Mono',monospace;}
+body.theme-glitch .terminal-window{border-radius:0px;border-width:2px;border-color:#ff003c;}
+body.theme-glitch .tbar{background:rgba(255,0,60,0.1);}
+body.theme-glitch .prompt-lbl{text-shadow:2px 0 #ff00ff,-2px 0 #00ffff;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--fs);line-height:var(--lh);overflow:hidden;}
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);}
@@ -490,30 +510,35 @@ ${[['GMP/ISO',95],['Data Recording',90],['Team Leadership',85],['Analytics',70],
     desc:'Switch terminal theme',
     output:(a)=>{
       const themes=[
-        {id:'default', label:'Dark', preview:'#0d1117', accent:'#00eaff'},
-        {id:'light',   label:'Light', preview:'#f6f8fa', accent:'#0969da'},
-        {id:'dracula', label:'Dracula', preview:'#282a36', accent:'#ff79c6'},
-        {id:'matrix',  label:'Matrix', preview:'#000000', accent:'#00ff41'},
-        {id:'amber',   label:'Amber', preview:'#1a0e00', accent:'#ffb347'},
-        {id:'nord',    label:'Nord', preview:'#2e3440', accent:'#88c0d0'},
-        {id:'cyber',   label:'Cyber', preview:'#0a0010', accent:'#c77dff'},
+        {id:'default',   label:'Dark',       emoji:'🌑', preview:'#0d1117', accent:'#00eaff',  desc:'Classic dark'},
+        {id:'light',     label:'Light',      emoji:'☀️', preview:'#f6f8fa', accent:'#0969da',  desc:'Clean & bright'},
+        {id:'dracula',   label:'Dracula',    emoji:'🧛', preview:'#282a36', accent:'#ff79c6',  desc:'Purple vampire'},
+        {id:'matrix',    label:'Matrix',     emoji:'🟩', preview:'#000000', accent:'#00ff41',  desc:'Wake up Neo'},
+        {id:'amber',     label:'Amber',      emoji:'🟠', preview:'#1a0e00', accent:'#ffb347',  desc:'Old monitor'},
+        {id:'nord',      label:'Nord',       emoji:'❄️', preview:'#2e3440', accent:'#88c0d0',  desc:'Arctic cool'},
+        {id:'cyber',     label:'Cyber',      emoji:'🔮', preview:'#0a0010', accent:'#c77dff',  desc:'Cyberpunk city'},
+        {id:'retro',     label:'Retro',      emoji:'📟', preview:'#1a1410', accent:'#c8a96e',  desc:'Typewriter vibes'},
+        {id:'bubblegum', label:'Bubblegum',  emoji:'🍬', preview:'#1a0a14', accent:'#ff6eb4',  desc:'Pink & fun'},
+        {id:'ocean',     label:'Ocean',      emoji:'🌊', preview:'#020b18', accent:'#00b4d8',  desc:'Deep sea blue'},
+        {id:'latte',     label:'Latte',      emoji:'☕', preview:'#f4ede3', accent:'#8b4513',  desc:'Cozy coffee shop'},
+        {id:'glitch',    label:'Glitch',     emoji:'⚡', preview:'#050005', accent:'#ff003c',  desc:'Broken & chaotic'},
       ];
       const n=(a[0]||'').toLowerCase();
       if(n){
         const match=themes.find(t=>t.id===n);
-        if(!match) return `<span class="red">Unknown theme: ${n}</span>`;
+        if(!match) return `<span class="red">Unknown theme: ${n}. Try: ${themes.map(t=>t.id).join(', ')}</span>`;
         document.body.className=n==='default'?'':`theme-${n}`;
-        return `<span class="grn">✓ Theme set to:</span> <span class="acc">${match.label}</span>`;
+        return `<span class="grn">✓ Theme set to:</span> <span class="acc">${match.emoji} ${match.label}</span> <span class="dim">— ${match.desc}</span>`;
       }
       const cards=themes.map(t=>`
-<div onclick="document.body.className='${t.id==='default'?'':'theme-'+t.id}';this.parentElement.querySelectorAll('.tcard').forEach(c=>c.style.borderColor='var(--border)');this.style.borderColor='${t.accent}';" class="tcard" style="cursor:pointer;border:2px solid var(--border);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:10px;transition:border-color .2s,box-shadow .2s;" onmouseover="this.style.boxShadow='0 0 12px ${t.accent}44'" onmouseout="this.style.boxShadow='none'">
-  <div style="width:28px;height:28px;border-radius:50%;background:${t.preview};border:2px solid ${t.accent};flex-shrink:0;box-shadow:0 0 8px ${t.accent}66;"></div>
+<div onclick="document.body.className='${t.id==='default'?'':'theme-'+t.id}';document.querySelectorAll('.tcard').forEach(c=>c.style.outline='none');this.style.outline='2px solid ${t.accent}';" class="tcard" style="cursor:pointer;border:1px solid var(--border);border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:10px;transition:border-color .2s,box-shadow .2s;background:var(--surface);" onmouseover="this.style.borderColor='${t.accent}';this.style.boxShadow='0 0 14px ${t.accent}44'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+  <div style="width:32px;height:32px;border-radius:50%;background:${t.preview};border:2px solid ${t.accent};flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;">${t.emoji}</div>
   <div>
     <div style="color:${t.accent};font-weight:700;font-size:13px;">${t.label}</div>
-    <div style="color:var(--dim);font-size:11px;">theme ${t.id}</div>
+    <div style="color:var(--dim);font-size:11px;">${t.desc}</div>
   </div>
 </div>`).join('');
-      return `<div class="cmd-out"><span class="acc">🎨 Themes</span><span class="dim"> — click to apply or type </span><span class="badge">theme &lt;name&gt;</span><hr class="divider"><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;">${cards}</div></div>`;
+      return `<div class="cmd-out"><span class="acc">🎨 Themes</span> <span class="dim">— click a card or type </span><span class="badge">theme &lt;name&gt;</span><hr class="divider"><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:8px;">${cards}</div></div>`;
     }
   },
 
