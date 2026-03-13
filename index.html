@@ -424,17 +424,34 @@ ${[['GMP/ISO',95],['Data Recording',90],['Team Leadership',85],['Analytics',70],
 
   hiking:{
     desc:'Outdoor activities and hobbies',
-    output:()=>`<div class="cmd-out">
-<span class="acc">🥾 Hiking &amp; Outdoors</span>
-<hr class="divider">
-<span class="dim">When I am not working or studying, I enjoy spending time outdoors. The Central Valley and nearby Sierra Nevada offer great trails and scenery.</span>
-<div style="margin-top:10px">
-  <div style="color:var(--highlight);margin-bottom:4px">Favorite areas</div>
-  <div class="dim">📍 Lodi Lake — local walks and nature</div>
-  <div class="dim">🏔️ Sierra Nevada — day hikes and camping</div>
-  <div class="dim">🌲 Calaveras Big Trees — redwood trails</div>
-</div>
-</div>`
+    output:()=>{
+      const trails=[
+        {name:'Lodi Lake',loc:'Lodi, CA',diff:'Easy',miles:'2.3',rating:'3.0',color:'#3fb950'},
+        {name:'Quarry Road Trail',loc:'Auburn, CA',diff:'Moderate',miles:'10.9',rating:'3.5',color:'#d29922'},
+        {name:'Western States Trail',loc:'Auburn, CA',diff:'Hard',miles:'100',rating:'4.3',color:'#f85149'},
+        {name:'Lower Yosemite Falls',loc:'Yosemite National Park, CA',diff:'Easy',miles:'1.0',rating:'3.8',color:'#3fb950'},
+        {name:'Upper Yosemite Falls',loc:'Yosemite National Park, CA',diff:'Strenuous',miles:'7.2',rating:'4.4',color:'#f85149'},
+        {name:'Vernal &amp; Nevada Falls via Mist Trail',loc:'Yosemite National Park, CA',diff:'Hard',miles:'6.6',rating:'4.8',color:'#f85149'},
+        {name:'Mirror Lake via Valley Loop Trail',loc:'Yosemite National Park, CA',diff:'Easy',miles:'5.0',rating:'3.9',color:'#3fb950'},
+      ];
+      const rows=trails.map(t=>`
+<div style="border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin:6px 0;background:rgba(255,255,255,0.02);transition:border-color .2s;" onmouseover="this.style.borderColor='var(--prompt)'" onmouseout="this.style.borderColor='var(--border)'">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;">
+    <div>
+      <div style="color:var(--prompt);font-weight:700;font-size:14px;">🥾 ${t.name}</div>
+      <div style="color:var(--dim);font-size:12px;margin-top:2px;">📍 ${t.loc}</div>
+    </div>
+    <div style="text-align:right;white-space:nowrap;">
+      <span style="color:#f9c74f;font-weight:700;font-size:15px;">⭐ ${t.rating}</span>
+    </div>
+  </div>
+  <div style="margin-top:8px;display:flex;gap:12px;font-size:12px;">
+    <span style="color:${t.color}">● ${t.diff}</span>
+    <span style="color:var(--dim)">📏 ${t.miles} mi</span>
+  </div>
+</div>`).join('');
+      return `<div class="cmd-out"><span class="acc">🥾 Hiking &amp; Outdoors</span><hr class="divider"><span class="dim" style="display:block;margin-bottom:10px">Trails I have hiked across California — rated from personal experience.</span>${rows}</div>`;
+    }
   },
 
   location:{
