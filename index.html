@@ -866,32 +866,44 @@ function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
   window.enterSite=async function(){
     if(window._splashDone)return;
     window._splashDone=true;
-    const splash=document.getElementById('splash');
-    splash.style.transition='opacity 0.6s ease';
-    splash.style.opacity='0';
-    canvas.style.transition='opacity 0.6s ease';
-    canvas.style.opacity='0';
-    await sleep(600);
-    splash.style.display='none';
-    canvas.style.display='none';
-    document.getElementById('app').style.visibility='visible';
-    await startBootSequence();
-  };
 
-  async function startBootSequence(){
+    // fade out splash + canvas
+    const splash=document.getElementById('splash');
+    const introCanvas=document.getElementById('intro-canvas');
+    splash.style.transition='opacity 0.5s';
+    introCanvas.style.transition='opacity 0.5s';
+    splash.style.opacity='0';
+    introCanvas.style.opacity='0';
+    await sleep(500);
+    splash.remove();
+    introCanvas.remove();
+
+    // show app
+    document.getElementById('app').style.visibility='visible';
+
+    // show boot screen
     const bootDiv=document.getElementById('boot');
     bootDiv.style.display='flex';
     const bootEl=document.getElementById('boot-text');
-    const bootLines=['[  0.001] Initializing terminal environment...','[  0.042] Loading fonts... OK','[  0.108] Mounting filesystem... OK','[  0.201] Loading profile: farhad','[  0.334] Importing modules... OK','[  0.601] All systems ready. Welcome.'];
-    for(let i=0;i<bootLines.length;i++){bootEl.innerHTML+=`<div>${bootLines[i]}</div>`;await sleep(CFG.bootSpeed+(i===bootLines.length-1?300:0));}
-    await sleep(500);
-    document.getElementById('boot').classList.add('hide');
+    const bootLines=[
+      '[  0.001] Initializing terminal environment...',
+      '[  0.042] Loading fonts... OK',
+      '[  0.108] Mounting filesystem... OK',
+      '[  0.201] Loading profile: farhad',
+      '[  0.334] Importing modules... OK',
+      '[  0.601] All systems ready. Welcome.'
+    ];
+    for(let i=0;i<bootLines.length;i++){
+      bootEl.innerHTML+=`<div>${bootLines[i]}</div>`;
+      await sleep(40);
+    }
+    await sleep(400);
+    bootDiv.style.transition='opacity 0.6s';
+    bootDiv.style.opacity='0';
     await sleep(650);
-    document.getElementById('boot').style.display='none';
-    showBanner();
-  }
+    bootDiv.style.display='none';
 
-  function showBanner(){
+    // show banner
     const stickyEl=document.getElementById('sticky');
     const inputEl=document.getElementById('userinput');
     const bannerHTML=`
@@ -916,10 +928,14 @@ function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
   <span style="color:#00eaff">⭐ ${CONTENT.gpa} GPA</span><br>
   <span style="color:var(--dim)">Type </span><span class="badge">help</span><span style="color:var(--dim)"> for commands &nbsp;·&nbsp; </span><span class="badge">Tab</span><span style="color:var(--dim)"> autocomplete</span>
 </div>`;
-    const d=document.createElement('div');d.innerHTML=bannerHTML;stickyEl.appendChild(d);
-    const gap=document.createElement('span');gap.className='gap';stickyEl.appendChild(gap);
+    const d=document.createElement('div');
+    d.innerHTML=bannerHTML;
+    stickyEl.appendChild(d);
+    const gap=document.createElement('span');
+    gap.className='gap';
+    stickyEl.appendChild(gap);
     inputEl.focus();
-  }
+  };
 })();
 </script>
 </body>
