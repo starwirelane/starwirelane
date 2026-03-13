@@ -131,6 +131,7 @@ pre.ascii-dim{color:var(--dim);font-size:10px;line-height:1.2;}
       <div class="dot dot-y"></div>
       <div class="dot dot-g" id="btn-fullscreen"></div>
       <span class="tbar-title">farhad.sh</span>
+      <span id="snd-btn" title="Toggle sound" style="cursor:pointer;font-size:13px;color:var(--dim);padding:2px 8px;border:1px solid var(--border);border-radius:4px;user-select:none;transition:color .2s,border-color .2s;" onclick="toggleSound()">🔇</span>
       <span class="tbar-stats" id="cmd-counter">cmds: 0</span>
     </div>
     <div id="sticky"></div>
@@ -146,7 +147,7 @@ pre.ascii-dim{color:var(--dim);font-size:10px;line-height:1.2;}
   </div>
 </div>
 <script>
-const CFG = { prompt:'> farhad\u00a0', typeSpeed:18, bootSpeed:22, soundOn:false };
+const CFG = { prompt:'> farhad\u00a0', typeSpeed:18, bootSpeed:22, soundOn:false, soundProfile:'mechanical' };
 
 let CONTENT = {
   name:"Farhad Ali", title:"Manufacturing Associate & Aspiring Data Analyst",
@@ -544,7 +545,17 @@ ${[['GMP/ISO',95],['Data Recording',90],['Team Leadership',85],['Analytics',70],
 
   clear:{desc:'Clear terminal screen',output:()=>{clearOut();return null;}},
   fullscreen:{desc:'Toggle fullscreen mode',output:()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen();else document.exitFullscreen();return `<span class="grn">✓ Toggled</span>`;}},
-  sound:{desc:'Sound on or off',output:(a)=>{if(a[0]==='on'){CFG.soundOn=true;return `<span class="grn">✓ Sound on</span>`;}if(a[0]==='off'){CFG.soundOn=false;return `<span class="dim">Sound off</span>`;}return `<span class="dim">Currently: ${CFG.soundOn?'on':'off'}</span>`;}},
+  sound:{
+    desc:'Sound on or off / change sound',
+    output:(a)=>{
+      const profiles=['mechanical','typewriter','scifi','digital','tap','chime','ping'];
+      if(a[0]==='on'){CFG.soundOn=true;updateSndBtn();return `<span class="grn">✓ Sound on</span> <span class="dim">(${CFG.soundProfile})</span>`;}
+      if(a[0]==='off'){CFG.soundOn=false;updateSndBtn();return `<span class="dim">🔇 Sound off</span>`;}
+      if(profiles.includes(a[0])){CFG.soundProfile=a[0];CFG.soundOn=true;updateSndBtn();playClick();return `<span class="grn">✓ Sound profile:</span> <span class="acc">${a[0]}</span>`;}
+      const cards=profiles.map(p=>`<div onclick="CFG.soundProfile='${p}';CFG.soundOn=true;updateSndBtn();playClick();document.querySelectorAll('.sndcard').forEach(c=>c.style.borderColor='var(--border)');this.style.borderColor='var(--prompt)';" class="sndcard" style="cursor:pointer;border:1px solid var(--border);border-radius:6px;padding:8px 12px;transition:border-color .2s;" onmouseover="this.style.borderColor='var(--prompt)'" onmouseout="this.style.borderColor='var(--border)'"><span style="color:var(--highlight);font-weight:700">${p}</span></div>`).join('');
+      return `<div class="cmd-out"><span class="acc">🔊 Sound</span> <span class="dim">— currently: ${CFG.soundOn?'<span style="color:var(--green)">on</span>':'<span style="color:var(--red)">off</span>'} · profile: <span style="color:var(--prompt)">${CFG.soundProfile}</span></span><hr class="divider"><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">${cards}</div><span class="dim">Click a profile to preview · or type </span><span class="badge">sound mechanical</span><span class="dim"> etc.</span></div>`;
+    }
+  },
 
   matrix:{desc:'Matrix rain effect',output:(a)=>{if(a[0]==='off'){stopMatrix();return `<span class="grn">✓ Matrix off</span>`;}startMatrix();return `<span class="grn">Wake up, Neo...</span><br><span class="dim">Type matrix off to stop</span>`;}},
   hack:{desc:'Hack sequence animation',output:()=>{setTimeout(()=>fakeHack(),100);return `<span class="red">INITIATING HACK SEQUENCE...</span>`;}},
@@ -608,9 +619,70 @@ function pHTML(html,copyable=true){
 function pGap(){const s=document.createElement('span');s.className='gap';outEl.appendChild(s);}
 function pErr(msg){pLine('line-err',msg);scrollBot();}
 
+function updateSndBtn(){
+  const btn=document.getElementById('snd-btn');
+  if(!btn)return;
+  btn.textContent=CFG.soundOn?'🔊':'🔇';
+  btn.style.color=CFG.soundOn?'var(--prompt)':'var(--dim)';
+  btn.style.borderColor=CFG.soundOn?'var(--prompt)':'var(--border)';
+}
+function toggleSound(){
+  CFG.soundOn=!CFG.soundOn;
+  updateSndBtn();
+  if(CFG.soundOn) playClick();
+}
 function playClick(){
   if(!CFG.soundOn)return;
-  try{const ctx=new(window.AudioContext||window.webkitAudioContext)();const o=ctx.createOscillator();const g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=800+Math.random()*400;g.gain.setValueAtTime(0.05,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.04);o.start();o.stop(ctx.currentTime+0.04);}catch(e){}
+  try{
+    const ctx=new(window.AudioContext||window.webkitAudioContext)();
+    const o=ctx.createOscillator();
+    const g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);
+    const p=CFG.soundProfile;
+    if(p==='mechanical'){
+      o.type='square';o.frequency.value=1200+Math.random()*200;
+      g.gain.setValueAtTime(0.06,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.05);
+      o.start();o.stop(ctx.currentTime+0.05);
+    } else if(p==='typewriter'){
+      o.type='sawtooth';o.frequency.value=600+Math.random()*100;
+      g.gain.setValueAtTime(0.04,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.08);
+      o.start();o.stop(ctx.currentTime+0.08);
+    } else if(p==='scifi'){
+      o.type='sine';o.frequency.setValueAtTime(800,ctx.currentTime);
+      o.frequency.exponentialRampToValueAtTime(1600,ctx.currentTime+0.1);
+      g.gain.setValueAtTime(0.05,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.12);
+      o.start();o.stop(ctx.currentTime+0.12);
+    } else if(p==='digital'){
+      o.type='square';o.frequency.value=440;
+      g.gain.setValueAtTime(0.04,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.04);
+      o.start();o.stop(ctx.currentTime+0.04);
+    } else if(p==='tap'){
+      o.type='sine';o.frequency.value=900;
+      g.gain.setValueAtTime(0.03,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.03);
+      o.start();o.stop(ctx.currentTime+0.03);
+    } else if(p==='chime'){
+      o.type='sine';o.frequency.value=1046;
+      g.gain.setValueAtTime(0.06,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.3);
+      o.start();o.stop(ctx.currentTime+0.3);
+    } else if(p==='ping'){
+      o.type='sine';o.frequency.setValueAtTime(1200,ctx.currentTime);
+      o.frequency.exponentialRampToValueAtTime(800,ctx.currentTime+0.15);
+      g.gain.setValueAtTime(0.05,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.2);
+      o.start();o.stop(ctx.currentTime+0.2);
+    } else {
+      o.frequency.value=800+Math.random()*400;
+      g.gain.setValueAtTime(0.05,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.04);
+      o.start();o.stop(ctx.currentTime+0.04);
+    }
+  }catch(e){}
 }
 
 function showSuggestions(){
