@@ -2,17 +2,19 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "images"
+media_folder: "gallery"
+public_folder: "gallery"
 
 collections:
   - name: "portfolio"
-    label: "Portfolio Content"
+    label: "Portfolio"
     files:
+
       - name: "main"
-        label: "Main Content"
+        label: "Basic Info"
         file: "content.json"
         fields:
-          - { label: "Your Name", name: "name", widget: "string" }
+          - { label: "Full Name", name: "name", widget: "string" }
           - { label: "Job Title", name: "title", widget: "string" }
           - { label: "Location", name: "location", widget: "string" }
           - { label: "Company", name: "company", widget: "string" }
@@ -22,3 +24,99 @@ collections:
           - { label: "GitHub URL", name: "github", widget: "string" }
           - { label: "LinkedIn URL", name: "linkedin", widget: "string" }
           - { label: "Bio", name: "bio", widget: "text" }
+          - { label: "Status Message", name: "status_message", widget: "text" }
+          - { label: "Mission Statement", name: "mission_statement", widget: "text" }
+          - { label: "Open to Work", name: "open_to_work", widget: "boolean", default: true }
+
+          - label: "Experience"
+            name: "experience"
+            widget: "list"
+            fields:
+              - { label: "Job Title", name: "title", widget: "string" }
+              - { label: "Company", name: "company", widget: "string" }
+              - { label: "Period", name: "period", widget: "string" }
+              - { label: "Location", name: "location", widget: "string" }
+              - label: "Bullet Points"
+                name: "bullets"
+                widget: "list"
+                field: { label: "Bullet", name: "item", widget: "string" }
+
+          - label: "Education"
+            name: "education"
+            widget: "list"
+            fields:
+              - { label: "Degree", name: "degree", widget: "string" }
+              - { label: "School", name: "school", widget: "string" }
+              - { label: "Period", name: "period", widget: "string" }
+              - { label: "Location", name: "location", widget: "string" }
+              - { label: "GPA", name: "gpa", widget: "string" }
+              - { label: "Notes", name: "notes", widget: "text" }
+
+          - label: "Skills"
+            name: "skills"
+            widget: "object"
+            fields:
+              - label: "Manufacturing & Quality"
+                name: "manufacturing"
+                widget: "list"
+                field: { label: "Skill", name: "item", widget: "string" }
+              - label: "Analytics & Data"
+                name: "analytics"
+                widget: "list"
+                field: { label: "Skill", name: "item", widget: "string" }
+              - label: "Leadership"
+                name: "leadership"
+                widget: "list"
+                field: { label: "Skill", name: "item", widget: "string" }
+              - label: "Skill Levels"
+                name: "levels"
+                widget: "list"
+                fields:
+                  - { label: "Skill Name", name: "name", widget: "string" }
+                  - { label: "Level (0-100)", name: "value", widget: "number", min: 0, max: 100 }
+
+          - label: "Awards"
+            name: "awards"
+            widget: "list"
+            fields:
+              - { label: "Emoji", name: "emoji", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "desc", widget: "string" }
+
+          - label: "Projects"
+            name: "projects"
+            widget: "list"
+            fields:
+              - { label: "Emoji", name: "emoji", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "desc", widget: "text" }
+              - { label: "Tags", name: "tags", widget: "string" }
+              - { label: "Link", name: "link", widget: "string" }
+
+          - label: "Hiking Trails"
+            name: "trails"
+            widget: "list"
+            fields:
+              - { label: "Trail Name", name: "name", widget: "string" }
+              - { label: "Location", name: "location", widget: "string" }
+              - label: "Difficulty"
+                name: "difficulty"
+                widget: "select"
+                options: ["Easy", "Moderate", "Hard", "Strenuous"]
+              - { label: "Distance (miles)", name: "miles", widget: "string" }
+              - { label: "Your Rating (e.g. 4.5)", name: "rating", widget: "string" }
+              - label: "Difficulty Color"
+                name: "color"
+                widget: "select"
+                options:
+                  - { label: "Green (Easy)", value: "#3fb950" }
+                  - { label: "Yellow (Moderate)", value: "#d29922" }
+                  - { label: "Red (Hard)", value: "#f85149" }
+
+          - label: "Photography"
+            name: "photography"
+            widget: "list"
+            fields:
+              - { label: "Filename (e.g. photo.jpg)", name: "file", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Location", name: "location", widget: "string" }
