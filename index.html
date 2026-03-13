@@ -121,14 +121,14 @@ pre.ascii-dim{color:var(--dim);font-size:10px;line-height:1.2;}
   :root{--fs:13px;}
   #app{padding:0;}
   .terminal-window{height:100vh;border-radius:0;border:none;}
-  #sticky{padding:10px 12px 8px;}
-  #output{padding:10px 12px 4px;}
-  .irow{padding:8px 12px 10px;}
+  #sticky{padding:8px 12px 6px;}
+  #output{padding:8px 12px 4px;}
+  .irow{padding:6px 12px 8px;}
   pre.ascii{display:none;}
-  .mobile-name{display:block!important;}
+  .mobile-name{display:block!important;font-size:20px!important;margin-bottom:4px!important;}
   .desktop-name{display:none;}
-  .cmd-out{font-size:12px;}
-  .lbl{min-width:90px;}
+  .cmd-out{font-size:12px;line-height:1.6;}
+  .lbl{min-width:80px;}
 }
 </style>
 </head>
@@ -838,7 +838,7 @@ function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
   <div class="mobile-name" style="display:none;font-family:'Orbitron',sans-serif;font-weight:900;font-size:26px;background:linear-gradient(90deg,#f9c74f,#ff9a3c,#f9c74f);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:3px;margin-bottom:6px;">${CONTENT.name.toUpperCase()}</div>
   <div style="margin-top:4px">
     <span class="desktop-name" style="font-family:'Orbitron',sans-serif;font-weight:900;font-size:13px;background:linear-gradient(90deg,#f9c74f,#ff9a3c,#f9c74f);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:2px;">${CONTENT.name.toUpperCase()}</span>
-    <span style="color:var(--dim)"> — </span>
+    <span class="desktop-name" style="color:var(--dim)"> — </span>
     <span style="color:var(--highlight)">${CONTENT.title}</span><br>
     <span style="color:#f778ba">📍 ${CONTENT.location}</span>
     <span style="color:var(--dim)"> · </span>
