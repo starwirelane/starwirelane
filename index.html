@@ -19,6 +19,7 @@ body.theme-matrix{--bg:#000;--surface:#0a0a0a;--border:#003b00;--text:#00ff41;--
 body.theme-amber{--bg:#1a0e00;--surface:#1f1200;--border:#4a2800;--text:#ffb347;--prompt:#ffb347;--highlight:#ffd080;--green:#ffb347;--cursor:#ffb347;--glow:rgba(255,179,71,0.15);}
 body.theme-nord{--bg:#2e3440;--surface:#3b4252;--border:#434c5e;--text:#eceff4;--prompt:#88c0d0;--highlight:#81a1c1;--green:#a3be8c;--cursor:#88c0d0;--glow:rgba(136,192,208,0.12);}
 body.theme-cyber{--bg:#0a0010;--surface:#0f0018;--border:#2d0050;--text:#e0aaff;--prompt:#c77dff;--highlight:#e0aaff;--green:#80ffdb;--cursor:#c77dff;--glow:rgba(199,125,255,0.2);}
+body.theme-light{--bg:#f6f8fa;--surface:#ffffff;--border:#d0d7de;--text:#24292f;--dim:#57606a;--prompt:#0969da;--highlight:#0550ae;--green:#1a7f37;--yellow:#9a6700;--red:#cf222e;--pink:#bf3989;--cursor:#0969da;--glow:rgba(9,105,218,0.1);}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--fs);line-height:var(--lh);overflow:hidden;}
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);}
@@ -488,12 +489,31 @@ ${[['GMP/ISO',95],['Data Recording',90],['Team Leadership',85],['Analytics',70],
   theme:{
     desc:'Switch terminal theme',
     output:(a)=>{
-      const themes=['default','dracula','matrix','amber','nord','cyber'];
+      const themes=[
+        {id:'default', label:'Dark', preview:'#0d1117', accent:'#00eaff'},
+        {id:'light',   label:'Light', preview:'#f6f8fa', accent:'#0969da'},
+        {id:'dracula', label:'Dracula', preview:'#282a36', accent:'#ff79c6'},
+        {id:'matrix',  label:'Matrix', preview:'#000000', accent:'#00ff41'},
+        {id:'amber',   label:'Amber', preview:'#1a0e00', accent:'#ffb347'},
+        {id:'nord',    label:'Nord', preview:'#2e3440', accent:'#88c0d0'},
+        {id:'cyber',   label:'Cyber', preview:'#0a0010', accent:'#c77dff'},
+      ];
       const n=(a[0]||'').toLowerCase();
-      if(!n) return `<div class="cmd-out"><span class="acc">Themes:</span><br>${themes.map(t=>`<span class="badge">${t}</span>`).join(' ')}</div>`;
-      if(!themes.includes(n)) return `<span class="red">Unknown theme: ${n}</span>`;
-      document.body.className=n==='default'?'':`theme-${n}`;
-      return `<span class="grn">✓ Theme:</span> <span class="acc">${n}</span>`;
+      if(n){
+        const match=themes.find(t=>t.id===n);
+        if(!match) return `<span class="red">Unknown theme: ${n}</span>`;
+        document.body.className=n==='default'?'':`theme-${n}`;
+        return `<span class="grn">✓ Theme set to:</span> <span class="acc">${match.label}</span>`;
+      }
+      const cards=themes.map(t=>`
+<div onclick="document.body.className='${t.id==='default'?'':'theme-'+t.id}';this.parentElement.querySelectorAll('.tcard').forEach(c=>c.style.borderColor='var(--border)');this.style.borderColor='${t.accent}';" class="tcard" style="cursor:pointer;border:2px solid var(--border);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:10px;transition:border-color .2s,box-shadow .2s;" onmouseover="this.style.boxShadow='0 0 12px ${t.accent}44'" onmouseout="this.style.boxShadow='none'">
+  <div style="width:28px;height:28px;border-radius:50%;background:${t.preview};border:2px solid ${t.accent};flex-shrink:0;box-shadow:0 0 8px ${t.accent}66;"></div>
+  <div>
+    <div style="color:${t.accent};font-weight:700;font-size:13px;">${t.label}</div>
+    <div style="color:var(--dim);font-size:11px;">theme ${t.id}</div>
+  </div>
+</div>`).join('');
+      return `<div class="cmd-out"><span class="acc">🎨 Themes</span><span class="dim"> — click to apply or type </span><span class="badge">theme &lt;name&gt;</span><hr class="divider"><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;">${cards}</div></div>`;
     }
   },
 
