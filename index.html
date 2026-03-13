@@ -41,6 +41,10 @@ body.theme-glitch .terminal-window{border-radius:0px;border-width:2px;border-col
 body.theme-glitch .tbar{background:rgba(255,0,60,0.1);}
 body.theme-glitch .prompt-lbl{text-shadow:2px 0 #ff00ff,-2px 0 #00ffff;}
 @keyframes popIn{0%{opacity:0;transform:scale(0.8) translateY(-10px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes splashName{0%{opacity:0;transform:translateY(30px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes splashSub{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes splashPulse{0%,100%{opacity:0.5}50%{opacity:1}}
+#enter-btn:hover{background:rgba(0,234,255,0.1)!important;box-shadow:0 0 30px rgba(0,234,255,0.3);letter-spacing:6px!important;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--fs);line-height:var(--lh);overflow:hidden;}
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);}
@@ -124,7 +128,17 @@ pre.ascii-dim{color:var(--dim);font-size:10px;line-height:1.2;}
 </head>
 <body>
 <canvas id="intro-canvas" style="position:fixed;inset:0;z-index:9999;background:#000;"></canvas>
-<div id="boot"><div id="boot-text"></div></div>
+<div id="splash" style="position:fixed;inset:0;z-index:10000;display:flex;flex-direction:column;align-items:center;justify-content:center;background:transparent;cursor:pointer;" onclick="enterSite()">
+  <div id="splash-content" style="text-align:center;pointer-events:none;">
+    <div style="font-family:'Orbitron',sans-serif;font-weight:900;font-size:clamp(40px,8vw,100px);background:linear-gradient(90deg,#f9c74f,#ff9a3c,#f9c74f);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:4px;animation:splashName 1.2s ease forwards;opacity:0;">FARHAD ALI</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:clamp(12px,2vw,18px);color:#00eaff;margin-top:16px;letter-spacing:2px;animation:splashSub 1.2s 0.6s ease forwards;opacity:0;">Manufacturing Associate & Aspiring Data Analyst</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#f778ba;margin-top:8px;animation:splashSub 1.2s 0.9s ease forwards;opacity:0;">📍 Lodi, California</div>
+    <div style="margin-top:48px;animation:splashPulse 1.5s 1.5s ease-in-out infinite;opacity:0;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:14px;color:rgba(0,234,255,0.8);letter-spacing:4px;border:1px solid rgba(0,234,255,0.4);padding:14px 40px;border-radius:4px;display:inline-block;transition:all .3s;" id="enter-btn">[ CLICK TO ENTER ]</div>
+    </div>
+    <div style="margin-top:20px;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(118,131,144,0.6);letter-spacing:2px;animation:splashSub 1s 2s ease forwards;opacity:0;">or scroll down</div>
+  </div>
+</div>
 <canvas id="matrix-canvas"></canvas>
 <div id="app">
   <div class="terminal-window" id="termwin">
@@ -794,188 +808,71 @@ function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 (async()=>{
   await loadContent();
 
-  // ── CINEMATIC INTRO ──────────────────────────────────────────
+  // ── PARTICLE BACKGROUND ON SPLASH ──
   const canvas=document.getElementById('intro-canvas');
   const ctx=canvas.getContext('2d');
   canvas.width=window.innerWidth;
   canvas.height=window.innerHeight;
-  const W=canvas.width, H=canvas.height;
-  const CX=W/2, CY=H/2;
-
-  // Particles
-  const particles=[];
-  for(let i=0;i<180;i++){
-    const angle=Math.random()*Math.PI*2;
-    const speed=0.5+Math.random()*3;
-    particles.push({
-      x:CX+(Math.random()-0.5)*W*0.8,
-      y:CY+(Math.random()-0.5)*H*0.8,
-      vx:Math.cos(angle)*speed,
-      vy:Math.sin(angle)*speed,
-      size:Math.random()*2+0.5,
-      alpha:Math.random(),
-      color:`hsl(${180+Math.random()*60},100%,${50+Math.random()*30}%)`,
-    });
-  }
-
-  // Glitch chars
-  const glitchChars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*!?<>[]{}';
-  const name='FARHAD ALI';
-  let glitchProgress=0;
-  let introPhase=0; // 0=particles, 1=glitch, 2=reveal, 3=done
-  let phaseTimer=0;
-  let revealAlpha=0;
-  let finalAlpha=0;
-
-  function glitchName(progress){
-    return name.split('').map((ch,i)=>{
-      if(ch===' ')return ' ';
-      if(i/name.length < progress) return ch;
-      return glitchChars[Math.floor(Math.random()*glitchChars.length)];
-    }).join('');
-  }
-
-  let frame=0;
-  function drawIntro(){
-    frame++;
-    ctx.fillStyle=`rgba(0,0,0,${introPhase<1?0.04:0.12})`;
+  const W=canvas.width,H=canvas.height;
+  const particles=Array.from({length:120},()=>({
+    x:Math.random()*W, y:Math.random()*H,
+    vx:(Math.random()-0.5)*0.4, vy:(Math.random()-0.5)*0.4,
+    size:Math.random()*1.5+0.3,
+    alpha:Math.random()*0.5+0.1,
+    color:`hsl(${180+Math.random()*60},100%,${60+Math.random()*20}%)`
+  }));
+  function drawParticles(){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='#000';
     ctx.fillRect(0,0,W,H);
-
-    // Phase 0: floating particles converging
-    if(introPhase===0){
-      particles.forEach(p=>{
-        p.x+=p.vx;p.y+=p.vy;
-        p.vx*=0.98;p.vy*=0.98;
-        ctx.globalAlpha=p.alpha*0.7;
-        ctx.fillStyle=p.color;
-        ctx.beginPath();
-        ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
-        ctx.fill();
-      });
-      ctx.globalAlpha=1;
-      phaseTimer++;
-      if(phaseTimer>80){introPhase=1;phaseTimer=0;glitchProgress=0;}
-    }
-
-    // Phase 1: glitch scramble
-    if(introPhase===1){
-      glitchProgress=Math.min(1,phaseTimer/60);
-      const txt=glitchName(glitchProgress);
-      const fontSize=Math.min(W/6, 96);
-      ctx.font=`900 ${fontSize}px 'Orbitron',sans-serif`;
-      ctx.textAlign='center';
-      ctx.textBaseline='middle';
-
-      // Glitch offset layers
-      if(Math.random()>0.4){
-        ctx.globalAlpha=0.4;
-        ctx.fillStyle='#ff003c';
-        ctx.fillText(txt,CX+(Math.random()*10-5),CY+(Math.random()*6-3));
-        ctx.fillStyle='#00ffff';
-        ctx.fillText(txt,CX-(Math.random()*10-5),CY-(Math.random()*6-3));
-      }
-
-      // Main text
-      ctx.globalAlpha=1;
-      const grad=ctx.createLinearGradient(CX-200,0,CX+200,0);
-      grad.addColorStop(0,'#f9c74f');
-      grad.addColorStop(0.5,'#ff9a3c');
-      grad.addColorStop(1,'#f9c74f');
-      ctx.fillStyle=grad;
-      ctx.shadowColor='#00eaff';
-      ctx.shadowBlur=30;
-      ctx.fillText(txt,CX,CY);
-      ctx.shadowBlur=0;
-
-      // Subtitle flicker
-      if(frame%4<3){
-        ctx.globalAlpha=0.6;
-        ctx.font=`400 ${Math.min(W/30,22)}px 'JetBrains Mono',monospace`;
-        ctx.fillStyle='#00eaff';
-        ctx.fillText(CONTENT.title||'Manufacturing Associate & Aspiring Data Analyst',CX,CY+fontSize*0.7);
-      }
-
-      ctx.globalAlpha=1;
-      phaseTimer++;
-      if(phaseTimer>70){introPhase=2;phaseTimer=0;}
-    }
-
-    // Phase 2: clean reveal + scanline sweep
-    if(introPhase===2){
-      const fontSize=Math.min(W/6,96);
-      ctx.font=`900 ${fontSize}px 'Orbitron',sans-serif`;
-      ctx.textAlign='center';
-      ctx.textBaseline='middle';
-      revealAlpha=Math.min(1,phaseTimer/30);
-
-      // Scanline sweep effect
-      const sweepY=(phaseTimer/50)*H;
-      ctx.globalAlpha=0.06;
-      ctx.fillStyle='#00eaff';
-      ctx.fillRect(0,sweepY-40,W,40);
-
-      // Clean name
-      ctx.globalAlpha=revealAlpha;
-      const grad=ctx.createLinearGradient(CX-200,0,CX+200,0);
-      grad.addColorStop(0,'#f9c74f');
-      grad.addColorStop(0.5,'#ff9a3c');
-      grad.addColorStop(1,'#f9c74f');
-      ctx.fillStyle=grad;
-      ctx.shadowColor='rgba(0,234,255,0.6)';
-      ctx.shadowBlur=50;
-      ctx.fillText(name,CX,CY);
-      ctx.shadowBlur=0;
-
-      // Subtitle
-      ctx.globalAlpha=revealAlpha*0.8;
-      ctx.font=`400 ${Math.min(W/30,20)}px 'JetBrains Mono',monospace`;
-      ctx.fillStyle='#00eaff';
-      ctx.fillText(CONTENT.title||'Manufacturing Associate & Aspiring Data Analyst',CX,CY+fontSize*0.7);
-
-      // Location line
-      ctx.globalAlpha=revealAlpha*0.5;
-      ctx.font=`300 ${Math.min(W/40,15)}px 'JetBrains Mono',monospace`;
-      ctx.fillStyle='#f778ba';
-      ctx.fillText(`📍 ${CONTENT.location||'Lodi, California'}`,CX,CY+fontSize*1.1);
-
-      ctx.globalAlpha=1;
-      phaseTimer++;
-      if(phaseTimer>60){introPhase=3;phaseTimer=0;}
-    }
-
-    // Phase 3: fade out
-    if(introPhase===3){
-      const fontSize=Math.min(W/6,96);
-      ctx.font=`900 ${fontSize}px 'Orbitron',sans-serif`;
-      ctx.textAlign='center';
-      ctx.textBaseline='middle';
-      finalAlpha=Math.max(0,1-phaseTimer/30);
-
-      ctx.globalAlpha=finalAlpha;
-      const grad=ctx.createLinearGradient(CX-200,0,CX+200,0);
-      grad.addColorStop(0,'#f9c74f');
-      grad.addColorStop(0.5,'#ff9a3c');
-      grad.addColorStop(1,'#f9c74f');
-      ctx.fillStyle=grad;
-      ctx.shadowColor='rgba(0,234,255,0.6)';
-      ctx.shadowBlur=50;
-      ctx.fillText(name,CX,CY);
-      ctx.shadowBlur=0;
-      ctx.font=`400 ${Math.min(W/30,20)}px 'JetBrains Mono',monospace`;
-      ctx.fillStyle='#00eaff';
-      ctx.fillText(CONTENT.title||'',CX,CY+fontSize*0.7);
-      ctx.globalAlpha=1;
-
-      phaseTimer++;
-      if(phaseTimer>35){
-        canvas.style.display='none';
-        startBootSequence();
-        return;
+    particles.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0)p.x=W; if(p.x>W)p.x=0;
+      if(p.y<0)p.y=H; if(p.y>H)p.y=0;
+      ctx.globalAlpha=p.alpha;
+      ctx.fillStyle=p.color;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+      ctx.fill();
+    });
+    // draw connecting lines between close particles
+    ctx.strokeStyle='rgba(0,234,255,0.08)';
+    ctx.lineWidth=0.5;
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const dx=particles[i].x-particles[j].x;
+        const dy=particles[i].y-particles[j].y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<120){
+          ctx.globalAlpha=(1-dist/120)*0.15;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x,particles[i].y);
+          ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.stroke();
+        }
       }
     }
-    requestAnimationFrame(drawIntro);
+    ctx.globalAlpha=1;
+    if(!window._splashDone) requestAnimationFrame(drawParticles);
   }
-  requestAnimationFrame(drawIntro);
+  drawParticles();
+
+  // scroll to enter
+  window.addEventListener('wheel',()=>enterSite(),{once:true});
+
+  window.enterSite=async function(){
+    if(window._splashDone)return;
+    window._splashDone=true;
+    const splash=document.getElementById('splash');
+    splash.style.transition='opacity 0.6s ease';
+    splash.style.opacity='0';
+    canvas.style.transition='opacity 0.6s ease';
+    canvas.style.opacity='0';
+    await sleep(600);
+    splash.style.display='none';
+    canvas.style.display='none';
+    await startBootSequence();
+  };
 
   async function startBootSequence(){
     const bootEl=document.getElementById('boot-text');
