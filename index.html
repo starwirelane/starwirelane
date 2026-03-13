@@ -165,7 +165,7 @@ const CMDS = {
     desc:'Show all commands',
     output:()=>{
       const groups={
-        'Core':['help','whoami','currently','mission','status'],
+        'Core':['help','about','whoami','currently','mission','status'],
         'Portfolio':['projects','experience','skills','education','awards','resume'],
         'Links':['github','linkedin','contact'],
         'Interests':['photography','hiking'],
@@ -183,6 +183,14 @@ const CMDS = {
     }
   },
 
+  about:{
+    desc:'About Farhad Ali',
+    output:()=>`<div class="cmd-out">
+<span class="acc" style="font-size:16px;font-weight:700">Farhad Ali</span>
+<hr class="divider">
+<span class="dim">Manufacturing Associate at Cepheid and student at San Joaquin Delta College. I am passionate about using data and analytical thinking to solve real world problems and improve how organizations operate. My experience in manufacturing and operations has given me hands on exposure to processes, performance metrics, and operational efficiency.</span>
+</div>`
+  },
 
   whoami:{
     desc:'Who is Farhad Ali',
@@ -420,7 +428,7 @@ ${[['GMP/ISO',95],['Data Recording',90],['Team Leadership',85],['Analytics',70],
       const trails=[
         {name:'Lodi Lake',loc:'Lodi, CA',diff:'Easy',miles:'2.3',rating:'3.0',color:'#3fb950'},
         {name:'Quarry Road Trail',loc:'Auburn, CA',diff:'Moderate',miles:'10.9',rating:'3.5',color:'#d29922'},
-        {name:'Western States Trail',loc:'Auburn, CA',diff:'Hard',miles:'100',rating:'4.3',color:'#f85149'},
+        {name:'Western States Trail to Robie Point Fire Break',loc:'Auburn, CA',diff:'Hard',miles:'100',rating:'4.3',color:'#f85149'},
         {name:'Lower Yosemite Falls',loc:'Yosemite National Park, CA',diff:'Easy',miles:'1.0',rating:'3.8',color:'#3fb950'},
         {name:'Upper Yosemite Falls',loc:'Yosemite National Park, CA',diff:'Strenuous',miles:'7.2',rating:'4.4',color:'#f85149'},
         {name:'Vernal &amp; Nevada Falls via Mist Trail',loc:'Yosemite National Park, CA',diff:'Hard',miles:'6.6',rating:'4.8',color:'#f85149'},
