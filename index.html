@@ -193,7 +193,7 @@ const CMDS = {
         'Links':['github','linkedin','contact'],
         'Interests':['photography','hiking'],
         'Terminal':['theme','clear','fullscreen','sound'],
-        'Fun':['matrix','hack','coffee','joke','easter'],
+        'Fun':['matrix','hack','coffee','joke'],
         'System':['location','system','date'],
       };
       let out=`<div class="cmd-out"><div style="margin-bottom:10px"><span class="acc">Available Commands</span> <span class="dim">— type any command below</span></div>`;
@@ -601,7 +601,6 @@ ${[['GMP/ISO',95],['Data Recording',90],['Team Leadership',85],['Analytics',70],
       return `<div class="cmd-out"><span style="color:var(--yellow);font-size:14px">🤔 ${joke.q}</span><hr class="divider">${buttons}<div id="${id}-res" style="display:none;margin-top:10px;font-size:14px;animation:popIn 0.2s ease;"></div></div>`;
     }
   },
-  easter:{desc:'Hidden command',output:()=>`<div class="cmd-out"><span class="acc">🥚 You found the Easter egg!</span><br><span class="dim">Achievement unlocked: </span><span class="yellow">Curious Explorer</span></div>`},
 
   // still functional but hidden from help
   ls:{desc:'List files',output:(a)=>{const path=a[0]?(a[0].startsWith('/')?a[0]:CWD+'/'+a[0]):CWD;const items=fsLs(path);if(!items)return `<span class="red">ls: no such directory: ${path}</span>`;return items.map(i=>{const isDir=FS[path+'/'+i]!==undefined;return isDir?`<span class="acc">${i}/</span>`:`<span class="dim">${i}</span>`;}).join('  ');}},
