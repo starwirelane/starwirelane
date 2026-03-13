@@ -570,76 +570,35 @@ ${[['GMP/ISO',95],['Data Recording',90],['Team Leadership',85],['Analytics',70],
     desc:'Programming joke',
     output:()=>{
       const jokes=[
-        {
-          q:'Why do programmers prefer dark mode?',
-          correct:'Because light attracts bugs! 🐛',
-          wrong:['Because it looks cooler 😎','They hate their eyes 👀','Stack Overflow is dark too'],
-        },
-        {
-          q:'Why did the developer go broke?',
-          correct:'He used up all his cache! 💸',
-          wrong:['Bad investments 📉','He bought too many keyboards','NFTs obviously 🎨'],
-        },
-        {
-          q:'A SQL query walks into a bar...',
-          correct:'...and asks two tables: "Can I JOIN you?" 🍺',
-          wrong:['...and gets a syntax error','...and orders a NULL beer','...and crashes the bartender'],
-        },
-        {
-          q:'Why do Java developers wear glasses?',
-          correct:"Because they don't C#! 👓",
-          wrong:['Too much screen time 😵','Java is blinding','Their IDE font is too small'],
-        },
-        {
-          q:'Why was the JavaScript developer sad?',
-          correct:"Because he didn't know how to Promise anything 😢",
-          wrong:['undefined feelings','His callback never came','NaN emotions detected'],
-        },
-        {
-          q:"What's a computer's favorite snack?",
-          correct:'Microchips! 🍟',
-          wrong:['RAM ramen 🍜','Bytes and bytes of pizza','Cookies obviously 🍪'],
-        },
-        {
-          q:'Why did the programmer quit his job?',
-          correct:"Because he didn't get arrays 📦",
-          wrong:['Too many bugs 🐛','The pay was null','His boss was a boolean'],
-        },
-        {
-          q:'How do you comfort a JavaScript bug?',
-          correct:"You console it! 🖥️",
-          wrong:['You reboot it 🔄','You undefined it','You give it a callback hug'],
-        },
+        {q:'Why do programmers prefer dark mode?',a:'Because light attracts bugs! 🐛',w:['Because it looks cooler 😎','They hate their eyes 👀','Stack Overflow is dark too']},
+        {q:'Why did the developer go broke?',a:'He used up all his cache! 💸',w:['Bad investments 📉','He bought too many keyboards','NFTs obviously 🎨']},
+        {q:'A SQL query walks into a bar...',a:'...and asks two tables: "Can I JOIN you?" 🍺',w:['...and gets a syntax error','...and orders a NULL beer','...and crashes the bartender']},
+        {q:'Why do Java developers wear glasses?',a:"Because they don't C#! 👓",w:['Too much screen time 😵','Java is blinding','Their IDE font is too small']},
+        {q:'Why was the JavaScript developer sad?',a:"Because he didn't know how to Promise anything 😢",w:['undefined feelings','His callback never came','NaN emotions detected']},
+        {q:"What's a computer's favorite snack?",a:'Microchips! 🍟',w:['RAM ramen 🍜','Bytes of pizza','Cookies obviously 🍪']},
+        {q:'Why did the programmer quit his job?',a:"Because he didn't get arrays 📦",w:['Too many bugs 🐛','The pay was null','His boss was a boolean']},
+        {q:'How do you comfort a JavaScript bug?',a:"You console it! 🖥️",w:['You reboot it 🔄','You undefined it','You give it a callback hug']},
       ];
       const joke=jokes[Math.floor(Math.random()*jokes.length)];
-      const id='joke-'+Date.now();
-      // shuffle correct + wrong answers
+      const id='j'+Date.now();
+      const reactions={
+        correct:'<span style="color:var(--green)">✓ CORRECT! 🎉</span>',
+        w0:'<span style="color:var(--red)">❌ Nope! 😂</span> Not even close...',
+        w1:'<span style="color:var(--yellow)">🤔 Nice try!</span> But noooope.',
+        w2:'<span style="color:var(--pink)">💀 Really?</span> That\'s your answer?',
+      };
+      // store data globally so onclick can access it
+      window._jokes=window._jokes||{};
+      window._jokes[id]={joke,reactions};
       const all=[
-        {text:joke.correct,reaction:`<span class="grn">✓ CORRECT! 🎉</span> ${joke.correct}`,correct:true},
-        {text:joke.wrong[0],reaction:`<span class="red">❌ Nope! 😂</span> Not even close...`,correct:false},
-        {text:joke.wrong[1],reaction:`<span class="yellow">🤔 Nice try!</span> But noooope.`,correct:false},
-        {text:joke.wrong[2],reaction:`<span class="pnk">💀 Really?</span> That's your answer?`,correct:false},
+        {text:joke.a,key:'correct'},
+        {text:joke.w[0],key:'w0'},
+        {text:joke.w[1],key:'w1'},
+        {text:joke.w[2],key:'w2'},
       ].sort(()=>Math.random()-0.5);
-
-      const buttons=all.map((opt,i)=>{
-        const btnId=`${id}-opt-${i}`;
-        const resId=`${id}-res`;
-        return `<div id="${btnId}" onclick="
-          document.querySelectorAll('.${id}-btn').forEach(b=>b.style.opacity='0.4');
-          this.style.opacity='1';
-          this.style.borderColor='${opt.correct?'var(--green)':'var(--red)'}';
-          this.style.color='${opt.correct?'var(--green)':'var(--red)'}';
-          document.getElementById('${resId}').innerHTML='${opt.reaction.replace(/'/g,"\\'")}';
-          document.getElementById('${resId}').style.display='block';
-        " class="${id}-btn" style="cursor:pointer;border:1px solid var(--border);color:var(--text);padding:8px 16px;border-radius:6px;font-size:13px;transition:all .2s;margin:3px 0;" onmouseover="this.style.borderColor='var(--highlight)';this.style.color='var(--highlight)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text)'">${String.fromCharCode(65+i)}. ${opt.text}</div>`;
-      }).join('');
-
-      return `<div class="cmd-out">
-<span style="color:var(--yellow);font-size:14px">🤔 ${joke.q}</span>
-<hr class="divider">
-${buttons}
-<div id="${id}-res" style="display:none;margin-top:10px;font-size:14px;animation:popIn 0.2s ease;"></div>
-</div>`;
+      const buttons=all.map((opt,i)=>`
+<div class="${id}-btn" data-id="${id}" data-key="${opt.key}" data-answer="${opt.text.replace(/"/g,'&quot;')}" onclick="jokeClick(this)" style="cursor:pointer;border:1px solid var(--border);color:var(--text);padding:8px 16px;border-radius:6px;font-size:13px;transition:all .2s;margin:3px 0;">${String.fromCharCode(65+i)}. ${opt.text}</div>`).join('');
+      return `<div class="cmd-out"><span style="color:var(--yellow);font-size:14px">🤔 ${joke.q}</span><hr class="divider">${buttons}<div id="${id}-res" style="display:none;margin-top:10px;font-size:14px;animation:popIn 0.2s ease;"></div></div>`;
     }
   },
   easter:{desc:'Hidden command',output:()=>`<div class="cmd-out"><span class="acc">🥚 You found the Easter egg!</span><br><span class="dim">Achievement unlocked: </span><span class="yellow">Curious Explorer</span></div>`},
@@ -873,6 +832,20 @@ async function fakeHack(){
     <div onclick="document.querySelectorAll('.hack-popup').forEach(e=>e.remove());" style="cursor:pointer;display:inline-block;border:2px solid #00eaff;color:#00eaff;padding:14px 40px;border-radius:8px;font-size:15px;font-weight:700;transition:background .2s;" onmouseover="this.style.background='rgba(0,234,255,0.12)'" onmouseout="this.style.background='transparent'">✓ Close Everything</div>
   </div>`;
   document.body.appendChild(overlay);
+}
+function jokeClick(el){
+  const id=el.dataset.id;
+  const key=el.dataset.key;
+  const data=window._jokes[id];
+  const isCorrect=key==='correct';
+  document.querySelectorAll('.'+id+'-btn').forEach(b=>{b.style.opacity='0.4';b.style.pointerEvents='none';});
+  el.style.opacity='1';
+  el.style.borderColor=isCorrect?'var(--green)':'var(--red)';
+  el.style.color=isCorrect?'var(--green)':'var(--red)';
+  const res=document.getElementById(id+'-res');
+  const reactions=data.reactions;
+  res.innerHTML=reactions[key]+(isCorrect?'':' <span style="color:var(--dim);font-size:12px">— correct: '+data.joke.a+'</span>');
+  res.style.display='block';
 }
 function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 
