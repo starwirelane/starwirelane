@@ -50,7 +50,7 @@ body.theme-glitch .prompt-lbl{text-shadow:2px 0 #ff00ff,-2px 0 #00ffff;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--fs);line-height:var(--lh);overflow:hidden;}
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);}
-#boot{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;padding:40px;transition:opacity 0.6s ease;}
+#boot{position:fixed;inset:0;background:var(--bg);z-index:9999;display:none;flex-direction:column;justify-content:center;align-items:center;gap:4px;padding:40px;transition:opacity 0.6s ease;}
 #boot.hide{opacity:0;pointer-events:none;}
 #boot-text{color:var(--green);font-size:13px;max-width:600px;width:100%;}
 #app{display:flex;align-items:center;justify-content:center;height:100vh;padding:16px;}
@@ -879,6 +879,8 @@ function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
   };
 
   async function startBootSequence(){
+    const bootDiv=document.getElementById('boot');
+    bootDiv.style.display='flex';
     const bootEl=document.getElementById('boot-text');
     const bootLines=['[  0.001] Initializing terminal environment...','[  0.042] Loading fonts... OK','[  0.108] Mounting filesystem... OK','[  0.201] Loading profile: farhad','[  0.334] Importing modules... OK','[  0.601] All systems ready. Welcome.'];
     for(let i=0;i<bootLines.length;i++){bootEl.innerHTML+=`<div>${bootLines[i]}</div>`;await sleep(CFG.bootSpeed+(i===bootLines.length-1?300:0));}
