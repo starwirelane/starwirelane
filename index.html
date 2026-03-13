@@ -811,23 +811,10 @@ function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 (async()=>{
   await loadContent();
 
-  // Boot sequence
+  // Boot sequence - instant, no text
   const bootDiv=document.getElementById('boot');
   bootDiv.style.display='flex';
-  const bootEl=document.getElementById('boot-text');
-  const bootLines=[
-    '[  0.001] Initializing terminal environment...',
-    '[  0.042] Loading fonts... OK',
-    '[  0.108] Mounting filesystem... OK',
-    '[  0.201] Loading profile: farhad',
-    '[  0.334] Importing modules... OK',
-    '[  0.601] All systems ready. Welcome.'
-  ];
-  for(let i=0;i<bootLines.length;i++){
-    bootEl.innerHTML+=`<div>${bootLines[i]}</div>`;
-    await sleep(30);
-  }
-  await sleep(400);
+  await sleep(300);
   bootDiv.style.transition='opacity 0.5s';
   bootDiv.style.opacity='0';
   await sleep(550);
