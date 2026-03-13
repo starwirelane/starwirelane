@@ -4,7 +4,856 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 <title>Farhad Ali | Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Je<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Farhad Ali | Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet"/>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="5da5f162-3e85-4994-8728-63fd5cddbcb3"></script>
+<style>
+:root {
+  --bg:#0d1117; --surface:#161b22; --border:#21262d; --text:#c9d1d9;
+  --dim:#768390; --prompt:#00eaff; --highlight:#58a6ff; --green:#3fb950;
+  --yellow:#d29922; --red:#f85149; --pink:#f778ba; --orange:#db6d28;
+  --cursor:#00eaff; --glow:rgba(0,234,255,0.15);
+  --font:'JetBrains Mono','Fira Code',monospace; --fs:14px; --lh:1.8;
+}
+body.theme-dracula{--bg:#282a36;--surface:#1e1f29;--border:#44475a;--text:#f8f8f2;--prompt:#ff79c6;--highlight:#bd93f9;--green:#50fa7b;--cursor:#ff79c6;--glow:rgba(255,121,198,0.15);}
+body.theme-matrix{--bg:#000;--surface:#0a0a0a;--border:#003b00;--text:#00ff41;--prompt:#00ff41;--highlight:#00cc33;--green:#00ff41;--cursor:#00ff41;--glow:rgba(0,255,65,0.2);}
+body.theme-amber{--bg:#1a0e00;--surface:#1f1200;--border:#4a2800;--text:#ffb347;--prompt:#ffb347;--highlight:#ffd080;--green:#ffb347;--cursor:#ffb347;--glow:rgba(255,179,71,0.15);}
+body.theme-nord{--bg:#2e3440;--surface:#3b4252;--border:#434c5e;--text:#eceff4;--prompt:#88c0d0;--highlight:#81a1c1;--green:#a3be8c;--cursor:#88c0d0;--glow:rgba(136,192,208,0.12);}
+body.theme-cyber{--bg:#0a0010;--surface:#0f0018;--border:#2d0050;--text:#e0aaff;--prompt:#c77dff;--highlight:#e0aaff;--green:#80ffdb;--cursor:#c77dff;--glow:rgba(199,125,255,0.2);}
+body.theme-light{--bg:#f6f8fa;--surface:#ffffff;--border:#d0d7de;--text:#24292f;--dim:#57606a;--prompt:#0969da;--highlight:#0550ae;--green:#1a7f37;--yellow:#9a6700;--red:#cf222e;--pink:#bf3989;--cursor:#0969da;--glow:rgba(9,105,218,0.1);}
+/* Retro — typewriter font, sepia tones */
+body.theme-retro{--bg:#1a1410;--surface:#221c16;--border:#4a3728;--text:#e8d5b0;--dim:#8a7060;--prompt:#c8a96e;--highlight:#e8b86d;--green:#7ab648;--yellow:#c8a96e;--red:#c0392b;--pink:#d4906a;--cursor:#c8a96e;--glow:rgba(200,169,110,0.15);--font:'Courier New',Courier,monospace;}
+body.theme-retro .terminal-window{border-radius:4px;border-width:2px;}
+body.theme-retro .tbar{background:rgba(0,0,0,0.6);}
+/* Bubblegum — pastel pink fun */
+body.theme-bubblegum{--bg:#1a0a14;--surface:#240d1a;--border:#6b2d4a;--text:#ffd6e8;--dim:#c084a8;--prompt:#ff6eb4;--highlight:#ffb3d9;--green:#a8ff78;--yellow:#ffe066;--red:#ff6b6b;--pink:#ff6eb4;--cursor:#ff6eb4;--glow:rgba(255,110,180,0.2);--font:'JetBrains Mono',monospace;}
+body.theme-bubblegum .terminal-window{border-radius:20px;}
+body.theme-bubblegum .tbar{background:rgba(255,110,180,0.1);}
+/* Ocean — deep sea blues */
+body.theme-ocean{--bg:#020b18;--surface:#041525;--border:#0a3050;--text:#cce7ff;--dim:#4a7fa0;--prompt:#00b4d8;--highlight:#90e0ef;--green:#52b788;--yellow:#f4a261;--red:#e63946;--pink:#c77dff;--cursor:#00b4d8;--glow:rgba(0,180,216,0.2);--font:'JetBrains Mono',monospace;}
+body.theme-ocean .terminal-window{border-radius:16px;}
+/* Latte — cozy coffee shop */
+body.theme-latte{--bg:#f4ede3;--surface:#fdf8f2;--border:#d4b896;--text:#3d2b1f;--dim:#8b6b4f;--prompt:#8b4513;--highlight:#a0522d;--green:#4a7c59;--yellow:#b8860b;--red:#8b2020;--pink:#c2507a;--cursor:#8b4513;--glow:rgba(139,69,19,0.1);--font:'Georgia',serif;}
+body.theme-latte .terminal-window{border-radius:8px;border-width:2px;}
+body.theme-latte .tbar{background:rgba(139,69,19,0.08);}
+/* Glitch — chaotic neon distortion */
+body.theme-glitch{--bg:#050005;--surface:#0a000a;--border:#ff003c;--text:#00ffff;--dim:#008080;--prompt:#ff003c;--highlight:#00ffff;--green:#00ff9f;--yellow:#ffff00;--red:#ff003c;--pink:#ff00ff;--cursor:#ff003c;--glow:rgba(255,0,60,0.3);--font:'JetBrains Mono',monospace;}
+body.theme-glitch .terminal-window{border-radius:0px;border-width:2px;border-color:#ff003c;}
+body.theme-glitch .tbar{background:rgba(255,0,60,0.1);}
+body.theme-glitch .prompt-lbl{text-shadow:2px 0 #ff00ff,-2px 0 #00ffff;}
+@keyframes popIn{0%{opacity:0;transform:scale(0.8) translateY(-10px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--fs);line-height:var(--lh);overflow:hidden;}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);}
+#boot{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;padding:40px;transition:opacity 0.6s ease;}
+#boot.hide{opacity:0;pointer-events:none;}
+#boot-text{color:var(--green);font-size:13px;max-width:600px;width:100%;}
+#app{display:flex;align-items:center;justify-content:center;height:100vh;padding:16px;}
+.terminal-window{width:100%;max-width:900px;height:92vh;background:var(--surface);border:1px solid var(--border);border-radius:12px;display:flex;flex-direction:column;box-shadow:0 0 0 1px rgba(255,255,255,0.03),0 32px 80px rgba(0,0,0,0.7),0 0 80px var(--glow);overflow:hidden;transition:box-shadow 0.3s;}
+.terminal-window:focus-within{box-shadow:0 0 0 1px rgba(255,255,255,0.05),0 32px 80px rgba(0,0,0,0.7),0 0 120px var(--glow);}
+.tbar{display:flex;align-items:center;gap:8px;padding:11px 16px;background:rgba(0,0,0,0.4);border-bottom:1px solid var(--border);flex-shrink:0;user-select:none;}
+.dot{width:13px;height:13px;border-radius:50%;cursor:pointer;transition:opacity .2s}
+.dot:hover{opacity:.7}
+.dot-r{background:#ff5f57}.dot-y{background:#febc2e}.dot-g{background:#28c840}
+.tbar-title{flex:1;text-align:center;font-size:11px;color:var(--dim);letter-spacing:.08em;}
+.tbar-stats{font-size:11px;color:var(--dim);}
+#sticky{padding:18px 24px 10px;flex-shrink:0;border-bottom:1px solid var(--border);}
+#output{flex:1;overflow-y:auto;padding:14px 24px 6px;scroll-behavior:smooth;}
+#output::-webkit-scrollbar{width:3px}
+#output::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.irow{display:flex;align-items:center;padding:10px 24px 14px;border-top:1px solid var(--border);gap:0;flex-shrink:0;position:relative;}
+.prompt-lbl{color:var(--prompt);white-space:nowrap;user-select:none;}
+.input-wrap{flex:1;position:relative;display:flex;align-items:center;padding-left:6px;}
+#userinput{position:relative;z-index:2;width:100%;background:transparent;border:none;outline:none;color:var(--text);font-family:var(--font);font-size:var(--fs);caret-color:var(--prompt);}
+#ghost-text{position:absolute;left:0;top:50%;transform:translateY(-50%);font-family:var(--font);font-size:var(--fs);color:var(--dim);pointer-events:none;z-index:1;white-space:pre;opacity:0.55;}
+#suggestions{position:absolute;bottom:calc(100% + 4px);left:24px;background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden;z-index:100;display:none;min-width:180px;box-shadow:0 8px 24px rgba(0,0,0,0.5);}
+.sug-item{padding:6px 14px;cursor:pointer;color:var(--text);font-size:13px;display:flex;justify-content:space-between;gap:20px;}
+.sug-item:hover,.sug-item.active{background:rgba(88,166,255,0.1);color:var(--highlight);}
+.sug-desc{color:var(--dim);font-size:11px;}
+.line{margin-bottom:1px;word-break:break-word;}
+.line-cmd{color:var(--prompt);}
+.line-out{color:var(--text);}
+.line-err{color:var(--red);}
+.gap{height:8px;display:block;}
+.cmd-out a{color:var(--highlight);text-decoration:none;}
+.cmd-out a:hover{text-decoration:underline;}
+.lbl{color:var(--yellow);display:inline-block;min-width:130px;}
+.acc{color:var(--prompt);}
+.dim{color:var(--dim);}
+.grn{color:var(--green);}
+.red{color:var(--red);}
+.pnk{color:var(--pink);}
+.divider{border:none;border-top:1px solid var(--border);margin:8px 0;opacity:.6;}
+pre.ascii{color:var(--prompt);font-size:10px;line-height:1.2;text-shadow:0 0 12px var(--prompt);}
+pre.ascii-dim{color:var(--dim);font-size:10px;line-height:1.2;}
+.xcard{border-left:2px solid var(--prompt);padding:8px 14px;margin:6px 0;background:rgba(0,234,255,0.03);border-radius:0 6px 6px 0;}
+.xcard .xt{color:var(--prompt);font-weight:700;}
+.xcard .xc{color:var(--highlight);}
+.xcard .xd{color:var(--dim);font-size:12px;margin-bottom:3px;}
+.xcard ul{padding-left:16px;color:var(--text);}
+.xcard li{font-size:13px;margin:2px 0;}
+.badge{display:inline-block;border:1px solid rgba(88,166,255,.3);background:rgba(88,166,255,.08);color:var(--highlight);border-radius:4px;padding:1px 8px;font-size:12px;margin:2px 2px 2px 0;}
+.badge-g{border-color:rgba(0,234,255,.3);background:rgba(0,234,255,.06);color:var(--prompt);}
+.pcard{border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin:8px 0;background:rgba(255,255,255,0.02);transition:border-color .2s,box-shadow .2s;cursor:default;}
+.pcard:hover{border-color:var(--prompt);box-shadow:0 0 20px rgba(0,234,255,0.08);}
+.pcard .pt{color:var(--prompt);font-weight:700;font-size:15px;}
+.pcard .pd{color:var(--text);margin:5px 0;}
+.pcard .pk{color:var(--dim);font-size:12px;}
+.pcard .pl{margin-top:8px;}
+.pcard .pl a{color:var(--highlight);font-size:12px;margin-right:14px;}
+.copy-btn{display:inline-block;float:right;font-size:11px;color:var(--dim);cursor:pointer;border:1px solid var(--border);padding:1px 8px;border-radius:4px;margin-left:8px;transition:color .2s,border-color .2s;}
+.copy-btn:hover{color:var(--prompt);border-color:var(--prompt);}
+.prog-wrap{display:flex;align-items:center;gap:8px;margin:2px 0;}
+.prog-bar{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+.prog-fill{height:100%;background:var(--prompt);border-radius:3px;box-shadow:0 0 6px var(--prompt);}
+.prog-lbl{font-size:12px;color:var(--dim);min-width:30px;text-align:right;}
+.gcard{position:relative;border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:border-color .2s,box-shadow .2s;}
+.gcard:hover{border-color:var(--prompt);box-shadow:0 0 20px rgba(0,234,255,0.1);}
+.goverlay{position:absolute;inset:0;background:rgba(0,0,0,0.78);opacity:0;transition:opacity .2s;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:10px;text-align:center;}
+.gcard:hover .goverlay{opacity:1;}
+#matrix-canvas{position:fixed;inset:0;z-index:9998;display:none;pointer-events:none;}
+@media(max-width:600px){
+  :root{--fs:13px;}
+  #app{padding:0;}
+  .terminal-window{height:100vh;border-radius:0;border:none;}
+  #sticky{padding:12px 14px 8px;}
+  #output{padding:10px 14px 4px;}
+  .irow{padding:8px 14px 10px;}
+  pre.ascii{font-size:7px;}
+}
+</style>
+</head>
+<body>
+<div id="boot"><div id="boot-text"></div></div>
+<canvas id="matrix-canvas"></canvas>
+<div id="app">
+  <div class="terminal-window" id="termwin">
+    <div class="tbar">
+      <div class="dot dot-r"></div>
+      <div class="dot dot-y"></div>
+      <div class="dot dot-g" id="btn-fullscreen"></div>
+      <span class="tbar-title">farhad.sh</span>
+      <span id="snd-btn" title="Toggle sound" style="cursor:pointer;font-size:13px;color:var(--dim);padding:2px 8px;border:1px solid var(--border);border-radius:4px;user-select:none;transition:color .2s,border-color .2s;" onclick="toggleSound()">🔇</span>
+      <span class="tbar-stats" id="cmd-counter">cmds: 0</span>
+    </div>
+    <div id="sticky"></div>
+    <div id="output"></div>
+    <div id="suggestions"></div>
+    <div class="irow">
+      <span class="prompt-lbl" id="promptlbl">&gt; farhad&nbsp;</span>
+      <div class="input-wrap">
+        <span id="ghost-text"></span>
+        <input id="userinput" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text"/>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const CFG = { prompt:'> farhad\u00a0', typeSpeed:18, bootSpeed:22, soundOn:false, soundProfile:'typewriter' };
+
+let CONTENT = {
+  name:"Farhad Ali", title:"Manufacturing Associate & Aspiring Data Analyst",
+  location:"Lodi, California", company:"Cepheid", college:"Delta College", gpa:"3.8",
+  email:"farhad622860@gmail.com", github:"https://github.com/starwirelane",
+  linkedin:"https://linkedin.com/in/farhadali-627770352",
+  bio:"I'm passionate about using data and analytical thinking to solve real-world problems and improve organizational efficiency."
+};
+
+async function loadContent(){
+  try{ const res=await fetch('/content.json?t='+Date.now()); if(res.ok) CONTENT=await res.json(); }catch(e){}
+}
+
+const FS={
+  '/':['home','projects','resume.pdf','readme.txt'],
+  '/home':['about.txt','skills.txt','contact.txt'],
+  '/projects':['genexpert','dashboard','terminal'],
+};
+let CWD='/home';
+function fsLs(path){ const p=path||CWD; return FS[p]||null; }
+function fsCd(arg){
+  if(!arg||arg==='~'){CWD='/home';return null;}
+  if(arg==='..'){const parts=CWD.split('/').filter(Boolean);parts.pop();CWD='/'+parts.join('/');if(CWD==='/')CWD='/';return null;}
+  const next=CWD==='/'?'/'+arg:CWD+'/'+arg;
+  if(FS[next]!==undefined){CWD=next;return null;}
+  return `cd: no such directory: ${arg}`;
+}
+const FILE_CONTENT={
+  'readme.txt':'<span class="acc">README — Farhad Ali Portfolio</span>\nWelcome! Type <span class="badge">help</span> to see all commands.',
+  'about.txt':'<span class="acc">Farhad Ali</span> — Manufacturing Associate & Aspiring Data Analyst\nLocation: Lodi, California\nGPA: 3.8 — High Honors',
+  'skills.txt':'<span class="acc">Core Skills</span>\nGMP · ISO · GeneXpert · Cleanroom Ops · IPT\nData Recording · Business Analytics · Documentation',
+  'contact.txt':'<span class="acc">Contact</span>\nEmail: farhad622860@gmail.com\nLinkedIn: linkedin.com/in/farhadali-627770352',
+};
+
+const CMDS = {
+  help:{
+    desc:'Show all commands',
+    output:()=>{
+      const groups={
+        'Core':['help','about','whoami','currently','mission','status'],
+        'Portfolio':['projects','experience','skills','education','awards','resume'],
+        'Links':['github','linkedin','contact'],
+        'Interests':['photography','hiking'],
+        'Terminal':['theme','clear','fullscreen','sound'],
+        'Fun':['matrix','hack','coffee','joke','easter'],
+        'System':['location','system','date'],
+      };
+      let out=`<div class="cmd-out"><div style="margin-bottom:10px"><span class="acc">Available Commands</span> <span class="dim">— type any command below</span></div>`;
+      for(const [g,cmds] of Object.entries(groups)){
+        out+=`<div style="margin:8px 0 4px"><span class="dim" style="text-transform:uppercase;letter-spacing:0.08em;font-size:11px">${g}</span></div>`;
+        out+=cmds.map(c=>CMDS[c]?`<div><span class="lbl" style="min-width:120px;color:var(--highlight)">${c}</span><span class="dim">${CMDS[c].desc}</span></div>`:'').join('');
+      }
+      out+=`<hr class="divider"><span class="dim">Tip: </span><span class="badge">Tab</span><span class="dim"> autocomplete &nbsp;·&nbsp; </span><span class="badge">↑↓</span><span class="dim"> history &nbsp;·&nbsp; </span><span class="badge">Ctrl+L</span><span class="dim"> clear</span></div>`;
+      return out;
+    }
+  },
+
+  about:{
+    desc:'About Farhad Ali',
+    output:()=>`<div class="cmd-out">
+<span class="acc" style="font-size:16px;font-weight:700">Farhad Ali</span>
+<hr class="divider">
+<span class="dim">Manufacturing Associate at Cepheid and student at San Joaquin Delta College. I am passionate about using data and analytical thinking to solve real world problems and improve how organizations operate. My experience in manufacturing and operations has given me hands on exposure to processes, performance metrics, and operational efficiency.</span>
+</div>`
+  },
+
+  whoami:{
+    desc:'Who is Farhad Ali',
+    output:()=>`<div class="cmd-out">
+<span class="acc" style="font-size:16px;font-weight:700">Farhad Ali</span>
+<hr class="divider">
+<span class="dim">Manufacturing Associate at Cepheid and student at San Joaquin Delta College. Interested in business analytics, data analysis, and operational improvement. Focused on using data to understand systems, identify inefficiencies, and support better decision making.</span>
+</div>`
+  },
+
+  currently:{
+    desc:'What I am currently working on',
+    output:()=>`<div class="cmd-out">
+<span class="acc">Currently</span>
+<hr class="divider">
+<span class="dim">Currently working as a Manufacturing Associate at <span class="acc">Cepheid</span> in a regulated cleanroom manufacturing environment supporting molecular diagnostic production. At the same time, I am a student at <span class="acc">San Joaquin Delta College</span> where I am developing skills in business analytics and data analysis while preparing to transfer to a four year university.</span>
+</div>`
+  },
+
+  mission:{
+    desc:'My goal and direction',
+    output:()=>`<div class="cmd-out">
+<span class="acc">Mission</span>
+<hr class="divider">
+<span class="dim">My goal is to apply analytical thinking and data analysis to improve operational efficiency and help organizations make smarter decisions. I am particularly interested in roles where data can be used to solve real business and manufacturing problems.</span>
+</div>`
+  },
+
+  status:{
+    desc:'Current focus',
+    output:()=>`<div class="cmd-out">
+<span class="acc">Status</span>
+<hr class="divider">
+<span class="grn">● Active</span> <span class="dim">— Currently building analytics skills and preparing for opportunities in business analytics and data analysis.</span>
+</div>`
+  },
+
+  projects:{
+    desc:'View my projects',
+    output:()=>`<div class="cmd-out">
+<span class="acc">Projects</span>
+<hr class="divider">
+<div class="pcard">
+  <div class="pt">🔬 GeneXpert Data Tracker</div>
+  <div class="pd">Custom spreadsheet system for tracking IPT results, trends, and anomalies across manufacturing batches at Cepheid.</div>
+  <div class="pk">Excel · Data Analysis · GMP Documentation</div>
+  <div class="pl"><a href="https://github.com/starwirelane" target="_blank">[ GitHub ]</a></div>
+</div>
+<div class="pcard">
+  <div class="pt">📊 Operations Dashboard</div>
+  <div class="pd">Visual dashboard concept for monitoring daily production output, quality metrics, and scheduling for manufacturing teams.</div>
+  <div class="pk">Data Visualization · Analytics · Process Improvement</div>
+  <div class="pl"><a href="https://github.com/starwirelane" target="_blank">[ GitHub ]</a></div>
+</div>
+<div class="pcard">
+  <div class="pt">💻 Terminal Portfolio</div>
+  <div class="pd">This interactive terminal-style portfolio — built with pure HTML, CSS and JavaScript. No frameworks.</div>
+  <div class="pk">HTML · CSS · JavaScript · GitHub Pages</div>
+  <div class="pl"><a href="https://github.com/starwirelane" target="_blank">[ GitHub ]</a></div>
+</div>
+</div>`
+  },
+
+  experience:{
+    desc:'Work experience',
+    output:()=>`<div class="cmd-out">
+<span class="acc">Work Experience</span>
+<hr class="divider">
+<div class="xcard">
+  <div class="xt">Manufacturing Associate I</div>
+  <div class="xc">Cepheid</div>
+  <div class="xd">December 2024 – Present · Lodi, CA</div>
+  <ul>
+    <li>Test products at all manufacturing stages using GeneXpert</li>
+    <li>Follow GMP &amp; ISO documentation and procedures</li>
+    <li>Investigate and troubleshoot functionality &amp; performance issues</li>
+    <li>Schedule and plan In-Process Testing (IPT) priority work</li>
+    <li>Operate equipment in a regulated cleanroom environment</li>
+  </ul>
+</div>
+<div class="xcard">
+  <div class="xt">Manager</div>
+  <div class="xc">McDonald's</div>
+  <div class="xd">March 2021 – December 2024 · 3 yrs 10 mos · Lodi, CA</div>
+  <ul>
+    <li>Led daily operations in a high-volume environment</li>
+    <li>Managed schedules, team performance &amp; inventory</li>
+    <li>Trained and supervised team members</li>
+  </ul>
+</div>
+<div class="xcard">
+  <div class="xt">Private Swimming Coach</div>
+  <div class="xc">Self-Employed</div>
+  <div class="xd">April 2022 – February 2024 · 1 yr 11 mos · Lodi, CA</div>
+  <ul>
+    <li>Provided one-on-one swimming instruction to clients of all skill levels</li>
+    <li>Developed personalized training plans based on individual goals</li>
+    <li>Ensured safety and proper technique during all sessions</li>
+    <li>Built strong client relationships through consistent communication</li>
+  </ul>
+</div>
+</div>`
+  },
+
+  skills:{
+    desc:'Skills and competencies',
+    output:()=>`<div class="cmd-out">
+<span class="acc">Skills &amp; Competencies</span>
+<hr class="divider">
+<div style="margin:6px 0 2px"><span class="dim">Manufacturing &amp; Quality</span></div>
+${['GMP Compliance','ISO Standards','In-Process Testing','Cleanroom Ops','GeneXpert','Quality Control','Documentation'].map(s=>`<span class="badge badge-g">${s}</span>`).join('')}
+<div style="margin:10px 0 2px"><span class="dim">Analytics &amp; Data</span></div>
+${['Data Recording','Business Analytics','Data Analysis','Process Improvement','Production Reporting'].map(s=>`<span class="badge">${s}</span>`).join('')}
+<div style="margin:10px 0 2px"><span class="dim">Leadership</span></div>
+${['Team Management','Training','Scheduling','Inventory Control','Emergency Response','CPR/First Aid'].map(s=>`<span class="badge">${s}</span>`).join('')}
+<hr class="divider">
+<div style="margin-bottom:4px"><span class="dim">Skill levels</span></div>
+${[['GMP/ISO',95],['Data Recording',90],['Team Leadership',85],['Analytics',70],['Process Improvement',75]].map(([n,v])=>`<div class="prog-wrap"><span style="min-width:150px;font-size:13px">${n}</span><div class="prog-bar"><div class="prog-fill" style="width:${v}%"></div></div><span class="prog-lbl">${v}%</span></div>`).join('')}
+</div>`
+  },
+
+  education:{
+    desc:'Education background',
+    output:()=>`<div class="cmd-out">
+<span class="acc">Education</span>
+<hr class="divider">
+<div class="xcard">
+  <div class="xt">Associate of Arts — Interdisciplinary Studies</div>
+  <div class="xc">San Joaquin Delta College</div>
+  <div class="xd">2021 · Stockton, CA</div>
+  <ul>
+    <li>Business Analytics &amp; Data Analysis focus</li>
+    <li>Preparing to transfer to 4-year university</li>
+    <li><span class="grn">GPA: 3.5</span></li>
+  </ul>
+</div>
+<div class="xcard">
+  <div class="xt">High School Diploma</div>
+  <div class="xc">Tokay High School</div>
+  <div class="xd">2019–2023 · Lodi, CA</div>
+  <ul><li><span class="grn">GPA: 3.8 — High Honors Graduate ⭐</span></li></ul>
+</div>
+</div>`
+  },
+
+  awards:{
+    desc:'Honors and awards',
+    output:()=>`<div class="cmd-out">
+<span class="acc">Honors &amp; Awards</span>
+<hr class="divider">
+<div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)">
+  <span style="font-size:22px">🏅</span>
+  <div><div style="color:var(--yellow)">California Scholarship Federation (CSF)</div><div class="dim" style="font-size:12px">Recognized for academic excellence in California</div></div>
+</div>
+<div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)">
+  <span style="font-size:22px">🎓</span>
+  <div><div style="color:var(--yellow)">National Society of High School Scholars (NSHSS)</div><div class="dim" style="font-size:12px">National recognition for outstanding scholastic achievement</div></div>
+</div>
+<div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)">
+  <span style="font-size:22px">⭐</span>
+  <div><div style="color:var(--yellow)">High Honors Graduate — 3.8 GPA</div><div class="dim" style="font-size:12px">Tokay High School</div></div>
+</div>
+<div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)">
+  <span style="font-size:22px">🦃</span>
+  <div><div style="color:var(--yellow)">Turkey Trot — 1st Place</div><div class="dim" style="font-size:12px">2019 · Competitive running race</div></div>
+</div>
+<div style="display:flex;align-items:center;gap:12px;padding:8px 0">
+  <span style="font-size:22px">🎨</span>
+  <div><div style="color:var(--yellow)">1st Place — Local Art Exhibition</div><div class="dim" style="font-size:12px">Photography · Lodi, CA</div></div>
+</div>
+</div>`
+  },
+
+  resume:{
+    desc:'Download my resume',
+    output:(a)=>{
+      if(a[0]==='preview') return `<div class="cmd-out"><pre class="ascii-dim">┌──────────────────────────────────────┐
+│  FARHAD ALI — RESUME PREVIEW         │
+├──────────────────────────────────────┤
+│  Role:  Manufacturing Associate I    │
+│  Co:    Cepheid, Lodi CA             │
+│  Edu:   Delta College — AA (3.5 GPA) │
+│  Skills: GMP · ISO · GeneXpert · IPT │
+│  Awards: CSF · NSHSS · High Honors   │
+└──────────────────────────────────────┘</pre></div>`;
+      setTimeout(()=>{const a=document.createElement('a');a.href='resume.pdf';a.download='Farhad_Ali_Resume.pdf';a.click();},300);
+      return `<div class="cmd-out"><span class="grn">✓ Downloading resume...</span><br><span class="dim">File: </span><a href="resume.pdf" download="Farhad_Ali_Resume.pdf">Farhad_Ali_Resume.pdf</a></div>`;
+    }
+  },
+
+  github:{desc:'Open GitHub profile',output:()=>{window.open('https://github.com/starwirelane','_blank');return `<span class="grn">✓ Opening</span> <a href="https://github.com/starwirelane" target="_blank">github.com/starwirelane</a>`;}},
+  linkedin:{desc:'Open LinkedIn profile',output:()=>{window.open('https://linkedin.com/in/farhadali-627770352','_blank');return `<span class="grn">✓ Opening</span> <a href="https://linkedin.com/in/farhadali-627770352" target="_blank">linkedin.com/in/farhadali-627770352</a>`;}},
+
+  contact:{
+    desc:'Contact information',
+    output:()=>`<div class="cmd-out">
+<span class="acc">Contact Farhad Ali</span>
+<hr class="divider">
+<div><span class="lbl">Email</span><a href="mailto:${CONTENT.email}">${CONTENT.email}</a></div>
+<div><span class="lbl">LinkedIn</span><a href="${CONTENT.linkedin}" target="_blank">${CONTENT.linkedin.replace('https://','')}</a></div>
+<div><span class="lbl">GitHub</span><a href="${CONTENT.github}" target="_blank">${CONTENT.github.replace('https://','')}</a></div>
+<div><span class="lbl">Location</span>${CONTENT.location} 📍</div>
+<hr class="divider">
+<span class="grn">Currently open to new opportunities.</span> <span class="dim">Response within 24h.</span>
+</div>`
+  },
+
+  photography:{
+    desc:'View my photography work',
+    output:()=>{
+      const photos=[
+        {file:'DSC_1093.jpeg',title:'Point Reyes',loc:'Point Reyes, CA'},
+        {file:'DSC_1150.jpeg',title:'Point Reyes Lighthouse',loc:'Point Reyes, CA'},
+        {file:'DSC_1168.jpeg',title:'Point Reyes Vista Point',loc:'Point Reyes, CA'},
+        {file:'IMG_5360.jpeg',title:'Baker Beach',loc:'San Francisco, CA'},
+        {file:'IMG_5550.jpeg',title:'Tunnel View',loc:'Yosemite National Park, CA'},
+        {file:'IMG_5573.jpeg',title:'Mist Trail',loc:'Yosemite National Park, CA'},
+        {file:'IMG_5664.jpeg',title:'Bishop Pumpkin Farm Corn Maze',loc:'Wheatland, CA'},
+        {file:'IMG_5683.jpeg',title:'Chuze Fitness',loc:'Stockton, CA'},
+        {file:'IMG_5829.jpeg',title:'Kimpton Sawyer Hotel',loc:'Sacramento, CA'},
+        {file:'IMG_5830.jpeg',title:'Golden 1 Center',loc:'Sacramento, CA'},
+        {file:'IMG_6120.jpeg',title:'California Academy of Sciences — Lizard Exhibition',loc:'San Francisco, CA'},
+        {file:'IMG_6121.jpeg',title:'California Academy of Sciences — Snake Exhibition',loc:'San Francisco, CA'},
+        {file:'IMG_6160.jpeg',title:'Seal Rock Beach',loc:'San Francisco, CA'},
+        {file:'IMG_6171.jpeg',title:'Lands End',loc:'San Francisco, CA'},
+      ];
+      const grid=photos.map(p=>`<div style="border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:border-color .2s,box-shadow .2s;" onmouseover="this.style.borderColor='var(--prompt)';this.style.boxShadow='0 0 16px rgba(0,234,255,0.1)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'" onclick="window.open('gallery/${p.file}','_blank')"><img src="gallery/${p.file}" style="width:100%;height:130px;object-fit:cover;display:block;"/><div style="padding:8px 10px;background:var(--surface)"><div style="color:var(--prompt);font-weight:700;font-size:12px;">${p.title}</div><div style="color:var(--dim);font-size:11px;margin-top:2px;">📍 ${p.loc}</div></div></div>`).join('');
+      return `<div class="cmd-out"><span class="acc">📸 Photography</span><hr class="divider"><span class="dim" style="display:block;margin-bottom:10px">Photography is one of my creative outlets. I enjoy capturing moments, nature, and everyday life across California.</span><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;">${grid}</div><span class="dim" style="font-size:12px;margin-top:10px;display:block;">Click any photo to open full size</span></div>`;
+    }
+  },
+
+  hiking:{
+    desc:'Outdoor activities and hobbies',
+    output:()=>{
+      const trails=[
+        {name:'Lodi Lake',loc:'Lodi, CA',diff:'Easy',miles:'2.3',rating:'3.0',color:'#3fb950'},
+        {name:'Quarry Road Trail',loc:'Auburn, CA',diff:'Moderate',miles:'10.9',rating:'3.5',color:'#d29922'},
+        {name:'Western States Trail to Robie Point Fire Break',loc:'Auburn, CA',diff:'Hard',miles:'100',rating:'4.3',color:'#f85149'},
+        {name:'Lower Yosemite Falls',loc:'Yosemite National Park, CA',diff:'Easy',miles:'1.0',rating:'3.8',color:'#3fb950'},
+        {name:'Upper Yosemite Falls',loc:'Yosemite National Park, CA',diff:'Strenuous',miles:'7.2',rating:'4.4',color:'#f85149'},
+        {name:'Vernal &amp; Nevada Falls via Mist Trail',loc:'Yosemite National Park, CA',diff:'Hard',miles:'6.6',rating:'4.8',color:'#f85149'},
+        {name:'Mirror Lake via Valley Loop Trail',loc:'Yosemite National Park, CA',diff:'Easy',miles:'5.0',rating:'3.9',color:'#3fb950'},
+      ];
+      const rows=trails.map(t=>`
+<div style="border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin:6px 0;background:rgba(255,255,255,0.02);transition:border-color .2s;" onmouseover="this.style.borderColor='var(--prompt)'" onmouseout="this.style.borderColor='var(--border)'">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;">
+    <div>
+      <div style="color:var(--prompt);font-weight:700;font-size:14px;">🥾 ${t.name}</div>
+      <div style="color:var(--dim);font-size:12px;margin-top:2px;">📍 ${t.loc}</div>
+    </div>
+    <div style="text-align:right;white-space:nowrap;">
+      <span style="color:#f9c74f;font-weight:700;font-size:15px;">⭐ ${t.rating}</span>
+    </div>
+  </div>
+  <div style="margin-top:8px;display:flex;gap:12px;font-size:12px;">
+    <span style="color:${t.color}">● ${t.diff}</span>
+    <span style="color:var(--dim)">📏 ${t.miles} mi</span>
+  </div>
+</div>`).join('');
+      return `<div class="cmd-out"><span class="acc">🥾 Hiking &amp; Outdoors</span><hr class="divider"><span class="dim" style="display:block;margin-bottom:10px">Trails I have hiked across California — rated from personal experience.</span>${rows}</div>`;
+    }
+  },
+
+  location:{
+    desc:'Where I am based',
+    output:()=>`<div class="cmd-out">
+<span class="acc">Location</span>
+<hr class="divider">
+<span style="color:#f778ba">📍 Lodi, California, United States</span>
+</div>`
+  },
+
+  system:{
+    desc:'Visitor system information',
+    output:()=>{
+      const ua=navigator.userAgent;
+      const platform=/iPhone/.test(ua)?'iPhone':/iPad/.test(ua)?'iPad':/Android/.test(ua)?'Android':/Mac/.test(ua)?'macOS':/Windows/.test(ua)?'Windows':/Linux/.test(ua)?'Linux':'Unknown';
+      const browser=/Chrome/.test(ua)&&!/Edg/.test(ua)?'Chrome':/Safari/.test(ua)&&!/Chrome/.test(ua)?'Safari':/Firefox/.test(ua)?'Firefox':/Edg/.test(ua)?'Edge':'Unknown';
+      const mobile=/Mobi|Android|iPhone|iPad/.test(ua);
+      return `<div class="cmd-out">
+<span class="acc">Visitor Info</span>
+<hr class="divider">
+<div><span class="lbl">Platform</span>${platform}</div>
+<div><span class="lbl">Browser</span>${browser}</div>
+<div><span class="lbl">Device</span>${mobile?'📱 Mobile':'🖥️ Desktop'}</div>
+<div><span class="lbl">Resolution</span>${window.innerWidth}x${window.innerHeight}</div>
+<div><span class="lbl">Language</span>${navigator.language}</div>
+<div><span class="lbl">Timezone</span>${Intl.DateTimeFormat().resolvedOptions().timeZone}</div>
+</div>`;
+    }
+  },
+
+  date:{desc:'Current date and time',output:()=>`<span class="acc">${new Date().toLocaleString('en-US',{timeZone:'America/Los_Angeles',weekday:'long',year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'})}</span> <span class="dim">(Pacific)</span>`},
+
+  theme:{
+    desc:'Switch terminal theme',
+    output:(a)=>{
+      const themes=[
+        {id:'default',   label:'Dark',       emoji:'🌑', preview:'#0d1117', accent:'#00eaff',  desc:'Classic dark'},
+        {id:'light',     label:'Light',      emoji:'☀️', preview:'#f6f8fa', accent:'#0969da',  desc:'Clean & bright'},
+        {id:'dracula',   label:'Dracula',    emoji:'🧛', preview:'#282a36', accent:'#ff79c6',  desc:'Purple vampire'},
+        {id:'matrix',    label:'Matrix',     emoji:'🟩', preview:'#000000', accent:'#00ff41',  desc:'Wake up Neo'},
+        {id:'amber',     label:'Amber',      emoji:'🟠', preview:'#1a0e00', accent:'#ffb347',  desc:'Old monitor'},
+        {id:'nord',      label:'Nord',       emoji:'❄️', preview:'#2e3440', accent:'#88c0d0',  desc:'Arctic cool'},
+        {id:'cyber',     label:'Cyber',      emoji:'🔮', preview:'#0a0010', accent:'#c77dff',  desc:'Cyberpunk city'},
+        {id:'retro',     label:'Retro',      emoji:'📟', preview:'#1a1410', accent:'#c8a96e',  desc:'Typewriter vibes'},
+        {id:'bubblegum', label:'Bubblegum',  emoji:'🍬', preview:'#1a0a14', accent:'#ff6eb4',  desc:'Pink & fun'},
+        {id:'ocean',     label:'Ocean',      emoji:'🌊', preview:'#020b18', accent:'#00b4d8',  desc:'Deep sea blue'},
+        {id:'latte',     label:'Latte',      emoji:'☕', preview:'#f4ede3', accent:'#8b4513',  desc:'Cozy coffee shop'},
+        {id:'glitch',    label:'Glitch',     emoji:'⚡', preview:'#050005', accent:'#ff003c',  desc:'Broken & chaotic'},
+      ];
+      const n=(a[0]||'').toLowerCase();
+      if(n){
+        const match=themes.find(t=>t.id===n);
+        if(!match) return `<span class="red">Unknown theme: ${n}. Try: ${themes.map(t=>t.id).join(', ')}</span>`;
+        document.body.className=n==='default'?'':`theme-${n}`;
+        return `<span class="grn">✓ Theme set to:</span> <span class="acc">${match.emoji} ${match.label}</span> <span class="dim">— ${match.desc}</span>`;
+      }
+      const cards=themes.map(t=>`
+<div onclick="document.body.className='${t.id==='default'?'':'theme-'+t.id}';document.querySelectorAll('.tcard').forEach(c=>c.style.outline='none');this.style.outline='2px solid ${t.accent}';" class="tcard" style="cursor:pointer;border:1px solid var(--border);border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:10px;transition:border-color .2s,box-shadow .2s;background:var(--surface);" onmouseover="this.style.borderColor='${t.accent}';this.style.boxShadow='0 0 14px ${t.accent}44'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+  <div style="width:32px;height:32px;border-radius:50%;background:${t.preview};border:2px solid ${t.accent};flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;">${t.emoji}</div>
+  <div>
+    <div style="color:${t.accent};font-weight:700;font-size:13px;">${t.label}</div>
+    <div style="color:var(--dim);font-size:11px;">${t.desc}</div>
+  </div>
+</div>`).join('');
+      return `<div class="cmd-out"><span class="acc">🎨 Themes</span> <span class="dim">— click a card or type </span><span class="badge">theme &lt;name&gt;</span><hr class="divider"><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:8px;">${cards}</div></div>`;
+    }
+  },
+
+  clear:{desc:'Clear terminal screen',output:()=>{clearOut();return null;}},
+  fullscreen:{desc:'Toggle fullscreen mode',output:()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen();else document.exitFullscreen();return `<span class="grn">✓ Toggled</span>`;}},
+  sound:{
+    desc:'Sound on or off / change sound',
+    output:(a)=>{
+      const profiles=['mechanical','typewriter','scifi','digital','tap','chime','ping'];
+      if(a[0]==='on'){CFG.soundOn=true;updateSndBtn();return `<span class="grn">✓ Sound on</span> <span class="dim">(${CFG.soundProfile})</span>`;}
+      if(a[0]==='off'){CFG.soundOn=false;updateSndBtn();return `<span class="dim">🔇 Sound off</span>`;}
+      if(profiles.includes(a[0])){CFG.soundProfile=a[0];CFG.soundOn=true;updateSndBtn();playClick();return `<span class="grn">✓ Sound profile:</span> <span class="acc">${a[0]}</span>`;}
+      const cards=profiles.map(p=>`<div onclick="CFG.soundProfile='${p}';CFG.soundOn=true;updateSndBtn();playClick();document.querySelectorAll('.sndcard').forEach(c=>c.style.borderColor='var(--border)');this.style.borderColor='var(--prompt)';" class="sndcard" style="cursor:pointer;border:1px solid var(--border);border-radius:6px;padding:8px 12px;transition:border-color .2s;" onmouseover="this.style.borderColor='var(--prompt)'" onmouseout="this.style.borderColor='var(--border)'"><span style="color:var(--highlight);font-weight:700">${p}</span></div>`).join('');
+      return `<div class="cmd-out"><span class="acc">🔊 Sound</span> <span class="dim">— currently: ${CFG.soundOn?'<span style="color:var(--green)">on</span>':'<span style="color:var(--red)">off</span>'} · profile: <span style="color:var(--prompt)">${CFG.soundProfile}</span></span><hr class="divider"><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">${cards}</div><span class="dim">Click a profile to preview · or type </span><span class="badge">sound mechanical</span><span class="dim"> etc.</span></div>`;
+    }
+  },
+
+  matrix:{desc:'Matrix rain effect',output:(a)=>{if(a[0]==='off'){stopMatrix();return `<span class="grn">✓ Matrix off</span>`;}startMatrix();return `<span class="grn">Wake up, Neo...</span><br><span class="dim">Type matrix off to stop</span>`;}},
+  hack:{desc:'Hack sequence animation',output:()=>{setTimeout(()=>fakeHack(),100);return `<span class="red">INITIATING HACK SEQUENCE...</span>`;}},
+  coffee:{desc:'Buy me a coffee ☕',output:()=>`<div class="cmd-out"><pre class="ascii-dim">    ( (
+     ) )
+  ........
+  |      |]
+  \\      /
+   \`----'</pre><span class="acc">☕ Enjoying the portfolio?</span><br><span class="dim">You can buy me a coffee if you'd like!</span><br><br><a href="https://buymeacoffee.com/farhadaii" target="_blank" style="display:inline-block;border:2px solid #f9c74f;color:#f9c74f;padding:10px 24px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;transition:background .2s;" onmouseover="this.style.background='rgba(249,199,79,0.12)'" onmouseout="this.style.background='transparent'">☕ Buy Me a Coffee</a></div>`},
+  joke:{
+    desc:'Programming joke',
+    output:()=>{
+      const jokes=[['Why do programmers prefer dark mode?','Because light attracts bugs! 🐛'],['Why did the developer go broke?','He used up all his cache. 💸'],['A SQL query walks into a bar...','...and asks two tables: "Can I JOIN you?"']];
+      const [q,a]=jokes[Math.floor(Math.random()*jokes.length)];
+      return `<div class="cmd-out"><span class="yellow">Q: ${q}</span><br><br><span class="acc">A: ${a}</span></div>`;
+    }
+  },
+  easter:{desc:'Hidden command',output:()=>`<div class="cmd-out"><span class="acc">🥚 You found the Easter egg!</span><br><span class="dim">Achievement unlocked: </span><span class="yellow">Curious Explorer</span></div>`},
+
+  // still functional but hidden from help
+  ls:{desc:'List files',output:(a)=>{const path=a[0]?(a[0].startsWith('/')?a[0]:CWD+'/'+a[0]):CWD;const items=fsLs(path);if(!items)return `<span class="red">ls: no such directory: ${path}</span>`;return items.map(i=>{const isDir=FS[path+'/'+i]!==undefined;return isDir?`<span class="acc">${i}/</span>`:`<span class="dim">${i}</span>`;}).join('  ');}},
+  cd:{desc:'Change directory',output:(a)=>{const e=fsCd(a[0]);return e?`<span class="red">${e}</span>`:`<span class="dim">now in: </span><span class="acc">${CWD}</span>`;}},
+  pwd:{desc:'Print directory',output:()=>`<span class="acc">${CWD}</span>`},
+  cat:{desc:'Read a file',output:(a)=>{if(!a[0])return `<span class="red">cat: missing filename</span>`;if(FILE_CONTENT[a[0]])return `<div class="cmd-out">${FILE_CONTENT[a[0]]}</div>`;return `<span class="red">cat: ${a[0]}: No such file</span>`;}},
+  gallery:{desc:'View photo gallery',output:()=>`<div class="cmd-out"><span class="dim">Try the </span><span class="acc">photography</span><span class="dim"> command instead!</span></div>`},
+};
+
+const outEl=document.getElementById('output');
+const stickyEl=document.getElementById('sticky');
+const inputEl=document.getElementById('userinput');
+const promptEl=document.getElementById('promptlbl');
+const sugEl=document.getElementById('suggestions');
+const counterEl=document.getElementById('cmd-counter');
+const ghostEl=document.getElementById('ghost-text');
+
+function updateGhost(){
+  const val=inputEl.value;
+  if(!val){ghostEl.textContent='';return;}
+  const match=Object.keys(CMDS).find(k=>k.startsWith(val)&&k!==val);
+  if(match) ghostEl.innerHTML=`<span style="color:transparent">${val}</span><span style="color:var(--text);opacity:0.35">${match.slice(val.length)}</span>`;
+  else ghostEl.textContent='';
+}
+
+let hist=[],histIdx=-1,cmdCount=0;
+let matrixInterval=null,matrixCtx=null;
+promptEl.textContent=CFG.prompt;
+
+function clearOut(){outEl.innerHTML='';}
+function scrollBot(){outEl.scrollTop=outEl.scrollHeight;}
+function updateCursor(){}
+function updatePrompt(){const path=CWD==='/home'?'':' '+CWD;promptEl.textContent=`> farhad${path}\u00a0`;}
+
+inputEl.addEventListener('input',()=>{updateCursor();showSuggestions();updateGhost();});
+
+function pLine(cls,html){const d=document.createElement('div');d.className='line '+cls;d.innerHTML=html;outEl.appendChild(d);}
+function pHTML(html,copyable=true){
+  const wrap=document.createElement('div');wrap.className='line line-out';
+  if(copyable){const btn=document.createElement('span');btn.className='copy-btn';btn.textContent='copy';btn.onclick=()=>{navigator.clipboard.writeText(wrap.innerText).then(()=>{btn.textContent='✓';setTimeout(()=>btn.textContent='copy',1500);});};wrap.appendChild(btn);}
+  const d=document.createElement('div');d.innerHTML=html;wrap.appendChild(d);outEl.appendChild(wrap);scrollBot();
+}
+function pGap(){const s=document.createElement('span');s.className='gap';outEl.appendChild(s);}
+function pErr(msg){pLine('line-err',msg);scrollBot();}
+
+function updateSndBtn(){
+  const btn=document.getElementById('snd-btn');
+  if(!btn)return;
+  btn.textContent=CFG.soundOn?'🔊':'🔇';
+  btn.style.color=CFG.soundOn?'var(--prompt)':'var(--dim)';
+  btn.style.borderColor=CFG.soundOn?'var(--prompt)':'var(--border)';
+}
+function toggleSound(){
+  CFG.soundOn=!CFG.soundOn;
+  updateSndBtn();
+  if(CFG.soundOn) playClick();
+}
+function playClick(){
+  if(!CFG.soundOn)return;
+  try{
+    const ctx=new(window.AudioContext||window.webkitAudioContext)();
+    const o=ctx.createOscillator();
+    const g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);
+    const p=CFG.soundProfile;
+    if(p==='mechanical'){
+      o.type='square';o.frequency.value=1200+Math.random()*200;
+      g.gain.setValueAtTime(0.06,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.05);
+      o.start();o.stop(ctx.currentTime+0.05);
+    } else if(p==='typewriter'){
+      o.type='sawtooth';o.frequency.value=600+Math.random()*100;
+      g.gain.setValueAtTime(0.04,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.08);
+      o.start();o.stop(ctx.currentTime+0.08);
+    } else if(p==='scifi'){
+      o.type='sine';o.frequency.setValueAtTime(800,ctx.currentTime);
+      o.frequency.exponentialRampToValueAtTime(1600,ctx.currentTime+0.1);
+      g.gain.setValueAtTime(0.05,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.12);
+      o.start();o.stop(ctx.currentTime+0.12);
+    } else if(p==='digital'){
+      o.type='square';o.frequency.value=440;
+      g.gain.setValueAtTime(0.04,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.04);
+      o.start();o.stop(ctx.currentTime+0.04);
+    } else if(p==='tap'){
+      o.type='sine';o.frequency.value=900;
+      g.gain.setValueAtTime(0.03,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.03);
+      o.start();o.stop(ctx.currentTime+0.03);
+    } else if(p==='chime'){
+      o.type='sine';o.frequency.value=1046;
+      g.gain.setValueAtTime(0.06,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.3);
+      o.start();o.stop(ctx.currentTime+0.3);
+    } else if(p==='ping'){
+      o.type='sine';o.frequency.setValueAtTime(1200,ctx.currentTime);
+      o.frequency.exponentialRampToValueAtTime(800,ctx.currentTime+0.15);
+      g.gain.setValueAtTime(0.05,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.2);
+      o.start();o.stop(ctx.currentTime+0.2);
+    } else {
+      o.frequency.value=800+Math.random()*400;
+      g.gain.setValueAtTime(0.05,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.04);
+      o.start();o.stop(ctx.currentTime+0.04);
+    }
+  }catch(e){}
+}
+
+function showSuggestions(){
+  const val=inputEl.value.trim().toLowerCase();
+  sugEl.style.display='none';
+  if(!val||val.includes(' '))return;
+  const matches=Object.entries(CMDS).filter(([k])=>k.startsWith(val)&&k!==val);
+  if(!matches.length)return;
+  sugEl.innerHTML=matches.slice(0,6).map(([k,v],i)=>`<div class="sug-item${i===0?' active':''}" data-cmd="${k}"><span>${k}</span><span class="sug-desc">${v.desc}</span></div>`).join('');
+  sugEl.style.display='block';
+  sugEl.querySelectorAll('.sug-item').forEach(el=>{el.addEventListener('mousedown',e=>{e.preventDefault();inputEl.value=el.dataset.cmd;sugEl.style.display='none';inputEl.focus();});});
+}
+
+async function runCmd(raw){
+  const parts=raw.trim().split(/\s+/);
+  const cmd=parts[0].toLowerCase(),args=parts.slice(1);
+  if(!cmd)return;
+  if(hist[0]!==raw)hist.unshift(raw);
+  if(hist.length>100)hist.pop();
+  histIdx=-1;cmdCount++;
+  counterEl.textContent=`cmds: ${cmdCount}`;
+  sugEl.style.display='none';
+  pLine('line-cmd',promptEl.textContent+raw);
+  pGap();playClick();
+  if(CMDS[cmd]){
+    try{const res=CMDS[cmd].output(args);if(res!==null&&res!==undefined){if(/<[a-z][\s\S]*>/i.test(res))pHTML(res);else pHTML(`<span>${res}</span>`);}}
+    catch(e){pErr('Error: '+e.message);}
+  } else {
+    pErr(`Command not found: <strong>${cmd}</strong> — type <span style="color:var(--highlight)">help</span>`);
+  }
+  pGap();scrollBot();updatePrompt();
+}
+
+inputEl.addEventListener('keydown',async e=>{
+  if(e.key==='Enter'){const v=inputEl.value;inputEl.value='';ghostEl.textContent='';sugEl.style.display='none';await runCmd(v);}
+  if(e.key==='ArrowUp'){e.preventDefault();if(histIdx<hist.length-1)histIdx++;inputEl.value=hist[histIdx]||'';ghostEl.textContent='';}
+  if(e.key==='ArrowDown'){e.preventDefault();if(histIdx>0)histIdx--;else{histIdx=-1;inputEl.value='';}inputEl.value=hist[histIdx]||'';ghostEl.textContent='';}
+  if(e.key==='Tab'){
+    e.preventDefault();
+    const val=inputEl.value.toLowerCase();
+    const match=Object.keys(CMDS).find(k=>k.startsWith(val)&&k!==val);
+    if(match){inputEl.value=match;ghostEl.textContent='';sugEl.style.display='none';}
+    else{const m=Object.keys(CMDS).filter(k=>k.startsWith(val));if(m.length>1){pLine('line-cmd',promptEl.textContent+val);pHTML(`<span class="dim">${m.join('  ')}</span>`,false);}}
+  }
+  if(e.key==='Escape')sugEl.style.display='none';
+  if(e.key==='l'&&e.ctrlKey){e.preventDefault();clearOut();}
+  playClick();
+});
+inputEl.addEventListener('click',updateCursor);
+document.querySelector('.terminal-window').addEventListener('click',()=>inputEl.focus());
+document.getElementById('btn-fullscreen').addEventListener('click',()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen();else document.exitFullscreen();});
+
+function startMatrix(){
+  const canvas=document.getElementById('matrix-canvas');canvas.style.display='block';canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+  matrixCtx=canvas.getContext('2d');const cols=Math.floor(canvas.width/16);const drops=Array(cols).fill(1);
+  const chars='アイウエオABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%';
+  matrixInterval=setInterval(()=>{matrixCtx.fillStyle='rgba(0,0,0,0.05)';matrixCtx.fillRect(0,0,canvas.width,canvas.height);matrixCtx.fillStyle='#00ff41';matrixCtx.font='15px monospace';drops.forEach((y,i)=>{matrixCtx.fillText(chars[Math.floor(Math.random()*chars.length)],i*16,y*16);if(y*16>canvas.height&&Math.random()>0.975)drops[i]=0;drops[i]++;});},50);
+}
+function stopMatrix(){clearInterval(matrixInterval);const canvas=document.getElementById('matrix-canvas');canvas.style.display='none';canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);}
+
+async function fakeHack(){
+  const lines=[
+    `<span class="red">[ SCANNING ]</span> Locating target...`,
+    `<span class="red">[ FOUND ]</span> IP: 192.168.${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}`,
+    `<span class="yellow">[ BYPASS ]</span> Firewall... <span class="grn">BYPASSED ✓</span>`,
+    `<span class="yellow">[ INJECT ]</span> Payload loading... <span class="grn">SUCCESS ✓</span>`,
+    `<span class="acc">[ ACCESS ]</span> Root privileges... <span class="grn">GRANTED 🔓</span>`,
+  ];
+  for(const l of lines){pHTML(`<span>${l}</span>`,false);await sleep(280);}
+
+  const messages=[
+    {title:'⚠️ SECURITY BREACH DETECTED',body:'Unauthorized access to system files\nFirewall status: DISABLED\nBackdoor installed at /root/.hidden',color:'#f85149'},
+    {title:'💀 ADMIN ACCESS GRANTED',body:'All privileges escalated\nPassword database: DUMPED\nEncryption keys: STOLEN',color:'#ff003c'},
+    {title:'📡 NETWORK COMPROMISED',body:'Intercepting all traffic...\nDNS poisoning: ACTIVE\nPackets captured: 48,291',color:'#d29922'},
+    {title:'🔓 DATABASE BREACH',body:'Users table: DOWNLOADED\nCredit cards: EXPOSED\nSSN records: COPIED',color:'#f85149'},
+    {title:'👁️ WEBCAM ACTIVATED',body:'Accessing camera feed...\nMicrophone: ENABLED\nStreaming to remote server',color:'#ff003c'},
+    {title:'💸 CRYPTO WALLET FOUND',body:'Bitcoin wallet detected\nBalance: 4.2 BTC\nTransfer in progress...',color:'#d29922'},
+    {title:'📂 FILES ENCRYPTED',body:'Ransomware deployed\nAll files locked: 99%\nSend 1 BTC to decrypt',color:'#f85149'},
+    {title:'🌐 BOTNET ENROLLED',body:'Device added to botnet\nRemote control: ACTIVE\nAwaiting commands...',color:'#ff003c'},
+    {title:'⚡ SYSTEM OVERLOAD',body:'CPU usage: 100%\nMemory: CRITICAL\nShutdown imminent...',color:'#d29922'},
+    {title:'🚨 FBI MONITORING',body:'Suspicious activity flagged\nTrace route: COMPLETE\nAgents dispatched to location',color:'#f85149'},
+    {title:'💣 SELF DESTRUCT',body:'System wipe initiated\nCountdown: 10...9...8...\nAll data will be erased',color:'#ff003c'},
+    {title:'😈 TOTAL CONTROL',body:'You have been hacked\nAll systems compromised\nResistance is futile',color:'#c77dff'},
+    {title:'🕵️ IDENTITY STOLEN',body:'SSN: ***-**-4821\nDOB: CAPTURED\nAddress: KNOWN',color:'#f85149'},
+    {title:'📱 PHONE CLONED',body:'IMEI captured\nContacts: COPIED\nMessages: INTERCEPTED',color:'#d29922'},
+    {title:'🏦 BANK ACCESS',body:'Routing number: FOUND\nAccount balance: VISIBLE\nTransfer initiated: $9,999',color:'#ff003c'},
+    {title:'🔐 PASSWORDS DUMPED',body:'Chrome passwords: EXPORTED\nKeychains: UNLOCKED\n247 credentials stolen',color:'#f85149'},
+    {title:'📍 LOCATION TRACKED',body:'GPS coordinates: LOCKED\nLast 30 locations: LOGGED\nSharing with unknown server',color:'#d29922'},
+    {title:'🖥️ REMOTE DESKTOP',body:'Screen capture: ACTIVE\nKeylogger: INSTALLED\nAll keystrokes recorded',color:'#ff003c'},
+    {title:'📧 EMAILS BREACHED',body:'Inbox access: GRANTED\nSent items: DOWNLOADED\nForwarding to attacker',color:'#f85149'},
+    {title:'🧬 BIOMETRICS STOLEN',body:'Face ID data: EXPORTED\nFingerprints: CLONED\nVoice profile: RECORDED',color:'#c77dff'},
+  ];
+
+  // Tag all hack elements with class for easy cleanup
+  const HACK_CLASS='hack-popup';
+
+  for(let i=0;i<messages.length;i++){
+    await sleep(i<5?250:150);
+    const m=messages[i];
+    const pop=document.createElement('div');
+    pop.className=HACK_CLASS;
+    const top=3+Math.random()*72;
+    const left=1+Math.random()*62;
+    pop.style.cssText=`position:fixed;z-index:9997;top:${top}%;left:${left}%;background:#080008;border:2px solid ${m.color};border-radius:8px;padding:18px 22px;min-width:300px;max-width:370px;box-shadow:0 0 40px ${m.color}88;font-family:'JetBrains Mono',monospace;font-size:13px;color:#c9d1d9;animation:popIn 0.2s ease;`;
+    pop.innerHTML=`<div style="color:${m.color};font-weight:700;font-size:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center">${m.title}<span onclick="this.closest('.hack-popup').remove()" style="cursor:pointer;color:#666;font-size:20px;line-height:1;margin-left:12px">×</span></div><pre style="color:#c9d1d9;font-size:12px;white-space:pre-wrap;margin:0;line-height:1.8">${m.body}</pre>`;
+    document.body.appendChild(pop);
+  }
+
+  // Big final overlay
+  await sleep(500);
+  const overlay=document.createElement('div');
+  overlay.className=HACK_CLASS;
+  overlay.style.cssText=`position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,0.92);display:flex;align-items:center;justify-content:center;animation:popIn 0.3s ease;`;
+  overlay.innerHTML=`<div style="text-align:center;font-family:'JetBrains Mono',monospace;padding:20px;">
+    <div style="font-size:90px;margin-bottom:16px">😄</div>
+    <div style="font-size:42px;font-weight:700;color:#00eaff;margin-bottom:14px;letter-spacing:2px">JUST KIDDING!</div>
+    <div style="font-size:16px;color:#768390;margin-bottom:10px">This is Farhad's portfolio.</div>
+    <div style="font-size:14px;color:#768390;margin-bottom:32px">No systems were harmed. You're safe 😊</div>
+    <div onclick="document.querySelectorAll('.hack-popup').forEach(e=>e.remove());" style="cursor:pointer;display:inline-block;border:2px solid #00eaff;color:#00eaff;padding:14px 40px;border-radius:8px;font-size:15px;font-weight:700;transition:background .2s;" onmouseover="this.style.background='rgba(0,234,255,0.12)'" onmouseout="this.style.background='transparent'">✓ Close Everything</div>
+  </div>`;
+  document.body.appendChild(overlay);
+}
+function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+
+(async()=>{
+  await loadContent();
+  const bootEl=document.getElementById('boot-text');
+  const bootLines=['[  0.001] Initializing terminal environment...','[  0.042] Loading fonts... OK','[  0.108] Mounting filesystem... OK','[  0.201] Loading profile: farhad','[  0.334] Importing modules... OK','[  0.601] All systems ready. Welcome.'];
+  for(let i=0;i<bootLines.length;i++){bootEl.innerHTML+=`<div>${bootLines[i]}</div>`;await sleep(CFG.bootSpeed+(i===bootLines.length-1?300:0));}
+  await sleep(500);
+  document.getElementById('boot').classList.add('hide');
+  await sleep(650);
+  document.getElementById('boot').style.display='none';
+
+  const bannerHTML=`
+<pre class="ascii" style="font-size:10px;letter-spacing:0.5px;text-shadow:0 0 6px rgba(0,234,255,0.4);">
+  ███████╗ █████╗ ██████╗ ██╗  ██╗ █████╗ ██████╗      █████╗ ██╗     ██╗
+  ██╔════╝██╔══██╗██╔══██╗██║  ██║██╔══██╗██╔══██╗    ██╔══██╗██║     ██║
+  █████╗  ███████║██████╔╝███████║███████║██║  ██║    ███████║██║     ██║
+  ██╔══╝  ██╔══██║██╔══██╗██╔══██║██╔══██║██║  ██║    ██╔══██║██║     ██║
+  ██║     ██║  ██║██║  ██║██║  ██║██║  ██║██████╔╝    ██║  ██║███████╗██║
+  ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝     ╚═╝  ╚═╝╚══════╝╚═╝
+</pre>
+<div class="cmd-out" style="margin-top:4px">
+  <span style="font-family:'Orbitron',sans-serif;font-weight:900;font-size:13px;background:linear-gradient(90deg,#f9c74f,#ff9a3c,#f9c74f);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:2px;">${CONTENT.name.toUpperCase()}</span>
+  <span style="color:var(--dim)"> — </span>
+  <span style="color:var(--highlight)">${CONTENT.title}</span><br>
+  <span style="color:#f778ba">📍 ${CONTENT.location}</span>
+  <span style="color:var(--dim)"> · </span>
+  <span style="color:#3fb950">🔬 ${CONTENT.company}</span>
+  <span style="color:var(--dim)"> · </span>
+  <span style="color:#d29922">🎓 ${CONTENT.college}</span>
+  <span style="color:var(--dim)"> · </span>
+  <span style="color:#00eaff">⭐ ${CONTENT.gpa} GPA</span><br>
+  <span style="color:var(--dim)">Type </span><span class="badge">help</span><span style="color:var(--dim)"> for commands &nbsp;·&nbsp; </span><span class="badge">Tab</span><span style="color:var(--dim)"> autocomplete</span>
+</div>`;
+  const d=document.createElement('div');d.innerHTML=bannerHTML;stickyEl.appendChild(d);
+  const gap=document.createElement('span');gap.className='gap';stickyEl.appendChild(gap);
+  inputEl.focus();
+})();
+</script>
+</body>
+</html>
+tBrains+Mono:wght@300;400;500;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet"/>
 <script defer src="https://cloud.umami.is/script.js" data-website-id="5da5f162-3e85-4994-8728-63fd5cddbcb3"></script>
 <style>
 :root {
