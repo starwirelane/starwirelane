@@ -165,7 +165,7 @@ const CMDS = {
     desc:'Show all commands',
     output:()=>{
       const groups={
-        'Core':['help','about','whoami','currently','mission','status'],
+        'Core':['help','whoami','currently','mission','status'],
         'Portfolio':['projects','experience','skills','education','awards','resume'],
         'Links':['github','linkedin','contact'],
         'Interests':['photography','hiking'],
@@ -183,14 +183,6 @@ const CMDS = {
     }
   },
 
-  about:{
-    desc:'About Farhad Ali',
-    output:()=>`<div class="cmd-out">
-<span class="acc" style="font-size:16px;font-weight:700">Farhad Ali</span>
-<hr class="divider">
-<span class="dim">Manufacturing Associate at Cepheid and student at San Joaquin Delta College. I am passionate about using data and analytical thinking to solve real world problems and improve how organizations operate. My experience in manufacturing and operations has given me hands on exposure to processes, performance metrics, and operational efficiency.</span>
-</div>`
-  },
 
   whoami:{
     desc:'Who is Farhad Ali',
