@@ -557,7 +557,7 @@ ${[['GMP/ISO',95],['Data Recording',90],['Team Leadership',85],['Analytics',70],
     }
   },
 
-  matrix:{desc:'Matrix rain effect',output:(a)=>{if(a[0]==='off'){stopMatrix();return `<span class="grn">✓ Matrix off</span>`;}startMatrix();return `<span class="grn">Wake up, Neo...</span><br><span class="dim">Type matrix off to stop</span>`;}},
+  matrix:{desc:'Matrix rain effect',output:(a)=>{if(a[0]==='off'){stopMatrix();return `<span class="grn">✓ Matrix off</span>`;}startMatrix();setTimeout(()=>stopMatrix(),10000);return `<span class="grn">Wake up, Neo...</span><br><span class="dim">Auto-stops in 10 seconds</span>`;}},
   hack:{desc:'Hack sequence animation',output:()=>{setTimeout(()=>fakeHack(),100);return `<span class="red">INITIATING HACK SEQUENCE...</span>`;}},
   coffee:{desc:'Get a coffee ☕',output:()=>`<div class="cmd-out"><pre class="ascii-dim">    ( (
      ) )
