@@ -1,12 +1,106 @@
 {
-  "github": "https://github.com/starwirelane",
-  "bio": "I'm passionate about using data and analytical thinking to solve real-world problems and improve organizational efficiency. Through manufacturing and operations experience, I've built a strong foundation for transitioning into business analytics and data analysis.",
-  "name": "Farhad Ali ",
+  "name": "Farhad Ali",
+  "title": "Manufacturing Associate & Aspiring Data Analyst",
   "location": "Lodi, California",
+  "company": "Cepheid",
   "college": "Delta College",
   "gpa": "3.8",
-  "title": "Manufacturing Associate & Aspiring Data Analyst",
   "email": "farhad622860@gmail.com",
-  "company": "Cepheid",
-  "linkedin": "https://linkedin.com/in/farhadali-627770352"
+  "github": "https://github.com/starwirelane",
+  "linkedin": "https://www.linkedin.com/in/FarhadAIi",
+  "buymeacoffee": "https://buymeacoffee.com/farhadaii",
+  "bio": "Manufacturing Associate at Cepheid and student at San Joaquin Delta College. I am passionate about using data and analytical thinking to solve real world problems and improve how organizations operate.",
+  "whoami": "Manufacturing Associate at Cepheid and student at San Joaquin Delta College. Interested in business analytics, data analysis, and operational improvement. Focused on using data to understand systems, identify inefficiencies, and support better decision making.",
+  "currently": "Currently working as a Manufacturing Associate at Cepheid in a regulated cleanroom manufacturing environment supporting molecular diagnostic production. At the same time, I am a student at San Joaquin Delta College where I am developing skills in business analytics and data analysis while preparing to transfer to a four year university.",
+  "mission": "My goal is to apply analytical thinking and data analysis to improve operational efficiency and help organizations make smarter decisions. I am particularly interested in roles where data can be used to solve real business and manufacturing problems.",
+  "status": "Currently building analytics skills and preparing for opportunities in business analytics and data analysis.",
+  "open_to_work": true,
+  "experience": [
+    {
+      "title": "Manufacturing Associate I",
+      "company": "Cepheid",
+      "dates": "December 2024 – Present",
+      "location": "Lodi, CA",
+      "bullets": ["Test products at all manufacturing stages using GeneXpert","Follow GMP & ISO documentation and procedures","Investigate and troubleshoot functionality & performance issues","Schedule and plan In-Process Testing (IPT) priority work","Operate equipment in a regulated cleanroom environment"]
+    },
+    {
+      "title": "Manager",
+      "company": "McDonald's",
+      "dates": "March 2021 – December 2024",
+      "location": "Lodi, CA",
+      "bullets": ["Led daily operations in a high-volume environment","Managed schedules, team performance & inventory","Trained and supervised team members"]
+    },
+    {
+      "title": "Private Swimming Coach",
+      "company": "Self-Employed",
+      "dates": "April 2022 – February 2024",
+      "location": "Lodi, CA",
+      "bullets": ["Provided one-on-one swimming instruction to clients of all skill levels","Developed personalized training plans based on individual goals","Ensured safety and proper technique during all sessions","Built strong client relationships through consistent communication"]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Associate of Arts — Interdisciplinary Studies",
+      "school": "San Joaquin Delta College",
+      "dates": "2021",
+      "location": "Stockton, CA",
+      "gpa": "3.5",
+      "notes": "Business Analytics & Data Analysis focus. Preparing to transfer to 4-year university."
+    },
+    {
+      "degree": "High School Diploma",
+      "school": "Tokay High School",
+      "dates": "2019–2023",
+      "location": "Lodi, CA",
+      "gpa": "3.8",
+      "notes": "High Honors Graduate"
+    }
+  ],
+  "awards": [
+    { "emoji": "🏅", "title": "California Scholarship Federation (CSF)", "desc": "Recognized for academic excellence in California" },
+    { "emoji": "🎓", "title": "National Society of High School Scholars (NSHSS)", "desc": "National recognition for outstanding scholastic achievement" },
+    { "emoji": "⭐", "title": "High Honors Graduate — 3.8 GPA", "desc": "Tokay High School" },
+    { "emoji": "🦃", "title": "Turkey Trot — 1st Place", "desc": "2019 · Competitive running race" },
+    { "emoji": "🎨", "title": "1st Place — Local Art Exhibition", "desc": "Photography · Lodi, CA" }
+  ],
+  "skills_manufacturing": ["GMP Compliance","ISO Standards","In-Process Testing","Cleanroom Ops","GeneXpert","Quality Control","Documentation"],
+  "skills_analytics": ["Data Recording","Business Analytics","Data Analysis","Process Improvement","Production Reporting"],
+  "skills_leadership": ["Team Management","Training","Scheduling","Inventory Control","Emergency Response","CPR/First Aid"],
+  "skill_levels": [
+    { "name": "GMP/ISO", "value": 95 },
+    { "name": "Data Recording", "value": 90 },
+    { "name": "Team Leadership", "value": 85 },
+    { "name": "Process Improvement", "value": 75 },
+    { "name": "Analytics", "value": 70 }
+  ],
+  "projects": [
+    { "emoji": "🔬", "title": "GeneXpert Data Tracker", "desc": "Custom spreadsheet system for tracking IPT results, trends, and anomalies across manufacturing batches at Cepheid.", "tags": "Excel · Data Analysis · GMP Documentation", "link": "https://github.com/starwirelane" },
+    { "emoji": "📊", "title": "Operations Dashboard", "desc": "Visual dashboard concept for monitoring daily production output, quality metrics, and scheduling for manufacturing teams.", "tags": "Data Visualization · Analytics · Process Improvement", "link": "https://github.com/starwirelane" },
+    { "emoji": "💻", "title": "Terminal Portfolio", "desc": "This interactive terminal-style portfolio — built with pure HTML, CSS and JavaScript. No frameworks.", "tags": "HTML · CSS · JavaScript · GitHub Pages", "link": "https://github.com/starwirelane" }
+  ],
+  "photography": [
+    { "file": "DSC_1093.jpeg", "title": "Point Reyes", "loc": "Point Reyes, CA" },
+    { "file": "DSC_1150.jpeg", "title": "Point Reyes Lighthouse", "loc": "Point Reyes, CA" },
+    { "file": "DSC_1168.jpeg", "title": "Point Reyes Vista Point", "loc": "Point Reyes, CA" },
+    { "file": "IMG_5360.jpeg", "title": "Baker Beach", "loc": "San Francisco, CA" },
+    { "file": "IMG_5550.jpeg", "title": "Tunnel View", "loc": "Yosemite National Park, CA" },
+    { "file": "IMG_5573.jpeg", "title": "Mist Trail", "loc": "Yosemite National Park, CA" },
+    { "file": "IMG_5664.jpeg", "title": "Bishop Pumpkin Farm Corn Maze", "loc": "Wheatland, CA" },
+    { "file": "IMG_5683.jpeg", "title": "Chuze Fitness", "loc": "Stockton, CA" },
+    { "file": "IMG_5829.jpeg", "title": "Kimpton Sawyer Hotel", "loc": "Sacramento, CA" },
+    { "file": "IMG_5830.jpeg", "title": "Golden 1 Center", "loc": "Sacramento, CA" },
+    { "file": "IMG_6120.jpeg", "title": "California Academy of Sciences — Lizard Exhibition", "loc": "San Francisco, CA" },
+    { "file": "IMG_6121.jpeg", "title": "California Academy of Sciences — Snake Exhibition", "loc": "San Francisco, CA" },
+    { "file": "IMG_6160.jpeg", "title": "Seal Rock Beach", "loc": "San Francisco, CA" },
+    { "file": "IMG_6171.jpeg", "title": "Lands End", "loc": "San Francisco, CA" }
+  ],
+  "trails": [
+    { "name": "Lodi Lake", "loc": "Lodi, CA", "diff": "Easy", "miles": "2.3", "rating": "3.0", "color": "#3fb950" },
+    { "name": "Quarry Road Trail", "loc": "Auburn, CA", "diff": "Moderate", "miles": "10.9", "rating": "3.5", "color": "#d29922" },
+    { "name": "Western States Trail to Robie Point Fire Break", "loc": "Auburn, CA", "diff": "Hard", "miles": "13.4", "rating": "4.3", "color": "#f85149" },
+    { "name": "Lower Yosemite Falls", "loc": "Yosemite National Park, CA", "diff": "Easy", "miles": "1.0", "rating": "3.8", "color": "#3fb950" },
+    { "name": "Upper Yosemite Falls", "loc": "Yosemite National Park, CA", "diff": "Strenuous", "miles": "7.2", "rating": "4.4", "color": "#f85149" },
+    { "name": "Vernal & Nevada Falls via Mist Trail", "loc": "Yosemite National Park, CA", "diff": "Hard", "miles": "6.6", "rating": "4.8", "color": "#f85149" },
+    { "name": "Mirror Lake via Valley Loop Trail", "loc": "Yosemite National Park, CA", "diff": "Easy", "miles": "5.0", "rating": "3.9", "color": "#3fb950" }
+  ]
 }
