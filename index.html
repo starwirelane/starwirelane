@@ -50,7 +50,7 @@ body.theme-glitch .prompt-lbl{text-shadow:2px 0 #ff00ff,-2px 0 #00ffff;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--fs);line-height:var(--lh);overflow:hidden;}
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);}
-#boot{position:fixed;inset:0;background:var(--bg);z-index:9999;display:none;flex-direction:column;justify-content:center;align-items:center;gap:4px;padding:40px;transition:opacity 0.6s ease;}
+#boot{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;padding:40px;transition:opacity 0.6s ease;}
 #boot.hide{opacity:0;pointer-events:none;}
 #boot-text{color:var(--green);font-size:13px;max-width:600px;width:100%;}
 #app{display:flex;align-items:center;justify-content:center;height:100vh;padding:16px;}
@@ -129,21 +129,9 @@ pre.ascii-dim{color:var(--dim);font-size:10px;line-height:1.2;}
 </style>
 </head>
 <body>
-<canvas id="intro-canvas" style="position:fixed;inset:0;z-index:9999;background:#000;"></canvas>
-<div id="splash" style="position:fixed;inset:0;z-index:10000;display:flex;flex-direction:column;align-items:center;justify-content:center;background:transparent;cursor:pointer;" onclick="enterSite()">
-  <div id="splash-content" style="text-align:center;pointer-events:none;">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(0,234,255,0.45);letter-spacing:8px;margin-bottom:28px;animation:splashSub 0.8s 0.3s ease forwards;opacity:0;">✦ WELCOME ✦</div>
-    <div style="font-family:'Orbitron',sans-serif;font-weight:900;font-size:clamp(44px,9vw,110px);background:linear-gradient(135deg,#f9c74f 0%,#ff9a3c 45%,#ffe066 80%,#fff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:8px;animation:splashName 1.4s 0.5s cubic-bezier(0.16,1,0.3,1) forwards;opacity:0;filter:drop-shadow(0 0 60px rgba(249,199,79,0.35));">FARHAD ALI</div>
-    <div style="height:2px;background:linear-gradient(90deg,transparent,#00eaff,transparent);margin:22px auto;animation:splashLine 0.8s 1.6s ease forwards;width:0;opacity:0;"></div>
-    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#f778ba;letter-spacing:4px;animation:splashSub 0.8s 1.8s ease forwards;opacity:0;">📍 LODI · CALIFORNIA</div>
-    <div style="margin-top:64px;animation:splashBtn 0.8s 2.2s ease forwards;opacity:0;">
-      <div id="enter-btn" style="font-family:'JetBrains Mono',monospace;font-size:12px;color:rgba(0,234,255,0.9);letter-spacing:6px;border:1px solid rgba(0,234,255,0.3);padding:16px 52px;border-radius:2px;display:inline-block;box-shadow:0 0 30px rgba(0,234,255,0.08),inset 0 0 30px rgba(0,234,255,0.02);animation:splashPulse 2.5s 3s ease-in-out infinite;">[ CLICK TO ENTER ]</div>
-    </div>
-    <div style="margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(118,131,144,0.35);letter-spacing:4px;animation:splashSub 0.8s 2.8s ease forwards;opacity:0;">— OR SCROLL —</div>
-  </div>
-</div>
+<div id="boot"><div id="boot-text"></div></div>
 <canvas id="matrix-canvas"></canvas>
-<div id="app" style="visibility:hidden;">
+<div id="app">
   <div class="terminal-window" id="termwin">
     <div class="tbar">
       <div class="dot dot-r"></div>
@@ -810,102 +798,30 @@ function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 (async()=>{
   await loadContent();
 
-  // ── PARTICLE BACKGROUND ON SPLASH ──
-  const canvas=document.getElementById('intro-canvas');
-  const ctx=canvas.getContext('2d');
-  canvas.width=window.innerWidth;
-  canvas.height=window.innerHeight;
-  const W=canvas.width,H=canvas.height;
-  const particles=Array.from({length:120},()=>({
-    x:Math.random()*W, y:Math.random()*H,
-    vx:(Math.random()-0.5)*0.4, vy:(Math.random()-0.5)*0.4,
-    size:Math.random()*1.5+0.3,
-    alpha:Math.random()*0.5+0.1,
-    color:`hsl(${180+Math.random()*60},100%,${60+Math.random()*20}%)`
-  }));
-  function drawParticles(){
-    ctx.clearRect(0,0,W,H);
-    ctx.fillStyle='#000';
-    ctx.fillRect(0,0,W,H);
-    particles.forEach(p=>{
-      p.x+=p.vx; p.y+=p.vy;
-      if(p.x<0)p.x=W; if(p.x>W)p.x=0;
-      if(p.y<0)p.y=H; if(p.y>H)p.y=0;
-      ctx.globalAlpha=p.alpha;
-      ctx.fillStyle=p.color;
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
-      ctx.fill();
-    });
-    // draw connecting lines between close particles
-    ctx.strokeStyle='rgba(0,234,255,0.08)';
-    ctx.lineWidth=0.5;
-    for(let i=0;i<particles.length;i++){
-      for(let j=i+1;j<particles.length;j++){
-        const dx=particles[i].x-particles[j].x;
-        const dy=particles[i].y-particles[j].y;
-        const dist=Math.sqrt(dx*dx+dy*dy);
-        if(dist<120){
-          ctx.globalAlpha=(1-dist/120)*0.15;
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x,particles[i].y);
-          ctx.lineTo(particles[j].x,particles[j].y);
-          ctx.stroke();
-        }
-      }
-    }
-    ctx.globalAlpha=1;
-    if(!window._splashDone) requestAnimationFrame(drawParticles);
+  // Boot sequence
+  const bootDiv=document.getElementById('boot');
+  bootDiv.style.display='flex';
+  const bootEl=document.getElementById('boot-text');
+  const bootLines=[
+    '[  0.001] Initializing terminal environment...',
+    '[  0.042] Loading fonts... OK',
+    '[  0.108] Mounting filesystem... OK',
+    '[  0.201] Loading profile: farhad',
+    '[  0.334] Importing modules... OK',
+    '[  0.601] All systems ready. Welcome.'
+  ];
+  for(let i=0;i<bootLines.length;i++){
+    bootEl.innerHTML+=`<div>${bootLines[i]}</div>`;
+    await sleep(30);
   }
-  drawParticles();
+  await sleep(400);
+  bootDiv.style.transition='opacity 0.5s';
+  bootDiv.style.opacity='0';
+  await sleep(550);
+  bootDiv.style.display='none';
 
-  // scroll to enter
-  window.addEventListener('wheel',()=>enterSite(),{once:true});
-
-  window.enterSite=async function(){
-    if(window._splashDone)return;
-    window._splashDone=true;
-
-    // fade out splash + canvas
-    const splash=document.getElementById('splash');
-    const introCanvas=document.getElementById('intro-canvas');
-    splash.style.transition='opacity 0.5s';
-    introCanvas.style.transition='opacity 0.5s';
-    splash.style.opacity='0';
-    introCanvas.style.opacity='0';
-    await sleep(500);
-    splash.remove();
-    introCanvas.remove();
-
-    // show app
-    document.getElementById('app').style.visibility='visible';
-
-    // show boot screen
-    const bootDiv=document.getElementById('boot');
-    bootDiv.style.display='flex';
-    const bootEl=document.getElementById('boot-text');
-    const bootLines=[
-      '[  0.001] Initializing terminal environment...',
-      '[  0.042] Loading fonts... OK',
-      '[  0.108] Mounting filesystem... OK',
-      '[  0.201] Loading profile: farhad',
-      '[  0.334] Importing modules... OK',
-      '[  0.601] All systems ready. Welcome.'
-    ];
-    for(let i=0;i<bootLines.length;i++){
-      bootEl.innerHTML+=`<div>${bootLines[i]}</div>`;
-      await sleep(40);
-    }
-    await sleep(400);
-    bootDiv.style.transition='opacity 0.6s';
-    bootDiv.style.opacity='0';
-    await sleep(650);
-    bootDiv.style.display='none';
-
-    // show banner
-    const stickyEl=document.getElementById('sticky');
-    const inputEl=document.getElementById('userinput');
-    const bannerHTML=`
+  // Show banner
+  const bannerHTML=`
 <pre class="ascii" style="font-size:10px;letter-spacing:0.5px;text-shadow:0 0 6px rgba(0,234,255,0.4);">
   ███████╗ █████╗ ██████╗ ██╗  ██╗ █████╗ ██████╗      █████╗ ██╗     ██╗
   ██╔════╝██╔══██╗██╔══██╗██║  ██║██╔══██╗██╔══██╗    ██╔══██╗██║     ██║
@@ -927,14 +843,13 @@ function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
   <span style="color:#00eaff">⭐ ${CONTENT.gpa} GPA</span><br>
   <span style="color:var(--dim)">Type </span><span class="badge">help</span><span style="color:var(--dim)"> for commands &nbsp;·&nbsp; </span><span class="badge">Tab</span><span style="color:var(--dim)"> autocomplete</span>
 </div>`;
-    const d=document.createElement('div');
-    d.innerHTML=bannerHTML;
-    stickyEl.appendChild(d);
-    const gap=document.createElement('span');
-    gap.className='gap';
-    stickyEl.appendChild(gap);
-    inputEl.focus();
-  };
+  const d=document.createElement('div');
+  d.innerHTML=bannerHTML;
+  stickyEl.appendChild(d);
+  const gap=document.createElement('span');
+  gap.className='gap';
+  stickyEl.appendChild(gap);
+  inputEl.focus();
 })();
 </script>
 </body>
