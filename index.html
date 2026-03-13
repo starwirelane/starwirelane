@@ -745,7 +745,6 @@ function startMatrix(){
 function stopMatrix(){clearInterval(matrixInterval);const canvas=document.getElementById('matrix-canvas');canvas.style.display='none';canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);}
 
 async function fakeHack(){
-  // First print terminal lines
   const lines=[
     `<span class="red">[ SCANNING ]</span> Locating target...`,
     `<span class="red">[ FOUND ]</span> IP: 192.168.${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}`,
@@ -753,33 +752,44 @@ async function fakeHack(){
     `<span class="yellow">[ INJECT ]</span> Payload loading... <span class="grn">SUCCESS ✓</span>`,
     `<span class="acc">[ ACCESS ]</span> Root privileges... <span class="grn">GRANTED 🔓</span>`,
   ];
-  for(const l of lines){pHTML(`<span>${l}</span>`,false);await sleep(350);}
+  for(const l of lines){pHTML(`<span>${l}</span>`,false);await sleep(300);}
 
-  // Spawn floating popups
-  const popups=[
-    {title:'⚠️ SECURITY BREACH',body:'Unauthorized access detected\nSystem integrity: COMPROMISED',color:'#f85149',delay:0},
-    {title:'📡 SIGNAL INTERCEPTED',body:'Decrypting 2048-bit RSA key...\nProgress: ████████░░ 80%',color:'#d29922',delay:600},
-    {title:'💀 ROOT ACCESS',body:'All systems now under control\nWelcome, Administrator',color:'#00eaff',delay:1200},
-    {title:'😄 JUST KIDDING',body:"This is Farhad's portfolio!\nNo systems were harmed.",color:'#3fb950',delay:2000},
+  const messages=[
+    {title:'⚠️ SECURITY BREACH DETECTED',body:'Unauthorized access to system files\nFirewall status: DISABLED\nBackdoor installed at /root/.hidden',color:'#f85149'},
+    {title:'💀 ADMIN ACCESS GRANTED',body:'All privileges escalated\nPassword database: DUMPED\nEncryption keys: STOLEN',color:'#ff003c'},
+    {title:'📡 NETWORK COMPROMISED',body:'Intercepting all traffic...\nDNS poisoning: ACTIVE\nPackets captured: 48,291',color:'#d29922'},
+    {title:'🔓 DATABASE BREACH',body:'Users table: DOWNLOADED\nCredit cards: EXPOSED\nSSN records: COPIED',color:'#f85149'},
+    {title:'👁️ WEBCAM ACTIVATED',body:'Accessing camera feed...\nMicrophone: ENABLED\nStreaming to remote server',color:'#ff003c'},
+    {title:'💸 CRYPTO WALLET FOUND',body:'Bitcoin wallet detected\nBalance: 4.2 BTC\nTransfer in progress...',color:'#d29922'},
+    {title:'📂 FILES ENCRYPTED',body:'Ransomware deployed\nAll files locked: 99%\nSend 1 BTC to decrypt',color:'#f85149'},
+    {title:'🌐 BOTNET ENROLLED',body:'Device added to botnet\nRemote control: ACTIVE\nAwaiting commands...',color:'#ff003c'},
+    {title:'⚡ SYSTEM OVERLOAD',body:'CPU usage: 100%\nMemory: CRITICAL\nShutdown imminent...',color:'#d29922'},
+    {title:'🚨 FBI MONITORING',body:'Suspicious activity flagged\nTrace route: COMPLETE\nAgents dispatched...',color:'#f85149'},
+    {title:'💣 SELF DESTRUCT',body:'System wipe initiated\nCountdown: 10...9...8...\nAll data will be erased',color:'#ff003c'},
+    {title:'😈 TOTAL CONTROL',body:'You have been hacked\nAll systems compromised\nResistance is futile',color:'#c77dff'},
   ];
 
-  for(const p of popups){
-    await sleep(p.delay);
+  // Spawn popups rapidly all over screen
+  const spawned=[];
+  for(let i=0;i<messages.length;i++){
+    await sleep(i<4?300:180);
+    const m=messages[i];
     const pop=document.createElement('div');
-    pop.style.cssText=`position:fixed;z-index:9997;background:#0d1117;border:2px solid ${p.color};border-radius:8px;padding:14px 18px;min-width:260px;max-width:320px;box-shadow:0 0 30px ${p.color}55;font-family:'JetBrains Mono',monospace;font-size:12px;color:#c9d1d9;animation:popIn 0.2s ease;`;
-    // Random position on screen
-    const positions=[
-      'top:15%;left:10%','top:20%;right:8%','top:55%;left:6%','top:60%;right:10%'
-    ];
-    pop.style.cssText+=';'+positions[popups.indexOf(p)%positions.length];
-    pop.innerHTML=`<div style="color:${p.color};font-weight:700;font-size:13px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">${p.title}<span onclick="this.parentElement.parentElement.remove()" style="cursor:pointer;color:var(--dim);font-size:16px;line-height:1">×</span></div><pre style="color:#c9d1d9;font-size:11px;white-space:pre-wrap;margin:0">${p.body}</pre>`;
+    const top=5+Math.random()*70;
+    const left=2+Math.random()*65;
+    pop.style.cssText=`position:fixed;z-index:9997;top:${top}%;left:${left}%;background:#0a0005;border:2px solid ${m.color};border-radius:8px;padding:18px 22px;min-width:300px;max-width:380px;box-shadow:0 0 40px ${m.color}77;font-family:'JetBrains Mono',monospace;font-size:13px;color:#c9d1d9;animation:popIn 0.25s ease;`;
+    pop.innerHTML=`<div style="color:${m.color};font-weight:700;font-size:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center">${m.title}<span onclick="this.parentElement.parentElement.remove()" style="cursor:pointer;color:#666;font-size:18px;line-height:1;margin-left:12px">×</span></div><pre style="color:#c9d1d9;font-size:12px;white-space:pre-wrap;margin:0;line-height:1.7">${m.body}</pre>`;
     document.body.appendChild(pop);
-    // Auto remove after 5s
-    setTimeout(()=>pop.remove(),5000);
+    spawned.push(pop);
   }
 
-  await sleep(2500);
-  pHTML(`<span class="grn">✓ Hack complete.</span> <span class="dim">Close the popups or wait 5s.</span>`,false);
+  // Big final overlay
+  await sleep(600);
+  const overlay=document.createElement('div');
+  overlay.style.cssText=`position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;animation:popIn 0.3s ease;`;
+  overlay.innerHTML=`<div style="text-align:center;font-family:'JetBrains Mono',monospace;"><div style="font-size:80px;margin-bottom:20px">😄</div><div style="font-size:36px;font-weight:700;color:#00eaff;margin-bottom:12px">JUST KIDDING!</div><div style="font-size:16px;color:#768390;margin-bottom:30px">This is Farhad's portfolio — no systems were harmed.</div><div onclick="this.parentElement.parentElement.remove();document.querySelectorAll('[style*=z-index\\:9997]').forEach(e=>e.remove());" style="cursor:pointer;display:inline-block;border:2px solid #00eaff;color:#00eaff;padding:12px 32px;border-radius:8px;font-size:14px;transition:background .2s;" onmouseover="this.style.background='rgba(0,234,255,0.1)'" onmouseout="this.style.background='transparent'">✓ Close Everything</div></div>`;
+  document.body.appendChild(overlay);
+  spawned.forEach(p=>setTimeout(()=>p.remove(),8000));
 }
 function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 
