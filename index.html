@@ -133,7 +133,7 @@ pre.ascii-dim{color:var(--dim);font-size:10px;line-height:1.2;}
       <div class="dot dot-g" id="btn-fullscreen"></div>
       <span class="tbar-title">farhad.sh</span>
       <span id="snd-btn" title="Toggle sound" style="cursor:pointer;font-size:13px;color:var(--dim);padding:2px 8px;border:1px solid var(--border);border-radius:4px;user-select:none;transition:color .2s,border-color .2s;" onclick="toggleSound()">🔇</span>
-      <span class="tbar-stats" id="live-clock"></span>
+      <span id="live-clock" style="font-family:'Orbitron',sans-serif;font-size:11px;color:var(--prompt);letter-spacing:2px;text-shadow:0 0 8px var(--prompt);"></span>
     </div>
     <div id="sticky"></div>
     <div id="output"></div>
@@ -154,12 +154,27 @@ let CONTENT = {
   name:"Farhad Ali", title:"Manufacturing Associate & Aspiring Data Analyst",
   location:"Lodi, California", company:"Cepheid", college:"Delta College", gpa:"3.8",
   email:"farhad622860@gmail.com", github:"https://github.com/starwirelane",
-  linkedin:"https://linkedin.com/in/farhadali-627770352",
-  bio:"I'm passionate about using data and analytical thinking to solve real-world problems and improve organizational efficiency."
+  linkedin:"https://www.linkedin.com/in/FarhadAIi",
+  buymeacoffee:"https://buymeacoffee.com/farhadaii",
+  bio:"Manufacturing Associate at Cepheid and student at San Joaquin Delta College.",
+  whoami:"Manufacturing Associate at Cepheid and student at San Joaquin Delta College. Interested in business analytics, data analysis, and operational improvement.",
+  currently:"Currently working as a Manufacturing Associate at Cepheid while studying at San Joaquin Delta College.",
+  mission:"My goal is to apply analytical thinking and data analysis to improve operational efficiency.",
+  status:"Currently building analytics skills and preparing for opportunities in business analytics.",
+  open_to_work:true,
+  experience:[], education:[], awards:[], projects:[],
+  photography:[], trails:[],
+  skills_manufacturing:[], skills_analytics:[], skills_leadership:[], skill_levels:[]
 };
 
 async function loadContent(){
-  try{ const res=await fetch('/content.json?t='+Date.now()); if(res.ok) CONTENT=await res.json(); }catch(e){}
+  try{
+    const res=await fetch('/content.json?t='+Date.now());
+    if(res.ok){
+      const data=await res.json();
+      Object.assign(CONTENT,data);
+    }
+  }catch(e){}
 }
 
 const FS={
@@ -218,9 +233,9 @@ const CMDS = {
   whoami:{
     desc:'Who is Farhad Ali',
     output:()=>`<div class="cmd-out">
-<span class="acc" style="font-size:16px;font-weight:700">Farhad Ali</span>
+<span class="acc" style="font-size:16px;font-weight:700">${CONTENT.name}</span>
 <hr class="divider">
-<span class="dim">Manufacturing Associate at Cepheid and student at San Joaquin Delta College. Interested in business analytics, data analysis, and operational improvement. Focused on using data to understand systems, identify inefficiencies, and support better decision making.</span>
+<span class="dim">${CONTENT.whoami||CONTENT.bio}</span>
 </div>`
   },
 
@@ -229,7 +244,7 @@ const CMDS = {
     output:()=>`<div class="cmd-out">
 <span class="acc">Currently</span>
 <hr class="divider">
-<span class="dim">Currently working as a Manufacturing Associate at <span class="acc">Cepheid</span> in a regulated cleanroom manufacturing environment supporting molecular diagnostic production. At the same time, I am a student at <span class="acc">San Joaquin Delta College</span> where I am developing skills in business analytics and data analysis while preparing to transfer to a four year university.</span>
+<span class="dim">${CONTENT.currently||CONTENT.bio}</span>
 </div>`
   },
 
@@ -238,7 +253,7 @@ const CMDS = {
     output:()=>`<div class="cmd-out">
 <span class="acc">Mission</span>
 <hr class="divider">
-<span class="dim">My goal is to apply analytical thinking and data analysis to improve operational efficiency and help organizations make smarter decisions. I am particularly interested in roles where data can be used to solve real business and manufacturing problems.</span>
+<span class="dim">${CONTENT.mission||'My goal is to apply analytical thinking and data analysis to improve operational efficiency.'}</span>
 </div>`
   },
 
@@ -247,144 +262,85 @@ const CMDS = {
     output:()=>`<div class="cmd-out">
 <span class="acc">Status</span>
 <hr class="divider">
-<span class="grn">● Active</span> <span class="dim">— Currently building analytics skills and preparing for opportunities in business analytics and data analysis.</span>
+<span class="grn">● Active</span> <span class="dim">— ${CONTENT.status||'Currently open to new opportunities.'}</span>
+${CONTENT.open_to_work?'<br><span class="grn">✓ Open to new opportunities</span>':''}
 </div>`
   },
 
   projects:{
     desc:'View my projects',
-    output:()=>`<div class="cmd-out">
-<span class="acc">Projects</span>
-<hr class="divider">
-<div class="pcard">
-  <div class="pt">🔬 GeneXpert Data Tracker</div>
-  <div class="pd">Custom spreadsheet system for tracking IPT results, trends, and anomalies across manufacturing batches at Cepheid.</div>
-  <div class="pk">Excel · Data Analysis · GMP Documentation</div>
-  <div class="pl"><a href="https://github.com/starwirelane" target="_blank">[ GitHub ]</a></div>
-</div>
-<div class="pcard">
-  <div class="pt">📊 Operations Dashboard</div>
-  <div class="pd">Visual dashboard concept for monitoring daily production output, quality metrics, and scheduling for manufacturing teams.</div>
-  <div class="pk">Data Visualization · Analytics · Process Improvement</div>
-  <div class="pl"><a href="https://github.com/starwirelane" target="_blank">[ GitHub ]</a></div>
-</div>
-<div class="pcard">
-  <div class="pt">💻 Terminal Portfolio</div>
-  <div class="pd">This interactive terminal-style portfolio — built with pure HTML, CSS and JavaScript. No frameworks.</div>
-  <div class="pk">HTML · CSS · JavaScript · GitHub Pages</div>
-  <div class="pl"><a href="https://github.com/starwirelane" target="_blank">[ GitHub ]</a></div>
-</div>
-</div>`
+    output:()=>{
+      const projects=CONTENT.projects||[];
+      const cards=projects.map(p=>`<div class="pcard">
+  <div class="pt">${p.emoji||'💻'} ${p.title}</div>
+  <div class="pd">${p.desc}</div>
+  <div class="pk">${p.tags}</div>
+  <div class="pl"><a href="${p.link}" target="_blank">[ GitHub ]</a></div>
+</div>`).join('');
+      return `<div class="cmd-out"><span class="acc">Projects</span><hr class="divider">${cards}</div>`;
+    }
   },
 
   experience:{
     desc:'Work experience',
-    output:()=>`<div class="cmd-out">
-<span class="acc">Work Experience</span>
-<hr class="divider">
-<div class="xcard">
-  <div class="xt">Manufacturing Associate I</div>
-  <div class="xc">Cepheid</div>
-  <div class="xd">December 2024 – Present · Lodi, CA</div>
-  <ul>
-    <li>Test products at all manufacturing stages using GeneXpert</li>
-    <li>Follow GMP &amp; ISO documentation and procedures</li>
-    <li>Investigate and troubleshoot functionality &amp; performance issues</li>
-    <li>Schedule and plan In-Process Testing (IPT) priority work</li>
-    <li>Operate equipment in a regulated cleanroom environment</li>
-  </ul>
-</div>
-<div class="xcard">
-  <div class="xt">Manager</div>
-  <div class="xc">McDonald's</div>
-  <div class="xd">March 2021 – December 2024 · 3 yrs 10 mos · Lodi, CA</div>
-  <ul>
-    <li>Led daily operations in a high-volume environment</li>
-    <li>Managed schedules, team performance &amp; inventory</li>
-    <li>Trained and supervised team members</li>
-  </ul>
-</div>
-<div class="xcard">
-  <div class="xt">Private Swimming Coach</div>
-  <div class="xc">Self-Employed</div>
-  <div class="xd">April 2022 – February 2024 · 1 yr 11 mos · Lodi, CA</div>
-  <ul>
-    <li>Provided one-on-one swimming instruction to clients of all skill levels</li>
-    <li>Developed personalized training plans based on individual goals</li>
-    <li>Ensured safety and proper technique during all sessions</li>
-    <li>Built strong client relationships through consistent communication</li>
-  </ul>
-</div>
-</div>`
+    output:()=>{
+      const exp=CONTENT.experience||[];
+      if(!exp.length) return `<div class="cmd-out"><span class="acc">Work Experience</span><hr class="divider"><span class="dim">No experience listed yet.</span></div>`;
+      const cards=exp.map(e=>`<div class="xcard">
+  <div class="xt">${e.title}</div>
+  <div class="xc">${e.company}</div>
+  <div class="xd">${e.dates||e.period||''} · ${e.location||''}</div>
+  <ul>${(e.bullets||[]).map(b=>`<li>${b.item||b}</li>`).join('')}</ul>
+</div>`).join('');
+      return `<div class="cmd-out"><span class="acc">Work Experience</span><hr class="divider">${cards}</div>`;
+    }
   },
 
   skills:{
     desc:'Skills and competencies',
-    output:()=>`<div class="cmd-out">
-<span class="acc">Skills &amp; Competencies</span>
-<hr class="divider">
+    output:()=>{
+      const mfg=CONTENT.skills_manufacturing||[];
+      const ana=CONTENT.skills_analytics||[];
+      const lead=CONTENT.skills_leadership||[];
+      const levels=(CONTENT.skill_levels||[]).map(l=>`<div class="prog-wrap"><span style="min-width:150px;font-size:13px">${l.name}</span><div class="prog-bar"><div class="prog-fill" style="width:${l.value}%"></div></div><span class="prog-lbl">${l.value}%</span></div>`).join('');
+      return `<div class="cmd-out">
+<span class="acc">Skills &amp; Competencies</span><hr class="divider">
 <div style="margin:6px 0 2px"><span class="dim">Manufacturing &amp; Quality</span></div>
-${['GMP Compliance','ISO Standards','In-Process Testing','Cleanroom Ops','GeneXpert','Quality Control','Documentation'].map(s=>`<span class="badge badge-g">${s}</span>`).join('')}
+${mfg.map(x=>`<span class="badge badge-g">${x.item||x}</span>`).join('')}
 <div style="margin:10px 0 2px"><span class="dim">Analytics &amp; Data</span></div>
-${['Data Recording','Business Analytics','Data Analysis','Process Improvement','Production Reporting'].map(s=>`<span class="badge">${s}</span>`).join('')}
+${ana.map(x=>`<span class="badge">${x.item||x}</span>`).join('')}
 <div style="margin:10px 0 2px"><span class="dim">Leadership</span></div>
-${['Team Management','Training','Scheduling','Inventory Control','Emergency Response','CPR/First Aid'].map(s=>`<span class="badge">${s}</span>`).join('')}
-<hr class="divider">
-<div style="margin-bottom:4px"><span class="dim">Skill levels</span></div>
-${[['GMP/ISO',95],['Data Recording',90],['Team Leadership',85],['Analytics',70],['Process Improvement',75]].map(([n,v])=>`<div class="prog-wrap"><span style="min-width:150px;font-size:13px">${n}</span><div class="prog-bar"><div class="prog-fill" style="width:${v}%"></div></div><span class="prog-lbl">${v}%</span></div>`).join('')}
-</div>`
+${lead.map(x=>`<span class="badge">${x.item||x}</span>`).join('')}
+<hr class="divider"><div style="margin-bottom:4px"><span class="dim">Skill levels</span></div>
+${levels}</div>`;
+    }
   },
 
   education:{
     desc:'Education background',
-    output:()=>`<div class="cmd-out">
-<span class="acc">Education</span>
-<hr class="divider">
-<div class="xcard">
-  <div class="xt">Associate of Arts — Interdisciplinary Studies</div>
-  <div class="xc">San Joaquin Delta College</div>
-  <div class="xd">2021 · Stockton, CA</div>
-  <ul>
-    <li>Business Analytics &amp; Data Analysis focus</li>
-    <li>Preparing to transfer to 4-year university</li>
-    <li><span class="grn">GPA: 3.5</span></li>
-  </ul>
-</div>
-<div class="xcard">
-  <div class="xt">High School Diploma</div>
-  <div class="xc">Tokay High School</div>
-  <div class="xd">2019–2023 · Lodi, CA</div>
-  <ul><li><span class="grn">GPA: 3.8 — High Honors Graduate ⭐</span></li></ul>
-</div>
-</div>`
+    output:()=>{
+      const edu=CONTENT.education||[];
+      if(!edu.length) return `<div class="cmd-out"><span class="acc">Education</span><hr class="divider"><span class="dim">No education listed yet.</span></div>`;
+      const cards=edu.map(e=>`<div class="xcard">
+  <div class="xt">${e.degree}</div>
+  <div class="xc">${e.school}</div>
+  <div class="xd">${e.dates||e.period||''} · ${e.location||''}</div>
+  <ul><li>${e.notes||''}</li><li><span class="grn">GPA: ${e.gpa||''}</span></li></ul>
+</div>`).join('');
+      return `<div class="cmd-out"><span class="acc">Education</span><hr class="divider">${cards}</div>`;
+    }
   },
 
   awards:{
     desc:'Honors and awards',
-    output:()=>`<div class="cmd-out">
-<span class="acc">Honors &amp; Awards</span>
-<hr class="divider">
-<div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)">
-  <span style="font-size:22px">🏅</span>
-  <div><div style="color:var(--yellow)">California Scholarship Federation (CSF)</div><div class="dim" style="font-size:12px">Recognized for academic excellence in California</div></div>
-</div>
-<div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)">
-  <span style="font-size:22px">🎓</span>
-  <div><div style="color:var(--yellow)">National Society of High School Scholars (NSHSS)</div><div class="dim" style="font-size:12px">National recognition for outstanding scholastic achievement</div></div>
-</div>
-<div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)">
-  <span style="font-size:22px">⭐</span>
-  <div><div style="color:var(--yellow)">High Honors Graduate — 3.8 GPA</div><div class="dim" style="font-size:12px">Tokay High School</div></div>
-</div>
-<div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)">
-  <span style="font-size:22px">🦃</span>
-  <div><div style="color:var(--yellow)">Turkey Trot — 1st Place</div><div class="dim" style="font-size:12px">2019 · Competitive running race</div></div>
-</div>
-<div style="display:flex;align-items:center;gap:12px;padding:8px 0">
-  <span style="font-size:22px">🎨</span>
-  <div><div style="color:var(--yellow)">1st Place — Local Art Exhibition</div><div class="dim" style="font-size:12px">Photography · Lodi, CA</div></div>
-</div>
-</div>`
+    output:()=>{
+      const awards=CONTENT.awards||[];
+      const rows=awards.map((a,i)=>`<div style="display:flex;align-items:center;gap:12px;padding:8px 0;${i<awards.length-1?'border-bottom:1px solid var(--border)':''}">
+  <span style="font-size:22px">${a.emoji}</span>
+  <div><div style="color:var(--yellow)">${a.title}</div><div class="dim" style="font-size:12px">${a.desc}</div></div>
+</div>`).join('');
+      return `<div class="cmd-out"><span class="acc">Honors &amp; Awards</span><hr class="divider">${rows}</div>`;
+    }
   },
 
   resume:{
@@ -404,43 +360,29 @@ ${[['GMP/ISO',95],['Data Recording',90],['Team Leadership',85],['Analytics',70],
     }
   },
 
-  github:{desc:'Open GitHub profile',output:()=>{window.open('https://github.com/starwirelane','_blank');return `<span class="grn">✓ Opening</span> <a href="https://github.com/starwirelane" target="_blank">github.com/starwirelane</a>`;}},
-  linkedin:{desc:'Open LinkedIn profile',output:()=>{window.open('https://linkedin.com/in/farhadali-627770352','_blank');return `<span class="grn">✓ Opening</span> <a href="https://linkedin.com/in/farhadali-627770352" target="_blank">linkedin.com/in/farhadali-627770352</a>`;}},
+  github:{desc:'Open GitHub profile',output:()=>{window.open(CONTENT.github,'_blank');return `<span class="grn">✓ Opening</span> <a href="${CONTENT.github}" target="_blank">${CONTENT.github.replace('https://','')}</a>`;}},
+  linkedin:{desc:'Open LinkedIn profile',output:()=>{window.open(CONTENT.linkedin,'_blank');return `<span class="grn">✓ Opening</span> <a href="${CONTENT.linkedin}" target="_blank">${CONTENT.linkedin.replace('https://','')}</a>`;}},
 
   contact:{
     desc:'Contact information',
     output:()=>`<div class="cmd-out">
-<span class="acc">Contact Farhad Ali</span>
+<span class="acc">Contact ${CONTENT.name}</span>
 <hr class="divider">
 <div><span class="lbl">Email</span><a href="mailto:${CONTENT.email}">${CONTENT.email}</a></div>
 <div><span class="lbl">LinkedIn</span><a href="${CONTENT.linkedin}" target="_blank">${CONTENT.linkedin.replace('https://','')}</a></div>
 <div><span class="lbl">GitHub</span><a href="${CONTENT.github}" target="_blank">${CONTENT.github.replace('https://','')}</a></div>
 <div><span class="lbl">Location</span>${CONTENT.location} 📍</div>
 <hr class="divider">
-<span class="grn">Currently open to new opportunities.</span> <span class="dim">Response within 24h.</span>
+${CONTENT.open_to_work?'<span class="grn">✓ Currently open to new opportunities.</span>':'<span class="dim">Not currently looking.</span>'} <span class="dim">Response within 24h.</span>
 </div>`
   },
 
   photography:{
     desc:'View my photography work',
     output:()=>{
-      const photos=[
-        {file:'DSC_1093.jpeg',title:'Point Reyes',loc:'Point Reyes, CA'},
-        {file:'DSC_1150.jpeg',title:'Point Reyes Lighthouse',loc:'Point Reyes, CA'},
-        {file:'DSC_1168.jpeg',title:'Point Reyes Vista Point',loc:'Point Reyes, CA'},
-        {file:'IMG_5360.jpeg',title:'Baker Beach',loc:'San Francisco, CA'},
-        {file:'IMG_5550.jpeg',title:'Tunnel View',loc:'Yosemite National Park, CA'},
-        {file:'IMG_5573.jpeg',title:'Mist Trail',loc:'Yosemite National Park, CA'},
-        {file:'IMG_5664.jpeg',title:'Bishop Pumpkin Farm Corn Maze',loc:'Wheatland, CA'},
-        {file:'IMG_5683.jpeg',title:'Chuze Fitness',loc:'Stockton, CA'},
-        {file:'IMG_5829.jpeg',title:'Kimpton Sawyer Hotel',loc:'Sacramento, CA'},
-        {file:'IMG_5830.jpeg',title:'Golden 1 Center',loc:'Sacramento, CA'},
-        {file:'IMG_6120.jpeg',title:'California Academy of Sciences — Lizard Exhibition',loc:'San Francisco, CA'},
-        {file:'IMG_6121.jpeg',title:'California Academy of Sciences — Snake Exhibition',loc:'San Francisco, CA'},
-        {file:'IMG_6160.jpeg',title:'Seal Rock Beach',loc:'San Francisco, CA'},
-        {file:'IMG_6171.jpeg',title:'Lands End',loc:'San Francisco, CA'},
-      ];
-      const grid=photos.map(p=>`<div style="border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:border-color .2s,box-shadow .2s;" onmouseover="this.style.borderColor='var(--prompt)';this.style.boxShadow='0 0 16px rgba(0,234,255,0.1)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'" onclick="window.open('gallery/${p.file}','_blank')"><img src="gallery/${p.file}" style="width:100%;height:130px;object-fit:cover;display:block;"/><div style="padding:8px 10px;background:var(--surface)"><div style="color:var(--prompt);font-weight:700;font-size:12px;">${p.title}</div><div style="color:var(--dim);font-size:11px;margin-top:2px;">📍 ${p.loc}</div></div></div>`).join('');
+      const photos=CONTENT.photography||[];
+      if(!photos.length) return `<div class="cmd-out"><span class="acc">📸 Photography</span><hr class="divider"><span class="dim">No photos yet.</span></div>`;
+      const grid=photos.map(p=>`<div style="border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:border-color .2s,box-shadow .2s;" onmouseover="this.style.borderColor='var(--prompt)';this.style.boxShadow='0 0 16px rgba(0,234,255,0.1)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'" onclick="window.open('gallery/${p.file}','_blank')"><img src="gallery/${p.file}" style="width:100%;height:130px;object-fit:cover;display:block;"/><div style="padding:8px 10px;background:var(--surface)"><div style="color:var(--prompt);font-weight:700;font-size:12px;">${p.title}</div><div style="color:var(--dim);font-size:11px;margin-top:2px;">📍 ${p.loc||p.location}</div></div></div>`).join('');
       return `<div class="cmd-out"><span class="acc">📸 Photography</span><hr class="divider"><span class="dim" style="display:block;margin-bottom:10px">Photography is one of my creative outlets. I enjoy capturing moments, nature, and everyday life across California.</span><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;">${grid}</div><span class="dim" style="font-size:12px;margin-top:10px;display:block;">Click any photo to open full size</span></div>`;
     }
   },
@@ -448,28 +390,20 @@ ${[['GMP/ISO',95],['Data Recording',90],['Team Leadership',85],['Analytics',70],
   hiking:{
     desc:'Outdoor activities and hobbies',
     output:()=>{
-      const trails=[
-        {name:'Lodi Lake',loc:'Lodi, CA',diff:'Easy',miles:'2.3',rating:'3.0',color:'#3fb950'},
-        {name:'Quarry Road Trail',loc:'Auburn, CA',diff:'Moderate',miles:'10.9',rating:'3.5',color:'#d29922'},
-        {name:'Western States Trail to Robie Point Fire Break',loc:'Auburn, CA',diff:'Hard',miles:'100',rating:'4.3',color:'#f85149'},
-        {name:'Lower Yosemite Falls',loc:'Yosemite National Park, CA',diff:'Easy',miles:'1.0',rating:'3.8',color:'#3fb950'},
-        {name:'Upper Yosemite Falls',loc:'Yosemite National Park, CA',diff:'Strenuous',miles:'7.2',rating:'4.4',color:'#f85149'},
-        {name:'Vernal &amp; Nevada Falls via Mist Trail',loc:'Yosemite National Park, CA',diff:'Hard',miles:'6.6',rating:'4.8',color:'#f85149'},
-        {name:'Mirror Lake via Valley Loop Trail',loc:'Yosemite National Park, CA',diff:'Easy',miles:'5.0',rating:'3.9',color:'#3fb950'},
-      ];
+      const trails=CONTENT.trails||[];
+      if(!trails.length) return `<div class="cmd-out"><span class="acc">🥾 Hiking</span><hr class="divider"><span class="dim">No trails listed yet.</span></div>`;
+      const diffColor=(d)=>d==='Easy'?'#3fb950':d==='Moderate'?'#d29922':'#f85149';
       const rows=trails.map(t=>`
 <div style="border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin:6px 0;background:rgba(255,255,255,0.02);transition:border-color .2s;" onmouseover="this.style.borderColor='var(--prompt)'" onmouseout="this.style.borderColor='var(--border)'">
   <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;">
     <div>
       <div style="color:var(--prompt);font-weight:700;font-size:14px;">🥾 ${t.name}</div>
-      <div style="color:var(--dim);font-size:12px;margin-top:2px;">📍 ${t.loc}</div>
+      <div style="color:var(--dim);font-size:12px;margin-top:2px;">📍 ${t.loc||t.location}</div>
     </div>
-    <div style="text-align:right;white-space:nowrap;">
-      <span style="color:#f9c74f;font-weight:700;font-size:15px;">⭐ ${t.rating}</span>
-    </div>
+    <span style="color:#f9c74f;font-weight:700;font-size:15px;">⭐ ${t.rating}</span>
   </div>
   <div style="margin-top:8px;display:flex;gap:12px;font-size:12px;">
-    <span style="color:${t.color}">● ${t.diff}</span>
+    <span style="color:${t.color||diffColor(t.diff||t.difficulty)}">● ${t.diff||t.difficulty}</span>
     <span style="color:var(--dim)">📏 ${t.miles} mi</span>
   </div>
 </div>`).join('');
@@ -482,7 +416,7 @@ ${[['GMP/ISO',95],['Data Recording',90],['Team Leadership',85],['Analytics',70],
     output:()=>`<div class="cmd-out">
 <span class="acc">Location</span>
 <hr class="divider">
-<span style="color:#f778ba">📍 Lodi, California, United States</span>
+<span style="color:#f778ba">📍 ${CONTENT.location}</span>
 </div>`
   },
 
@@ -565,7 +499,7 @@ ${[['GMP/ISO',95],['Data Recording',90],['Team Leadership',85],['Analytics',70],
   ........
   |      |]
   \\      /
-   \`----'</pre><span class="acc">☕ Enjoying the portfolio?</span><br><span class="dim">You can buy me a coffee if you'd like!</span><br><br><a href="https://buymeacoffee.com/farhadaii" target="_blank" style="display:inline-block;border:2px solid #f9c74f;color:#f9c74f;padding:10px 24px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;transition:background .2s;" onmouseover="this.style.background='rgba(249,199,79,0.12)'" onmouseout="this.style.background='transparent'">☕ Buy Me a Coffee</a></div>`},
+   \`----'</pre><span class="acc">☕ Enjoying the portfolio?</span><br><span class="dim">You can buy me a coffee if you'd like!</span><br><br><a href="${CONTENT.buymeacoffee||'https://buymeacoffee.com/farhadaii'}" target="_blank" style="display:inline-block;border:2px solid #f9c74f;color:#f9c74f;padding:10px 24px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;transition:background .2s;" onmouseover="this.style.background='rgba(249,199,79,0.12)'" onmouseout="this.style.background='transparent'">☕ Buy Me a Coffee</a></div>`},
   joke:{
     desc:'Programming joke',
     output:()=>{
