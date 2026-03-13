@@ -143,7 +143,7 @@ pre.ascii-dim{color:var(--dim);font-size:10px;line-height:1.2;}
   </div>
 </div>
 <canvas id="matrix-canvas"></canvas>
-<div id="app">
+<div id="app" style="visibility:hidden;">
   <div class="terminal-window" id="termwin">
     <div class="tbar">
       <div class="dot dot-r"></div>
@@ -874,6 +874,7 @@ function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
     await sleep(600);
     splash.style.display='none';
     canvas.style.display='none';
+    document.getElementById('app').style.visibility='visible';
     await startBootSequence();
   };
 
