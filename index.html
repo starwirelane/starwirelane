@@ -40,6 +40,7 @@ body.theme-glitch{--bg:#050005;--surface:#0a000a;--border:#ff003c;--text:#00ffff
 body.theme-glitch .terminal-window{border-radius:0px;border-width:2px;border-color:#ff003c;}
 body.theme-glitch .tbar{background:rgba(255,0,60,0.1);}
 body.theme-glitch .prompt-lbl{text-shadow:2px 0 #ff00ff,-2px 0 #00ffff;}
+@keyframes popIn{0%{opacity:0;transform:scale(0.8) translateY(-10px)}100%{opacity:1;transform:scale(1) translateY(0)}}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);font-size:var(--fs);line-height:var(--lh);overflow:hidden;}
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);}
@@ -147,7 +148,7 @@ pre.ascii-dim{color:var(--dim);font-size:10px;line-height:1.2;}
   </div>
 </div>
 <script>
-const CFG = { prompt:'> farhad\u00a0', typeSpeed:18, bootSpeed:22, soundOn:false, soundProfile:'digital' };
+const CFG = { prompt:'> farhad\u00a0', typeSpeed:18, bootSpeed:22, soundOn:false, soundProfile:'typewriter' };
 
 let CONTENT = {
   name:"Farhad Ali", title:"Manufacturing Associate & Aspiring Data Analyst",
@@ -557,7 +558,7 @@ ${[['GMP/ISO',95],['Data Recording',90],['Team Leadership',85],['Analytics',70],
     }
   },
 
-  matrix:{desc:'Matrix rain effect',output:(a)=>{if(a[0]==='off'){stopMatrix();return `<span class="grn">✓ Matrix off</span>`;}startMatrix();setTimeout(()=>stopMatrix(),10000);return `<span class="grn">Wake up, Neo...</span><br><span class="dim">Auto-stops in 10 seconds</span>`;}},
+  matrix:{desc:'Matrix rain effect',output:(a)=>{if(a[0]==='off'){stopMatrix();return `<span class="grn">✓ Matrix off</span>`;}startMatrix();return `<span class="grn">Wake up, Neo...</span><br><span class="dim">Type matrix off to stop</span>`;}},
   hack:{desc:'Hack sequence animation',output:()=>{setTimeout(()=>fakeHack(),100);return `<span class="red">INITIATING HACK SEQUENCE...</span>`;}},
   coffee:{desc:'Get a coffee ☕',output:()=>`<div class="cmd-out"><pre class="ascii-dim">    ( (
      ) )
@@ -744,8 +745,41 @@ function startMatrix(){
 function stopMatrix(){clearInterval(matrixInterval);const canvas=document.getElementById('matrix-canvas');canvas.style.display='none';canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);}
 
 async function fakeHack(){
-  const lines=['<span class="red">[ SCANNING ]</span> Locating target...','<span class="red">[ FOUND ]</span> IP: 192.168.1.'+Math.floor(Math.random()*255),'<span class="yellow">[ BYPASS ]</span> Firewall... <span class="grn">BYPASSED</span>','<span class="acc">[ ACCESS ]</span> Root <span class="grn">GRANTED</span> 🔓','<span class="dim">Just kidding 😄 — this is Farhad\'s portfolio!</span>'];
-  for(const l of lines){pHTML(`<span>${l}</span>`,false);await sleep(400);}
+  // First print terminal lines
+  const lines=[
+    `<span class="red">[ SCANNING ]</span> Locating target...`,
+    `<span class="red">[ FOUND ]</span> IP: 192.168.${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}`,
+    `<span class="yellow">[ BYPASS ]</span> Firewall... <span class="grn">BYPASSED ✓</span>`,
+    `<span class="yellow">[ INJECT ]</span> Payload loading... <span class="grn">SUCCESS ✓</span>`,
+    `<span class="acc">[ ACCESS ]</span> Root privileges... <span class="grn">GRANTED 🔓</span>`,
+  ];
+  for(const l of lines){pHTML(`<span>${l}</span>`,false);await sleep(350);}
+
+  // Spawn floating popups
+  const popups=[
+    {title:'⚠️ SECURITY BREACH',body:'Unauthorized access detected\nSystem integrity: COMPROMISED',color:'#f85149',delay:0},
+    {title:'📡 SIGNAL INTERCEPTED',body:'Decrypting 2048-bit RSA key...\nProgress: ████████░░ 80%',color:'#d29922',delay:600},
+    {title:'💀 ROOT ACCESS',body:'All systems now under control\nWelcome, Administrator',color:'#00eaff',delay:1200},
+    {title:'😄 JUST KIDDING',body:"This is Farhad's portfolio!\nNo systems were harmed.",color:'#3fb950',delay:2000},
+  ];
+
+  for(const p of popups){
+    await sleep(p.delay);
+    const pop=document.createElement('div');
+    pop.style.cssText=`position:fixed;z-index:9997;background:#0d1117;border:2px solid ${p.color};border-radius:8px;padding:14px 18px;min-width:260px;max-width:320px;box-shadow:0 0 30px ${p.color}55;font-family:'JetBrains Mono',monospace;font-size:12px;color:#c9d1d9;animation:popIn 0.2s ease;`;
+    // Random position on screen
+    const positions=[
+      'top:15%;left:10%','top:20%;right:8%','top:55%;left:6%','top:60%;right:10%'
+    ];
+    pop.style.cssText+=';'+positions[popups.indexOf(p)%positions.length];
+    pop.innerHTML=`<div style="color:${p.color};font-weight:700;font-size:13px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">${p.title}<span onclick="this.parentElement.parentElement.remove()" style="cursor:pointer;color:var(--dim);font-size:16px;line-height:1">×</span></div><pre style="color:#c9d1d9;font-size:11px;white-space:pre-wrap;margin:0">${p.body}</pre>`;
+    document.body.appendChild(pop);
+    // Auto remove after 5s
+    setTimeout(()=>pop.remove(),5000);
+  }
+
+  await sleep(2500);
+  pHTML(`<span class="grn">✓ Hack complete.</span> <span class="dim">Close the popups or wait 5s.</span>`,false);
 }
 function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 
