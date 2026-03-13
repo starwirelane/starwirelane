@@ -570,21 +570,75 @@ ${[['GMP/ISO',95],['Data Recording',90],['Team Leadership',85],['Analytics',70],
     desc:'Programming joke',
     output:()=>{
       const jokes=[
-        ['Why do programmers prefer dark mode?','Because light attracts bugs! 🐛'],
-        ['Why did the developer go broke?','He used up all his cache. 💸'],
-        ['A SQL query walks into a bar...','...and asks two tables: "Can I JOIN you?"'],
-        ['Why do Java developers wear glasses?','Because they don\'t C#! 👓'],
-        ['How many programmers does it take to change a light bulb?','None — that\'s a hardware problem. 💡'],
-        ['Why was the JavaScript developer sad?','Because he didn\'t know how to Promise anything. 😢'],
-        ['What\'s a computer\'s favorite snack?','Microchips! 🍟'],
-        ['Why did the programmer quit his job?','Because he didn\'t get arrays. 📦'],
+        {
+          q:'Why do programmers prefer dark mode?',
+          correct:'Because light attracts bugs! 🐛',
+          wrong:['Because it looks cooler 😎','They hate their eyes 👀','Stack Overflow is dark too'],
+        },
+        {
+          q:'Why did the developer go broke?',
+          correct:'He used up all his cache! 💸',
+          wrong:['Bad investments 📉','He bought too many keyboards','NFTs obviously 🎨'],
+        },
+        {
+          q:'A SQL query walks into a bar...',
+          correct:'...and asks two tables: "Can I JOIN you?" 🍺',
+          wrong:['...and gets a syntax error','...and orders a NULL beer','...and crashes the bartender'],
+        },
+        {
+          q:'Why do Java developers wear glasses?',
+          correct:"Because they don't C#! 👓",
+          wrong:['Too much screen time 😵','Java is blinding','Their IDE font is too small'],
+        },
+        {
+          q:'Why was the JavaScript developer sad?',
+          correct:"Because he didn't know how to Promise anything 😢",
+          wrong:['undefined feelings','His callback never came','NaN emotions detected'],
+        },
+        {
+          q:"What's a computer's favorite snack?",
+          correct:'Microchips! 🍟',
+          wrong:['RAM ramen 🍜','Bytes and bytes of pizza','Cookies obviously 🍪'],
+        },
+        {
+          q:'Why did the programmer quit his job?',
+          correct:"Because he didn't get arrays 📦",
+          wrong:['Too many bugs 🐛','The pay was null','His boss was a boolean'],
+        },
+        {
+          q:'How do you comfort a JavaScript bug?',
+          correct:"You console it! 🖥️",
+          wrong:['You reboot it 🔄','You undefined it','You give it a callback hug'],
+        },
       ];
-      const [q,a]=jokes[Math.floor(Math.random()*jokes.length)];
+      const joke=jokes[Math.floor(Math.random()*jokes.length)];
       const id='joke-'+Date.now();
+      // shuffle correct + wrong answers
+      const all=[
+        {text:joke.correct,reaction:`<span class="grn">✓ CORRECT! 🎉</span> ${joke.correct}`,correct:true},
+        {text:joke.wrong[0],reaction:`<span class="red">❌ Nope! 😂</span> Not even close...`,correct:false},
+        {text:joke.wrong[1],reaction:`<span class="yellow">🤔 Nice try!</span> But noooope.`,correct:false},
+        {text:joke.wrong[2],reaction:`<span class="pnk">💀 Really?</span> That's your answer?`,correct:false},
+      ].sort(()=>Math.random()-0.5);
+
+      const buttons=all.map((opt,i)=>{
+        const btnId=`${id}-opt-${i}`;
+        const resId=`${id}-res`;
+        return `<div id="${btnId}" onclick="
+          document.querySelectorAll('.${id}-btn').forEach(b=>b.style.opacity='0.4');
+          this.style.opacity='1';
+          this.style.borderColor='${opt.correct?'var(--green)':'var(--red)'}';
+          this.style.color='${opt.correct?'var(--green)':'var(--red)'}';
+          document.getElementById('${resId}').innerHTML='${opt.reaction.replace(/'/g,"\\'")}';
+          document.getElementById('${resId}').style.display='block';
+        " class="${id}-btn" style="cursor:pointer;border:1px solid var(--border);color:var(--text);padding:8px 16px;border-radius:6px;font-size:13px;transition:all .2s;margin:3px 0;" onmouseover="this.style.borderColor='var(--highlight)';this.style.color='var(--highlight)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text)'">${String.fromCharCode(65+i)}. ${opt.text}</div>`;
+      }).join('');
+
       return `<div class="cmd-out">
-<span style="color:var(--yellow)">🤔 ${q}</span><br><br>
-<div id="${id}-btn" onclick="document.getElementById('${id}-btn').style.display='none';document.getElementById('${id}-ans').style.display='block';" style="cursor:pointer;display:inline-block;border:1px solid var(--border);color:var(--dim);padding:8px 20px;border-radius:6px;font-size:13px;transition:border-color .2s,color .2s;" onmouseover="this.style.borderColor='var(--prompt)';this.style.color='var(--prompt)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--dim)'">💬 Reveal punchline</div>
-<div id="${id}-ans" style="display:none;animation:popIn 0.2s ease;"><span class="acc">👉 ${a}</span></div>
+<span style="color:var(--yellow);font-size:14px">🤔 ${joke.q}</span>
+<hr class="divider">
+${buttons}
+<div id="${id}-res" style="display:none;margin-top:10px;font-size:14px;animation:popIn 0.2s ease;"></div>
 </div>`;
     }
   },
