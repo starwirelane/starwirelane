@@ -120,14 +120,15 @@ pre.ascii-dim{color:var(--dim);font-size:10px;line-height:1.2;}
 @media(max-width:600px){
   :root{--fs:13px;}
   #app{padding:0;}
-  .terminal-window{height:100vh;border-radius:0;border:none;}
-  #sticky{padding:8px 12px 6px;}
+  .terminal-window{height:100dvh;border-radius:0;border:none;}
+  #sticky{padding:6px 12px 5px;max-height:35dvh;overflow-y:auto;}
   #output{padding:8px 12px 4px;}
   .irow{padding:6px 12px 8px;}
   pre.ascii{display:none;}
-  .mobile-name{display:block!important;font-size:20px!important;margin-bottom:4px!important;}
+  .mobile-name{display:block!important;font-size:18px!important;margin-bottom:3px!important;letter-spacing:2px!important;}
   .desktop-name{display:none;}
-  .cmd-out{font-size:12px;line-height:1.6;}
+  .cmd-out{font-size:11px;line-height:1.5;}
+  .badge{font-size:11px;padding:1px 6px;}
   .lbl{min-width:80px;}
 }
 </style>
