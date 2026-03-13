@@ -752,7 +752,7 @@ async function fakeHack(){
     `<span class="yellow">[ INJECT ]</span> Payload loading... <span class="grn">SUCCESS ✓</span>`,
     `<span class="acc">[ ACCESS ]</span> Root privileges... <span class="grn">GRANTED 🔓</span>`,
   ];
-  for(const l of lines){pHTML(`<span>${l}</span>`,false);await sleep(300);}
+  for(const l of lines){pHTML(`<span>${l}</span>`,false);await sleep(280);}
 
   const messages=[
     {title:'⚠️ SECURITY BREACH DETECTED',body:'Unauthorized access to system files\nFirewall status: DISABLED\nBackdoor installed at /root/.hidden',color:'#f85149'},
@@ -764,32 +764,47 @@ async function fakeHack(){
     {title:'📂 FILES ENCRYPTED',body:'Ransomware deployed\nAll files locked: 99%\nSend 1 BTC to decrypt',color:'#f85149'},
     {title:'🌐 BOTNET ENROLLED',body:'Device added to botnet\nRemote control: ACTIVE\nAwaiting commands...',color:'#ff003c'},
     {title:'⚡ SYSTEM OVERLOAD',body:'CPU usage: 100%\nMemory: CRITICAL\nShutdown imminent...',color:'#d29922'},
-    {title:'🚨 FBI MONITORING',body:'Suspicious activity flagged\nTrace route: COMPLETE\nAgents dispatched...',color:'#f85149'},
+    {title:'🚨 FBI MONITORING',body:'Suspicious activity flagged\nTrace route: COMPLETE\nAgents dispatched to location',color:'#f85149'},
     {title:'💣 SELF DESTRUCT',body:'System wipe initiated\nCountdown: 10...9...8...\nAll data will be erased',color:'#ff003c'},
     {title:'😈 TOTAL CONTROL',body:'You have been hacked\nAll systems compromised\nResistance is futile',color:'#c77dff'},
+    {title:'🕵️ IDENTITY STOLEN',body:'SSN: ***-**-4821\nDOB: CAPTURED\nAddress: KNOWN',color:'#f85149'},
+    {title:'📱 PHONE CLONED',body:'IMEI captured\nContacts: COPIED\nMessages: INTERCEPTED',color:'#d29922'},
+    {title:'🏦 BANK ACCESS',body:'Routing number: FOUND\nAccount balance: VISIBLE\nTransfer initiated: $9,999',color:'#ff003c'},
+    {title:'🔐 PASSWORDS DUMPED',body:'Chrome passwords: EXPORTED\nKeychains: UNLOCKED\n247 credentials stolen',color:'#f85149'},
+    {title:'📍 LOCATION TRACKED',body:'GPS coordinates: LOCKED\nLast 30 locations: LOGGED\nSharing with unknown server',color:'#d29922'},
+    {title:'🖥️ REMOTE DESKTOP',body:'Screen capture: ACTIVE\nKeylogger: INSTALLED\nAll keystrokes recorded',color:'#ff003c'},
+    {title:'📧 EMAILS BREACHED',body:'Inbox access: GRANTED\nSent items: DOWNLOADED\nForwarding to attacker',color:'#f85149'},
+    {title:'🧬 BIOMETRICS STOLEN',body:'Face ID data: EXPORTED\nFingerprints: CLONED\nVoice profile: RECORDED',color:'#c77dff'},
   ];
 
-  // Spawn popups rapidly all over screen
-  const spawned=[];
+  // Tag all hack elements with class for easy cleanup
+  const HACK_CLASS='hack-popup';
+
   for(let i=0;i<messages.length;i++){
-    await sleep(i<4?300:180);
+    await sleep(i<5?250:150);
     const m=messages[i];
     const pop=document.createElement('div');
-    const top=5+Math.random()*70;
-    const left=2+Math.random()*65;
-    pop.style.cssText=`position:fixed;z-index:9997;top:${top}%;left:${left}%;background:#0a0005;border:2px solid ${m.color};border-radius:8px;padding:18px 22px;min-width:300px;max-width:380px;box-shadow:0 0 40px ${m.color}77;font-family:'JetBrains Mono',monospace;font-size:13px;color:#c9d1d9;animation:popIn 0.25s ease;`;
-    pop.innerHTML=`<div style="color:${m.color};font-weight:700;font-size:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center">${m.title}<span onclick="this.parentElement.parentElement.remove()" style="cursor:pointer;color:#666;font-size:18px;line-height:1;margin-left:12px">×</span></div><pre style="color:#c9d1d9;font-size:12px;white-space:pre-wrap;margin:0;line-height:1.7">${m.body}</pre>`;
+    pop.className=HACK_CLASS;
+    const top=3+Math.random()*72;
+    const left=1+Math.random()*62;
+    pop.style.cssText=`position:fixed;z-index:9997;top:${top}%;left:${left}%;background:#080008;border:2px solid ${m.color};border-radius:8px;padding:18px 22px;min-width:300px;max-width:370px;box-shadow:0 0 40px ${m.color}88;font-family:'JetBrains Mono',monospace;font-size:13px;color:#c9d1d9;animation:popIn 0.2s ease;`;
+    pop.innerHTML=`<div style="color:${m.color};font-weight:700;font-size:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center">${m.title}<span onclick="this.closest('.hack-popup').remove()" style="cursor:pointer;color:#666;font-size:20px;line-height:1;margin-left:12px">×</span></div><pre style="color:#c9d1d9;font-size:12px;white-space:pre-wrap;margin:0;line-height:1.8">${m.body}</pre>`;
     document.body.appendChild(pop);
-    spawned.push(pop);
   }
 
   // Big final overlay
-  await sleep(600);
+  await sleep(500);
   const overlay=document.createElement('div');
-  overlay.style.cssText=`position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;animation:popIn 0.3s ease;`;
-  overlay.innerHTML=`<div style="text-align:center;font-family:'JetBrains Mono',monospace;"><div style="font-size:80px;margin-bottom:20px">😄</div><div style="font-size:36px;font-weight:700;color:#00eaff;margin-bottom:12px">JUST KIDDING!</div><div style="font-size:16px;color:#768390;margin-bottom:30px">This is Farhad's portfolio — no systems were harmed.</div><div onclick="this.parentElement.parentElement.remove();document.querySelectorAll('[style*=z-index\\:9997]').forEach(e=>e.remove());" style="cursor:pointer;display:inline-block;border:2px solid #00eaff;color:#00eaff;padding:12px 32px;border-radius:8px;font-size:14px;transition:background .2s;" onmouseover="this.style.background='rgba(0,234,255,0.1)'" onmouseout="this.style.background='transparent'">✓ Close Everything</div></div>`;
+  overlay.className=HACK_CLASS;
+  overlay.style.cssText=`position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,0.92);display:flex;align-items:center;justify-content:center;animation:popIn 0.3s ease;`;
+  overlay.innerHTML=`<div style="text-align:center;font-family:'JetBrains Mono',monospace;padding:20px;">
+    <div style="font-size:90px;margin-bottom:16px">😄</div>
+    <div style="font-size:42px;font-weight:700;color:#00eaff;margin-bottom:14px;letter-spacing:2px">JUST KIDDING!</div>
+    <div style="font-size:16px;color:#768390;margin-bottom:10px">This is Farhad's portfolio.</div>
+    <div style="font-size:14px;color:#768390;margin-bottom:32px">No systems were harmed. You're safe 😊</div>
+    <div onclick="document.querySelectorAll('.hack-popup').forEach(e=>e.remove());" style="cursor:pointer;display:inline-block;border:2px solid #00eaff;color:#00eaff;padding:14px 40px;border-radius:8px;font-size:15px;font-weight:700;transition:background .2s;" onmouseover="this.style.background='rgba(0,234,255,0.12)'" onmouseout="this.style.background='transparent'">✓ Close Everything</div>
+  </div>`;
   document.body.appendChild(overlay);
-  spawned.forEach(p=>setTimeout(()=>p.remove(),8000));
 }
 function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
 
