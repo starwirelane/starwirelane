@@ -890,6 +890,8 @@ function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
   }
 
   function showBanner(){
+    const stickyEl=document.getElementById('sticky');
+    const inputEl=document.getElementById('userinput');
     const bannerHTML=`
 <pre class="ascii" style="font-size:10px;letter-spacing:0.5px;text-shadow:0 0 6px rgba(0,234,255,0.4);">
   ███████╗ █████╗ ██████╗ ██╗  ██╗ █████╗ ██████╗      █████╗ ██╗     ██╗
